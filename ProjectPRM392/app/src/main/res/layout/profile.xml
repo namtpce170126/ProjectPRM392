@@ -209,7 +209,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:padding="2dp"
-                        app:srcCompat="@drawable/mail_icon" />
+                        app:srcCompat="@drawable/address_icon" />
 
                     <TextView
                         android:id="@+id/lblMail"

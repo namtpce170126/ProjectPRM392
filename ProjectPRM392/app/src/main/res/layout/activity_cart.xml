@@ -104,7 +104,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="52dp"
                     android:layout_marginBottom="23dp"
-                    android:backgroundTint="#ED5757"
+                    android:backgroundTint="@color/orange"
                     android:text="ĐẶT HÀNG" />
 
                 <TextView
@@ -156,7 +156,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="29dp"
             android:layout_marginTop="30dp"
-            app:srcCompat="@drawable/backbutton" />
+            app:srcCompat="@drawable/address_icon" />
 
 
     </RelativeLayout>
