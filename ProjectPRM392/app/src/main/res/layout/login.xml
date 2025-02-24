@@ -15,14 +15,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Tiêu đề "Đăng ký" -->
+    <!-- Tiêu đề "Đăng nhập" -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
-        android:text="Đăng ký"
+        android:text="Đăng nhập"
         android:textColor="#1A1A1A"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -57,35 +57,6 @@
         app:layout_constraintTop_toBottomOf="@id/tvPhoneLabel"
         app:layout_constraintWidth_percent="0.90"/>
 
-    <!-- Checkbox điều khoản -->
-    <CheckBox
-        android:id="@+id/chkTerms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Vui lòng chấp nhận thông tin dưới đây để tiếp tục:"
-        android:textColor="#1A1A1A"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPhone" />
-
-    <!-- Hiển thị điều khoản -->
-    <TextView
-        android:id="@+id/tvTerms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Hiển thị Điều khoản sử dụng ▼"
-        android:textColor="#FF5A5F"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chkTerms" />
-
     <!-- Nút tiếp tục -->
     <Button
         android:id="@+id/btnContinue"
@@ -99,7 +70,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTerms"
+        app:layout_constraintTop_toBottomOf="@id/etPhone"
         app:layout_constraintWidth_percent="0.70"/>
 
     <!-- Đăng nhập -->
@@ -117,7 +88,7 @@
             android:id="@+id/tvAlreadyHaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bạn đã có tài khoản?"
+            android:text="Bạn chưa có tài khoản?"
             android:textColor="#1A1A1A"
             android:textSize="14sp"/>
 
@@ -126,7 +97,7 @@
             android:id="@+id/tvLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Đăng nhập"
+            android:text=" Đăng ký"
             android:textColor="#FF5A5F"
             android:textSize="14sp"
             android:textStyle="bold"
