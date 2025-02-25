@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:padding="8dp">
+
+    <!-- Ảnh món ăn -->
+    <ImageView
+        android:id="@+id/imgFood"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sample_food" />
+
+    <!-- Thông tin món ăn + nút Add -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:gravity="center_vertical">
+
+        <!-- Thông tin món ăn -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textFoodName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên món ăn"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textFoodPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="99.000đ"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Nút thêm vào giỏ hàng -->
+        <ImageButton
+            android:id="@+id/btnAddToCart"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@drawable/baseline_add_shopping_cart_24"
+            app:tint="@color/white"
+            android:backgroundTint="@color/orange"
+            android:contentDescription="Cart"/>
+    </LinearLayout>
+</LinearLayout>
