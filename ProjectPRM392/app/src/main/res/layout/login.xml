@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
 
     <!-- Nút đóng -->
     <ImageView
@@ -55,7 +56,79 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPhoneLabel"
-        app:layout_constraintWidth_percent="0.90"/>
+        app:layout_constraintWidth_percent="0.90" />
+
+    <!-- Nhập mật khẩu -->
+    <TextView
+        android:id="@+id/tvPasswordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Mật khẩu"
+        android:textColor="#1A1A1A"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPhone" />
+
+    <!-- Layout nhập mật khẩu + icon -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/passContraint"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_edittext"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPasswordLabel"
+        app:layout_constraintWidth_percent="0.90">
+
+        <!-- Ô nhập mật khẩu -->
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:hint="Vui lòng nhập"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingEnd="48dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/ivTogglePassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Icon ẩn/hiện mật khẩu -->
+        <ImageView
+            android:id="@+id/ivTogglePassword"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="4dp"
+            android:src="@drawable/closed_eyes"
+            android:contentDescription="Toggle password visibility"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Quên mật khẩu -->
+    <TextView
+        android:id="@+id/tvForgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="15dp"
+        android:text="Quên mật khẩu?"
+        android:textColor="#FF5A5F"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passContraint"
+        tools:ignore="MissingConstraints" />
 
     <!-- Nút tiếp tục -->
     <Button
@@ -70,39 +143,39 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPhone"
-        app:layout_constraintWidth_percent="0.70"/>
+        app:layout_constraintTop_toBottomOf="@id/tvForgot"
+        app:layout_constraintWidth_percent="0.70" />
 
     <!-- Đăng nhập -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="24dp">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Phần "Bạn đã có tài khoản?" -->
+        <!-- Phần "Bạn chưa có tài khoản?" -->
         <TextView
             android:id="@+id/tvAlreadyHaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bạn chưa có tài khoản?"
             android:textColor="#1A1A1A"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
-        <!-- Phần "Đăng nhập" có thể bấm -->
+        <!-- Phần "Đăng ký" có thể bấm -->
         <TextView
             android:id="@+id/tvLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
             android:text=" Đăng ký"
             android:textColor="#FF5A5F"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:clickable="true"
-            android:focusable="true"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
