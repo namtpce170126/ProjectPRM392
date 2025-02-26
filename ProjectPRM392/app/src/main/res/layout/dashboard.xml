@@ -14,7 +14,8 @@
         app:cardElevation="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="-16dp">
+        tools:layout_editor_absoluteY="-16dp"
+        tools:ignore="MissingConstraints">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -55,7 +56,7 @@
                 android:layout_marginTop="59dp"
                 android:text="Kiên Giang"
                 android:textColor="#FFFFFF"
-                android:textDecoration="underline" />
+                />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -68,7 +69,8 @@
         app:cardCornerRadius="30dp"
         app:cardElevation="26dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="72dp">
+        tools:layout_editor_absoluteY="72dp"
+        tools:ignore="MissingConstraints">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -120,7 +122,8 @@
 
         app:cardElevation="26dp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="72dp" >
+        tools:layout_editor_absoluteY="72dp"
+        tools:ignore="MissingConstraints">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -169,7 +172,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="163dp">
+        tools:layout_editor_absoluteY="163dp"
+        tools:ignore="MissingConstraints">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -215,7 +219,8 @@
                     android:layout_marginBottom="15dp"
                     android:backgroundTint="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@android:drawable/ic_input_add" />
+                    app:srcCompat="@android:drawable/ic_input_add"
+                    android:contentDescription="a"/>
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -263,7 +268,8 @@
                     android:layout_marginEnd="14dp"
                     android:layout_marginBottom="19dp"
                     android:backgroundTint="#FFFFFF"
-                    app:srcCompat="@android:drawable/ic_input_add" />
+                    app:srcCompat="@android:drawable/ic_input_add"
+                    android:contentDescription="a"/>
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

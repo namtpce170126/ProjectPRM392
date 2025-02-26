@@ -1,40 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    tools:context=".HomeFragment">
 
+    <!--    HEADER-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#EF5222"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:title="FFood"
+        app:titleTextColor="@android:color/white">
 
-        <!-- Tiêu đề ở giữa -->
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="FFood"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <!-- Icon giỏ hàng -->
-        <ImageView
-            android:id="@+id/icon_cart"
+        <!-- ImageButton Giỏ hàng -->
+        <ImageButton
+            android:id="@+id/btn_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="10dp"
             android:src="@drawable/baseline_add_shopping_cart_24"
-            app:tint="@android:color/white" />
+            app:tint="@android:color/white"/>
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Bọc nội dung trong ScrollView -->
@@ -105,13 +97,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Footer (Bottom Navigation) -->
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:id="@+id/bottomNavigation"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="?android:attr/windowBackground"-->
-<!--        app:itemIconTint="@color/white"-->
-<!--        app:itemTextColor="@color/orange"-->
-<!--        app:menu="@menu/bottom_nav_menu"/>-->
-</LinearLayout>
+</LinearLayout >

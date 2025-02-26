@@ -2,12 +2,17 @@ package com.example.projectprm392;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 
-import androidx.activity.EdgeToEdge;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +24,9 @@ import com.example.projectprm392.HomeControl.Food;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeFragment extends Fragment {
+    private Toolbar toolbar;
+    private ImageButton btnCart;
     private RecyclerView recyclerView;
     private RecyclerView recyclerBestSeller;
     private DiscountProductAdapter foodAdapter;
@@ -29,17 +36,31 @@ public class HomeActivity extends AppCompatActivity {
     private CategoryAdapter categoryAdapter;
     private ArrayList<Category> categoryList;
 
+    public HomeFragment() {
+        // Required empty public constructor
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_home, container, false);
 
-        //RECYCLERVIEW FOR DISCOUNT
-        recyclerView = findViewById(R.id.recyclerDiscounted);
+        // Ánh xạ Toolbar
+        toolbar = view.findViewById(R.id.toolbar);
+        btnCart = view.findViewById(R.id.btn_cart);
 
-        int spanCount = calculateSpanCount(); // Hoặc tính toán tự động dựa vào màn hình
-        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
+        // Thiết lập Toolbar làm ActionBar của Fragment
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        activity.setSupportActionBar(toolbar);
+        if (activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setTitle("FFood");
+        }
+
+        // RECYCLERVIEW FOR DISCOUNT
+        recyclerView = view.findViewById(R.id.recyclerDiscounted);
+
+        int spanCount = calculateSpanCount();
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
 
         foodList = new ArrayList<>();
@@ -49,19 +70,16 @@ public class HomeActivity extends AppCompatActivity {
         foodList.add(new Food("Mì Ý", "85.000đ", R.drawable.sample_food));
         foodList.add(new Food("Khoai tây chiên", "45.000đ", R.drawable.sample_food));
 
-        foodAdapter = new DiscountProductAdapter(this, foodList);
+        foodAdapter = new DiscountProductAdapter(getContext(), foodList);
         recyclerView.setAdapter(foodAdapter);
 
+        // RECYCLERVIEW FOR BEST SELLER
+        recyclerBestSeller = view.findViewById(R.id.recyclerBestSeller);
+        recyclerBestSeller.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
+        recyclerBestSeller.setAdapter(new DiscountProductAdapter(getContext(), foodList));
 
-        //RECYCLER VIEW FOR BEST SELLER
-        recyclerBestSeller = findViewById(R.id.recyclerBestSeller);
-        recyclerBestSeller.setLayoutManager(new GridLayoutManager(this, spanCount));
-        recyclerBestSeller.setAdapter(new DiscountProductAdapter(this, foodList));
-
-
-
-        //RECYCLER VIEW CUA CATEGORY
-        recyclerCategory = findViewById(R.id.recyclerCategories);
+        // RECYCLER VIEW FOR CATEGORY
+        recyclerCategory = view.findViewById(R.id.recyclerCategories);
 
         categoryList = new ArrayList<>();
         categoryList.add(new Category(1, "Fast Food", R.drawable.sample_food));
@@ -71,11 +89,12 @@ public class HomeActivity extends AppCompatActivity {
         categoryList.add(new Category(5, "Burgers", R.drawable.sample_food));
         categoryList.add(new Category(6, "Asian Food", R.drawable.sample_food));
 
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerCategory.setLayoutManager(layoutManager1);
-        categoryAdapter = new CategoryAdapter(this, categoryList);
+        categoryAdapter = new CategoryAdapter(getContext(), categoryList);
         recyclerCategory.setAdapter(categoryAdapter);
 
+        return view;
     }
 
     private int calculateSpanCount() {
