@@ -1,45 +1,57 @@
 package com.example.projectprm392;
 
-public class OrderDetail {
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-    private String foodName;
-    private double price;
-    private int quantity;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-    public OrderDetail() {
+import java.util.List;
+
+public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder> {
+    private List<OrderDetail> orderDetails;
+
+    public OrderDetailAdapter(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
-    public OrderDetail(String foodName, double price, int quantity) {
-        this.foodName = foodName;
-        this.price = price;
-        this.quantity = quantity;
+    @NonNull
+    @Override
+    public OrderDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_order_detail, parent, false);
+        return new OrderDetailViewHolder(view);
     }
 
-    public String getFoodName() {
-        return foodName;
+    @Override
+    public void onBindViewHolder(@NonNull OrderDetailViewHolder holder, int position) {
+        OrderDetail detail = orderDetails.get(position);
+        holder.txtFoodName.setText(detail.getFoodName());
+        holder.txtFoodPrice.setText(String.valueOf(detail.getPrice()));
+        holder.txtFoodQuantity.setText(String.valueOf(detail.getQuantity()));
+        Log.d("OrderDetailDebug", "Binding detail at position " + position + ": " + detail.getFoodName());
     }
 
-    public void setFoodName(String foodName) {
-        this.foodName = foodName;
+    @Override
+    public int getItemCount() {
+        Log.d("OrderDetailDebug", "Total OrderDetails: " + orderDetails.size());
+        return orderDetails.size();
     }
 
-    public double getPrice() {
-        return price;
-    }
+    public static class OrderDetailViewHolder extends RecyclerView.ViewHolder {
+        TextView txtFoodName, txtFoodPrice, txtFoodQuantity;
+        ImageView imgFood;
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getTotalPrice() {
-        return price * quantity;
+        public OrderDetailViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txtFoodName = itemView.findViewById(R.id.txtFoodName);
+            txtFoodPrice = itemView.findViewById(R.id.txtFoodPrice);
+            txtFoodQuantity = itemView.findViewById(R.id.txtFoodQuantity);
+            imgFood = itemView.findViewById(R.id.imgFood);
+        }
     }
 }
