@@ -6,12 +6,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class OrderAdapterViewHolder extends RecyclerView.ViewHolder{
-    TextView txtOrderId;
+public class OrderViewHolder extends RecyclerView.ViewHolder{
+    TextView txtFoodName, txtFoodPrice, txtQuantity, txtTotalPrice;
     RecyclerView recyclerViewDetails;
-    public OrderAdapterViewHolder(@NonNull View itemView) {
+    public OrderViewHolder(@NonNull View itemView) {
         super(itemView);
-        txtOrderId = itemView.findViewById(R.id.txtOrderId);
-        recyclerViewDetails = itemView.findViewById(R.id.recycleViewOrder);
+//        txtOrderId = itemView.findViewById(R.id.txtOrderId);
+        recyclerViewDetails = itemView.findViewById(R.id.OrderHistoryRecycleView);
+        txtFoodName = itemView.findViewById(R.id.txtFoodName);
+        txtFoodPrice = itemView.findViewById(R.id.txtFoodPrice);
+        txtQuantity = itemView.findViewById(R.id.txtFoodQuantity);
+        txtTotalPrice = itemView.findViewById(R.id.txtTotalPrice);
     }
 }
