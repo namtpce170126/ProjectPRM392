@@ -1,57 +1,50 @@
 package com.example.projectprm392;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder> {
-    private List<OrderDetail> orderDetails;
-
-    public OrderDetailAdapter(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-
-    @NonNull
-    @Override
-    public OrderDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_order_detail, parent, false);
-        return new OrderDetailViewHolder(view);
-    }
+public class OrderHistoryActivity extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private OrderAdapter orderAdapter;
+    private List<Order> orderList;
 
     @Override
-    public void onBindViewHolder(@NonNull OrderDetailViewHolder holder, int position) {
-        OrderDetail detail = orderDetails.get(position);
-        holder.txtFoodName.setText(detail.getFoodName());
-        holder.txtFoodPrice.setText(String.valueOf(detail.getPrice()));
-        holder.txtFoodQuantity.setText(String.valueOf(detail.getQuantity()));
-        Log.d("OrderDetailDebug", "Binding detail at position " + position + ": " + detail.getFoodName());
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.order_history);
 
-    @Override
-    public int getItemCount() {
-        Log.d("OrderDetailDebug", "Total OrderDetails: " + orderDetails.size());
-        return orderDetails.size();
-    }
+        recyclerView = findViewById(R.id.OrderHistoryRecycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    public static class OrderDetailViewHolder extends RecyclerView.ViewHolder {
-        TextView txtFoodName, txtFoodPrice, txtFoodQuantity;
-        ImageView imgFood;
+        // Tạo dữ liệu mẫu
+        orderList = new ArrayList<>();
+        orderList.add(new Order("1", "2025-02-26", Arrays.asList(
+                new OrderDetail("Gà rán", 100000, 2),
+                new OrderDetail("Coca", 20000, 1)
+        )));
+        orderList.add(new Order("2", "2025-02-26", Arrays.asList(
+                new OrderDetail("Pizza", 150000, 1)
+        )));
+        orderList.add(new Order("3", "2025-02-26", Arrays.asList(
+                new OrderDetail("Burger", 80000, 3),
+                new OrderDetail("Pepsi", 25000, 2)
+        )));
+        orderList.add(new Order("4", "2025-02-26", Arrays.asList(
+                new OrderDetail("Sushi", 120000, 2)
+        )));
+        orderList.add(new Order("5", "2025-02-26", Arrays.asList(
+                new OrderDetail("Phở", 60000, 4),
+                new OrderDetail("Trà đá", 10000, 4)
+        )));
 
-        public OrderDetailViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtFoodName = itemView.findViewById(R.id.txtFoodName);
-            txtFoodPrice = itemView.findViewById(R.id.txtFoodPrice);
-            txtFoodQuantity = itemView.findViewById(R.id.txtFoodQuantity);
-            imgFood = itemView.findViewById(R.id.imgFood);
-        }
+        // Thiết lập adapter
+        orderAdapter = new OrderAdapter(orderList);
+        recyclerView.setAdapter(orderAdapter);
     }
 }
