@@ -1,50 +1,45 @@
 package com.example.projectprm392;
 
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+public class OrderDetail {
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+    private String foodName;
+    private double price;
+    private int quantity;
 
-public class OrderHistoryActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private OrderAdapter orderAdapter;
-    private List<Order> orderList;
+    public OrderDetail() {
+    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.order_history);
+    public OrderDetail(String foodName, double price, int quantity) {
+        this.foodName = foodName;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
-        recyclerView = findViewById(R.id.OrderHistoryRecycleView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    public String getFoodName() {
+        return foodName;
+    }
 
-        // Tạo dữ liệu mẫu
-        orderList = new ArrayList<>();
-        orderList.add(new Order("1", "2025-02-26", Arrays.asList(
-                new OrderDetail("Gà rán", 100000, 2),
-                new OrderDetail("Coca", 20000, 1)
-        )));
-        orderList.add(new Order("2", "2025-02-26", Arrays.asList(
-                new OrderDetail("Pizza", 150000, 1)
-        )));
-        orderList.add(new Order("3", "2025-02-26", Arrays.asList(
-                new OrderDetail("Burger", 80000, 3),
-                new OrderDetail("Pepsi", 25000, 2)
-        )));
-        orderList.add(new Order("4", "2025-02-26", Arrays.asList(
-                new OrderDetail("Sushi", 120000, 2)
-        )));
-        orderList.add(new Order("5", "2025-02-26", Arrays.asList(
-                new OrderDetail("Phở", 60000, 4),
-                new OrderDetail("Trà đá", 10000, 4)
-        )));
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
 
-        // Thiết lập adapter
-        orderAdapter = new OrderAdapter(orderList);
-        recyclerView.setAdapter(orderAdapter);
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getTotalPrice() {
+        return price * quantity;
     }
 }
