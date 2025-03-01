@@ -6,6 +6,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.projectprm392.ProfileControl.ProfileFragment;
 import com.example.projectprm392.SearchControl.SearchProduct;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new HomeFragment();
             } else if (item.getItemId() == R.id.nav_search) {
                 selectedFragment = new SearchProduct();
+            } else if (item.getItemId() == R.id.nav_account) {
+                selectedFragment = new ProfileFragment();
             }
 
             if (selectedFragment != null) {
