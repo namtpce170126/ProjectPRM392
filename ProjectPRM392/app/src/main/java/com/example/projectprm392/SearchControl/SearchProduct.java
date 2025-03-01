@@ -3,56 +3,73 @@ package com.example.projectprm392.SearchControl;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.SearchView;
+import android.widget.ImageButton;
 
+import com.example.projectprm392.HomeFragment;
 import com.example.projectprm392.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchProduct#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SearchProduct extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public SearchProduct() {
-
-    }
-
-    public static SearchProduct newInstance(String param1, String param2) {
-        SearchProduct fragment = new SearchProduct();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private SearchView searchView;
+    private ImageButton btnBackSearchView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_product, container, false);
 
+        searchView = view.findViewById(R.id.searchView);
+        btnBackSearchView = view.findViewById(R.id.btnBackSearchView);
+
+        // Load danh sách món ăn ngẫu nhiên khi mở fragment
+        loadFragment(new ProductRandomFragment());
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("SearchView", "Người dùng tìm kiếm: " + query);
+
+                if (!query.isEmpty() && query != null) {
+                    // Thay đổi fragment khi tìm kiếm
+                    SearchFoodResultFragment searchResultFragment = SearchFoodResultFragment.newInstance(query);
+                    loadFragment(searchResultFragment);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+        //XỬ LÝ BUTTON TRỞ VỀ TRANG FRAGMENT TRUOCD ĐÓ
+        btnBackSearchView.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getParentFragmentManager();
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack(); // Trở về Fragment trước đó
+            } else {
+                // Nếu không có Fragment trước, trở về Home hoặc Profile
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragment_container, new HomeFragment()); // Thay HomeFragment bằng Fragment chính của bạn
+                transaction.commit();
+            }
+        });
 
         return view;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.productSearchView, fragment);
+        transaction.commit();
     }
 }

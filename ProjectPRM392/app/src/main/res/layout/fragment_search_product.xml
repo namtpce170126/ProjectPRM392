@@ -17,7 +17,7 @@
         android:gravity="center_vertical">
 
         <ImageButton
-            android:id="@+id/btnBack"
+            android:id="@+id/btnBackSearchView"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@null"
@@ -45,27 +45,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lịch sử tìm kiếm"
+            android:text="Gợi ý sản phâm"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
-        <LinearLayout
-            android:id="@+id/searchHistoryContainer"
+        <FrameLayout
+            android:id="@+id/productSearchView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/btnSeeMore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Xem thêm"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center"
-            android:textColor="@color/lightBlack"
-            android:backgroundTint="@color/white"
-            android:background="@null"/>
     </LinearLayout>
 </LinearLayout>
