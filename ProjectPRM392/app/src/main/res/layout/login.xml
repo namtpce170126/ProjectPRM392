@@ -76,6 +76,7 @@
         android:id="@+id/passContraint"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/bg_edittext"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
@@ -95,24 +96,24 @@
             android:maxLines="1"
             android:paddingEnd="48dp"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ivTogglePassword"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Icon ẩn/hiện mật khẩu -->
         <ImageView
             android:id="@+id/ivTogglePassword"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:clickable="true"
+            android:contentDescription="Toggle password visibility"
+            android:focusable="true"
             android:padding="4dp"
             android:src="@drawable/closed_eyes"
-            android:contentDescription="Toggle password visibility"
-            android:clickable="true"
-            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Quên mật khẩu -->
