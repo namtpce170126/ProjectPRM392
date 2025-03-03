@@ -43,20 +43,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <EditText
-        android:id="@+id/etPhone"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/phoneConstraint"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/bg_edittext"
-        android:hint="Vui lòng nhập"
-        android:inputType="phone"
-        android:padding="12dp"
-        android:textSize="16sp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPhoneLabel"
-        app:layout_constraintWidth_percent="0.90" />
+        app:layout_constraintWidth_percent="0.90">
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:hint="Vui lòng nhập"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingEnd="48dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivDeleteSign1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDeleteSign1"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="4dp"
+            android:src="@drawable/cancel_icon"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Nhập mật khẩu -->
     <TextView
@@ -69,7 +95,7 @@
         android:textColor="#1A1A1A"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPhone" />
+        app:layout_constraintTop_toBottomOf="@id/phoneConstraint" />
 
     <!-- Layout nhập mật khẩu + icon -->
     <androidx.constraintlayout.widget.ConstraintLayout
