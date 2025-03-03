@@ -66,21 +66,20 @@ public class ProfileFragment extends Fragment {
         });
 
         // Xử lý sự kiện click nút Order History
-        btnOrderHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Tạo instance của OrderHistoryFragment
-                OrderHistoryFragment orderHistoryFragment = new OrderHistoryFragment();
-
-                // Sử dụng FragmentManager để thêm hoặc thay thế fragment
-                getParentFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, orderHistoryFragment) // Thay R.id.fragment_container bằng ID của container trong activity layout của bạn
-                        .addToBackStack(null) // Thêm vào back stack để người dùng có thể quay lại
-                        .commit();
-            }
+        btnOrderHistory.setOnClickListener(v -> {
+            OrderHistoryFragment orderHistoryFragment = new OrderHistoryFragment();
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.slide_in_right,  // Fragment mới vào từ phải
+                            R.anim.slide_out_left,  // Fragment hiện tại ra bên trái
+                            R.anim.slide_in_left,   // Khi quay lại: Fragment trước vào từ trái
+                            R.anim.slide_out_right  // Khi quay lại: Fragment hiện tại ra bên phải
+                    )
+                    .replace(R.id.fragment_container, orderHistoryFragment)
+                    .addToBackStack(null)
+                    .commit();
         });
-
         return view;
     }
 }

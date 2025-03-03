@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.projectprm392.Order;
 import com.example.projectprm392.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
@@ -33,7 +34,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         Order order = orderList.get(position);
 
-        holder.txtOrderId.setText("Order ID: #" + order.getOrderId());
+        holder.txtOrderStatus.setText("Status: " + order.getOrderStatus());
         holder.txtOrderDate.setText("Date: " + order.getOrderDate());
         holder.txtTotalPrice.setText(String.valueOf(order.getTotalOrderPrice()));
 
@@ -48,16 +49,23 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         return orderList.size();
     }
 
+    // Phương thức cập nhật danh sách và thông báo thay đổi
+    public void updateList(List<Order> newList) {
+        this.orderList = new ArrayList<>(newList);
+        notifyDataSetChanged(); // Thông báo RecyclerView cập nhật giao diện
+    }
+
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView txtOrderId, txtOrderDate, txtTotalPrice;
+        TextView txtOrderStatus, txtOrderDate, txtTotalPrice;
         RecyclerView recyclerViewDetails;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtOrderId = itemView.findViewById(R.id.txtOrderId);
+            txtOrderStatus = itemView.findViewById(R.id.txtOrderStatus);
             txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
             txtTotalPrice = itemView.findViewById(R.id.txtTotalPrice);
             recyclerViewDetails = itemView.findViewById(R.id.recyclerViewDetails);
         }
+
     }
 }
