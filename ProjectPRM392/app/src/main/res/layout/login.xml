@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".PermissionControl.LoginActivity">
 
     <!-- Nút đóng -->
     <ImageView
@@ -67,12 +67,12 @@
             android:paddingEnd="48dp"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ivDeleteSign1"
+            app:layout_constraintEnd_toStartOf="@id/ivDeleteSign"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivDeleteSign1"
+            android:id="@+id/ivDeleteSign"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:padding="4dp"
@@ -194,7 +194,7 @@
 
         <!-- Phần "Đăng ký" có thể bấm -->
         <TextView
-            android:id="@+id/tvLogin"
+            android:id="@+id/tvRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"

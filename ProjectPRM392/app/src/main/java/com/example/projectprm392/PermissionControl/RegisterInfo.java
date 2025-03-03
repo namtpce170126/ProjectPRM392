@@ -1,4 +1,4 @@
-package com.example.projectprm392;
+package com.example.projectprm392.PermissionControl;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -7,11 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.projectprm392.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
