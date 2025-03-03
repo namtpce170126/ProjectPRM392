@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/btnBack"
+            android:id="@+id/btnBackToProfile"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="0"
@@ -71,7 +71,8 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:background="@drawable/bg_rounded_square"
-                    android:padding="14dp">
+                    android:padding="14dp"
+                    >
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -222,7 +223,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Deliveried"
+        android:text="Order"
         android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

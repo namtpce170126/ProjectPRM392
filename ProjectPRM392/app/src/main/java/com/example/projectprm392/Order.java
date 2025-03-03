@@ -5,14 +5,16 @@ import java.util.List;
 public class Order {
     private String orderId;
     private String orderDate;
+    private String orderStatus;
     private List<OrderDetail> orderDetails;
 
     public Order() {
     }
 
-    public Order(String orderId, String orderDate, List<OrderDetail> orderDetails) {
+    public Order(String orderId, String orderDate, String orderStatus, List<OrderDetail> orderDetails) {
         this.orderId = orderId;
         this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
         this.orderDetails = orderDetails;
     }
 
@@ -30,6 +32,14 @@ public class Order {
 
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public List<OrderDetail> getOrderDetails() {
