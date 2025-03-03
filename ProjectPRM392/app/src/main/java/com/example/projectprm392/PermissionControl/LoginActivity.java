@@ -1,20 +1,21 @@
-package com.example.projectprm392;
+package com.example.projectprm392.PermissionControl;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.projectprm392.R;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText etPassword;
-    ImageView ivTogglePassword;
+    EditText etPhone, etPassword;
+    ImageView ivTogglePassword, ivDeleteSign;
+    TextView linkRegister;
     boolean isPasswordVisible = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,18 @@ public class LoginActivity extends AppCompatActivity {
 
         etPassword = findViewById(R.id.etPassword);
         ivTogglePassword = findViewById(R.id.ivTogglePassword);
+        linkRegister = findViewById(R.id.tvRegister);
+        etPhone = findViewById(R.id.etPhone);
+        ivDeleteSign = findViewById(R.id.ivDeleteSign);
 
+        ivDeleteSign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etPhone.setText("");
+            }
+        });
+
+        // Hiển/ẩn mật khẩu
         ivTogglePassword.setOnClickListener(v -> {
             if (isPasswordVisible) {
                 // Chuyển về kiểu nhập mật khẩu (ẩn)
@@ -38,6 +50,12 @@ public class LoginActivity extends AppCompatActivity {
             }
             // Giữ con trỏ ở cuối văn bản khi thay đổi kiểu nhập
             etPassword.setSelection(etPassword.getText().length());
+        });
+
+        // Chuyển trang đăng ký
+        linkRegister.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
     }
 }
