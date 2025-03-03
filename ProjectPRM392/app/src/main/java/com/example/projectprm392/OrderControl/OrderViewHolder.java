@@ -1,10 +1,12 @@
-package com.example.projectprm392;
+package com.example.projectprm392.OrderControl;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.projectprm392.R;
 
 public class OrderViewHolder extends RecyclerView.ViewHolder{
     TextView txtFoodName, txtFoodPrice, txtQuantity, txtTotalPrice;

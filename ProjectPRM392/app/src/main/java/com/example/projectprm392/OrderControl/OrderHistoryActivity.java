@@ -1,9 +1,13 @@
-package com.example.projectprm392;
+package com.example.projectprm392.OrderControl;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.projectprm392.Order;
+import com.example.projectprm392.OrderDetail;
+import com.example.projectprm392.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
