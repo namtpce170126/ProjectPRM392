@@ -1,4 +1,4 @@
-package com.example.projectprm392;
+package com.example.projectprm392.OrderControl;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.projectprm392.Order;
+import com.example.projectprm392.R;
 
 import java.util.List;
 
