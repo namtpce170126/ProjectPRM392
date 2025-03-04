@@ -6,6 +6,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_weight="1"
+    android:layout_margin="4dp"
+    android:background="@color/white"
+    android:elevation="4dp"
     android:padding="8dp">
 
     <!-- Ảnh món ăn -->
