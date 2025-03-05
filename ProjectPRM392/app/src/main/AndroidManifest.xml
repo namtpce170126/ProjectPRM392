@@ -20,7 +20,7 @@
             android:exported="true"/>
 
         <activity
-            android:name=".PermissionControl.RegisterActivity"
+            android:name=".PermissionControl.RegisterFragment"
             android:exported="false" />
         <activity
             android:name=".PermissionControl.RegisterInfo"
@@ -44,7 +44,7 @@
             android:name=".CartActivity"
             android:exported="true" />
         <activity
-            android:name=".PermissionControl.LoginActivity"
+            android:name=".PermissionControl.LoginFragment"
             android:exported="true">
 
         </activity>
