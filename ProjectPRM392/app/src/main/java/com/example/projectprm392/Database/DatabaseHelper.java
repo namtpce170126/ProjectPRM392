@@ -42,6 +42,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(role_id) REFERENCES role(role_id))";
         db.execSQL(CREATE_ACCOUNT_TABLE);
 
+        db.execSQL("INSERT INTO account (role_id, username, password, fullname, phone_number, email, birthday, address, isDelete) " +
+                "VALUES (1, 'customer01', '123456', 'Nguyen Van A', '0123456789', 'customer01@example.com', '2000-01-01', 'Hanoi, Vietnam', 0)");
+
 
         //TẠO BẢNG CATEGORY
         String CREATE_CATEGORY_TABLE = "CREATE TABLE category (" +

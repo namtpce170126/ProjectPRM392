@@ -9,7 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.projectprm392.DAOs.AccountDAO;
+import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.Models.Account;
 import com.example.projectprm392.OrderControl.OrderHistoryFragment;
 import com.example.projectprm392.R;
 
@@ -23,8 +27,11 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private Button btnUpdateProfile;
     LinearLayout btnOrderHistory;
+    private TextView txtFullName, txtBirthday, txtPhone, txtMail, txtProfileName;
     private String mParam1;
     private String mParam2;
+    private AccountDAO accountDAO;
+    private DatabaseHelper dbHelper;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -42,7 +49,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        dbHelper = new DatabaseHelper(getContext());
+        accountDAO = new AccountDAO(dbHelper);
     }
 
     @Override
@@ -54,6 +62,25 @@ public class ProfileFragment extends Fragment {
         // Khởi tạo nút Update Profile
         btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
         btnOrderHistory = view.findViewById(R.id.btnOrderHistory);
+        txtFullName = view.findViewById(R.id.txtFullName);
+        txtBirthday = view.findViewById(R.id.txtBirthday);
+        txtPhone = view.findViewById(R.id.txtPhone);
+        txtMail = view.findViewById(R.id.txtMail);
+        txtProfileName = view.findViewById(R.id.textView2);
+
+        // Mở kết nối database
+        accountDAO.open();
+
+        // Lấy thông tin tài khoản với ID = 1
+        Account account = accountDAO.getAccountById(1);
+        if (account != null) {
+            // Đổ dữ liệu lên view
+            txtFullName.setText(account.getFullName());
+            txtBirthday.setText(account.getBirthday());
+            txtPhone.setText(account.getPhoneNumber());
+            txtMail.setText(account.getEmail());
+            txtProfileName.setText(account.getFullName());
+        }
 
         // Xử lý sự kiện click nút Update Profile
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
@@ -81,5 +108,12 @@ public class ProfileFragment extends Fragment {
                     .commit();
         });
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Đóng kết nối database khi fragment bị hủy
+        accountDAO.close();
     }
 }
