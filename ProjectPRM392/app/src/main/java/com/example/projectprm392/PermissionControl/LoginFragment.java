@@ -3,31 +3,57 @@ package com.example.projectprm392.PermissionControl;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.projectprm392.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginFragment extends Fragment {
     EditText etPhone, etPassword;
     ImageView ivTogglePassword, ivDeleteSign;
     TextView linkRegister;
+
+    public LoginFragment() {
+        // Required empty public constructor
+    }
     boolean isPasswordVisible = false;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        /*setContentView(R.layout.login);*/
+    }
 
-        etPassword = findViewById(R.id.etPassword);
-        ivTogglePassword = findViewById(R.id.ivTogglePassword);
-        linkRegister = findViewById(R.id.tvRegister);
-        etPhone = findViewById(R.id.etPhone);
-        ivDeleteSign = findViewById(R.id.ivDeleteSign);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.login, container, false);
 
+        /*Button btnRegister = view.findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(v -> {
+            // Chuyển sang RegisterFragment
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new RegisterFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });*/
+
+        etPassword = view.findViewById(R.id.etPassword);
+        ivTogglePassword = view.findViewById(R.id.ivTogglePassword);
+        linkRegister = view.findViewById(R.id.tvRegister);
+        etPhone = view.findViewById(R.id.etPhone);
+        ivDeleteSign = view.findViewById(R.id.ivDeleteSign);
+
+        // Xóa ký tự ô nhập
         ivDeleteSign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,9 +79,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Chuyển trang đăng ký
-        linkRegister.setOnClickListener(view -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
+        linkRegister.setOnClickListener(v -> {
+            // Chuyển sang RegisterFragment
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new RegisterFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
+
+        return view;
     }
 }
