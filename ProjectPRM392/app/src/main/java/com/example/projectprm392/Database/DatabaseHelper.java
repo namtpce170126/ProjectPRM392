@@ -31,14 +31,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String CREATE_ACCOUNT_TABLE = "CREATE TABLE account (" +
                 "acc_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "role_id INTEGER, " +
+                "username TEXT NOT NULL, " +
                 "password TEXT NOT NULL, " +
                 "fullname TEXT, " +
                 "phone_number TEXT, " +
                 "email TEXT, " +
                 "birthday TEXT, " +
+                "address TEXT, " +
                 "isDelete INTEGER DEFAULT 0, " +
                 "FOREIGN KEY(role_id) REFERENCES role(role_id))";
         db.execSQL(CREATE_ACCOUNT_TABLE);
+
 
         //TẠO BẢNG CATEGORY
         String CREATE_CATEGORY_TABLE = "CREATE TABLE category (" +
