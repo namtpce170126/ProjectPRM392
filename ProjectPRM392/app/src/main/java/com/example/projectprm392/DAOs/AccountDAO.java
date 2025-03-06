@@ -70,10 +70,8 @@ public class AccountDAO extends SingletonBaseDAO {
         cursor.close();
         return null;
     }
-
-    // Tạo tài khoản
-    public Account insertAccount(Account account) {
-        open();
+    // CREATE - Thêm tài khoản mới
+    public long insertAccount(Account account) {
         ContentValues values = new ContentValues();
         values.put("role_id", account.getRoleId());
         values.put("username", account.getUsername());
@@ -84,6 +82,41 @@ public class AccountDAO extends SingletonBaseDAO {
         values.put("birthday", account.getBirthday());
         values.put("address", account.getAddress());
         values.put("isDelete", account.getIsDelete());
+
+<<<<<<< HEAD
+    // Tạo tài khoản
+    public Account insertAccount(Account account) {
+        open();
+=======
+        return db.insert("account", null, values);
+    }
+
+    // UPDATE - Cập nhật thông tin tài khoản
+    public int updateAccount(Account account) {
+>>>>>>> main
+        ContentValues values = new ContentValues();
+        values.put("role_id", account.getRoleId());
+        values.put("username", account.getUsername());
+        values.put("password", account.getPassword());
+        values.put("fullname", account.getFullName());
+        values.put("phone_number", account.getPhoneNumber());
+        values.put("email", account.getEmail());
+        values.put("birthday", account.getBirthday());
+        values.put("address", account.getAddress());
+<<<<<<< HEAD
+        values.put("isDelete", account.getIsDelete());
+=======
+
+        return db.update("account", values, "acc_id = ?", new String[]{String.valueOf(account.getAccId())});
+    }
+
+    // DELETE - Xóa tài khoản (cập nhật isDelete = 1)
+    public int deleteAccount(int accId) {
+        ContentValues values = new ContentValues();
+        values.put("isDelete", 1);
+        return db.update("account", values, "acc_id = ?", new String[]{String.valueOf(accId)});
+    }
+>>>>>>> main
 
         long id = db.insert("account", null, values);
         close();
