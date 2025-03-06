@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PermissionControl.RegisterInfo">
+    tools:context=".PermissionControl.RegisterInfoFragment">
 
     <!-- Nút đóng -->
     <ImageView
@@ -118,7 +118,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:hint="Vui lòng nhập"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:maxLines="1"
             android:paddingEnd="48dp"
             android:textSize="16sp"
@@ -258,7 +258,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/bg_button_enable"
-        android:enabled="false"
+        android:enabled="true"
         android:text="Hoàn thành"
         android:textColor="@android:color/white"
         android:textSize="16sp"

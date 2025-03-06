@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,15 +21,15 @@
         <activity android:name=".ProductControl.ProductDetailAdmin"
             android:exported="true"/>
 
-        <activity
+        <!--<activity
             android:name=".PermissionControl.RegisterFragment"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
-            android:name=".PermissionControl.RegisterInfo"
+            android:name=".PermissionControl.RegisterInfoFragment"
             android:exported="true"></activity>
-        <activity
-            android:name=".PermissionControl.OTPActivity"
-            android:exported="false" />
+        <!--<activity
+            android:name=".PermissionControl.OTPFragment"
+            android:exported="false" />-->
         <activity
             android:name=".PermissionControl.ForgotPassword"
             android:exported="false" />
@@ -43,11 +45,10 @@
         <activity
             android:name=".CartActivity"
             android:exported="true" />
-        <activity
+        <!--<activity
             android:name=".PermissionControl.LoginFragment"
             android:exported="true">
-
-        </activity>
+        </activity>-->
     </application>
 
 </manifest>

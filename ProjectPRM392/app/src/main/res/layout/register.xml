@@ -95,7 +95,7 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/bg_button_enable"
+        android:background="@drawable/bg_button_disable"
         android:enabled="false"
         android:text="Tiếp tục"
         android:textColor="@android:color/white"

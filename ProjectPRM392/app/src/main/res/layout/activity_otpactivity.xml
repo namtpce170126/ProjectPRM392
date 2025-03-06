@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".PermissionControl.OTPActivity">
+    tools:context=".PermissionControl.OTPFragment">
 
     <!-- Nút đóng -->
     <ImageView
@@ -171,7 +171,7 @@
 
     <!-- Nút xác nhận -->
     <Button
-        android:id="@+id/btnConfirm"
+        android:id="@+id/btnConfirmOTP"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"

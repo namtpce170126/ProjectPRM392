@@ -1,5 +1,6 @@
 package com.example.projectprm392.DAOs;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.example.projectprm392.Database.DatabaseHelper;
@@ -70,5 +71,29 @@ public class AccountDAO extends SingletonBaseDAO {
         return null;
     }
 
+    // Tạo tài khoản
+    public Account insertAccount(Account account) {
+        open();
+        ContentValues values = new ContentValues();
+        values.put("role_id", account.getRoleId());
+        values.put("username", account.getUsername());
+        values.put("password", account.getPassword());
+        values.put("fullname", account.getFullName());
+        values.put("phone_number", account.getPhoneNumber());
+        values.put("email", account.getEmail());
+        values.put("birthday", account.getBirthday());
+        values.put("address", account.getAddress());
+        values.put("isDelete", account.getIsDelete());
 
+        long id = db.insert("account", null, values);
+        close();
+
+        if (id == -1) {
+            return null; // Thêm thất bại
+        }
+
+        // Cập nhật ID vào đối tượng và trả về
+        account.setAccId((int) id);
+        return account;
+    }
 }
