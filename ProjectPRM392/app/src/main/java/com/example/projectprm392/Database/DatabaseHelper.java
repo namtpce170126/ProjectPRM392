@@ -53,6 +53,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "cat_description TEXT, " +
                 "is_deleted INTEGER DEFAULT 0)";
         db.execSQL(CREATE_CATEGORY_TABLE);
+        // Chèn danh mục sản phẩm
+        db.execSQL("INSERT INTO category (cat_name, cat_description, is_deleted) VALUES ('Fast Food', 'Quick meals', 0)");
+        db.execSQL("INSERT INTO category (cat_name, cat_description, is_deleted) VALUES ('Drinks', 'Beverages and soft drinks', 0)");
+        db.execSQL("INSERT INTO category (cat_name, cat_description, is_deleted) VALUES ('Desserts', 'Sweet treats', 0)");
+        db.execSQL("INSERT INTO category (cat_name, cat_description, is_deleted) VALUES ('Pizza', 'Delicious pizzas', 0)");
+        db.execSQL("INSERT INTO category (cat_name, cat_description, is_deleted) VALUES ('Burgers', 'Juicy burgers', 0)");
+        db.execSQL("INSERT INTO category (cat_name, cat_description, is_deleted) VALUES ('Asian Food', 'Traditional Asian dishes', 0)");
+
 
         //TẠO BẢNG PRODUCT
         String CREATE_PRODUCT_TABLE = "CREATE TABLE product (" +
@@ -68,6 +76,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "isDelete INTEGER DEFAULT 0, " +
                 "FOREIGN KEY(cat_id) REFERENCES category(cat_id))";
         db.execSQL(CREATE_PRODUCT_TABLE);
+
+        // Chèn 5 sản phẩm mẫu (Tất cả thuộc Fast Food)
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Fried Chicken Drumstick', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 50, 5.99, 0.1, 'Crispy fried chicken', '2025-03-05', 0)");
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Chicken Nuggets', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 60, 4.99, 0.05, 'Golden crispy nuggets', '2025-03-05', 0)");
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'French Fries', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 80, 2.99, 0, 'Crispy golden fries', '2025-03-05', 0)");
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Burger Combo', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 40, 7.99, 0.15, 'Burger with fries and drink', '2025-03-05', 0)");
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Hot Wings', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
 
         // TẠO BẢNG CART
         String CREATE_CART_TABLE = "CREATE TABLE cart (" +
@@ -92,6 +107,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "isDelete INTEGER DEFAULT 0, " +
                 "FOREIGN KEY(account_id) REFERENCES account(acc_id))";
         db.execSQL(CREATE_ORDERS_TABLE);
+        // Chèn 10 đơn hàng
+
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Ordered', '2025-03-05', 15.99, 0)");
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Ordered', '2025-03-05', 15.99, 0)");
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Preparing', '2025-03-05', 15.99, 0)");
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Preparing', '2025-03-05', 15.99, 0)");
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Delivering', '2025-03-05', 15.99, 0)");
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Delivering', '2025-03-05', 15.99, 0)");
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Delivered', '2025-03-05', 15.99, 0)");
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Delivered', '2025-03-05', 15.99, 0)");
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Cancelled', '2025-03-05', 15.99, 0)");
+        db.execSQL("INSERT INTO orders (account_id, payment, address, status, o_date, total_price, isDelete) " +
+                "VALUES (1, 'Credit Card', '123 Main St, Hanoi', 'Cancelled', '2025-03-05', 15.99, 0)");
 
         // Tạo bảng Order Detail
         String CREATE_ORDER_DETAIL_TABLE = "CREATE TABLE order_detail (" +
@@ -102,6 +139,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (o_id) REFERENCES orders(o_id), " +
                 "FOREIGN KEY (pro_id) REFERENCES product(pro_id))";
         db.execSQL(CREATE_ORDER_DETAIL_TABLE);
+        // Chèn 30 chi tiết đơn hàng (Mỗi đơn hàng có 3 sản phẩm ngẫu nhiên)
+        for (int i = 1; i <= 10; i++) {
+            db.execSQL("INSERT INTO order_detail (o_id, pro_id, quantity) VALUES (" + i + ", 1, 2)");
+            db.execSQL("INSERT INTO order_detail (o_id, pro_id, quantity) VALUES (" + i + ", 2, 1)");
+            db.execSQL("INSERT INTO order_detail (o_id, pro_id, quantity) VALUES (" + i + ", 3, 3)");
+        }
     }
 
     @Override
