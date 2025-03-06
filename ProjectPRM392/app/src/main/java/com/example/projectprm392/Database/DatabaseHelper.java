@@ -1,17 +1,29 @@
 package com.example.projectprm392.Database;
 
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import androidx.annotation.Nullable;
+
+
+import com.example.projectprm392.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ecommerce.db";
     private static final int DATABASE_VERSION = 1;
+    private Context context;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -62,6 +74,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO category (cat_name, cat_description, is_deleted) VALUES ('Asian Food', 'Traditional Asian dishes', 0)");
 
 
+        db.execSQL("INSERT INTO category (cat_name, cat_description, is_deleted) VALUES ('Gà', 'Các món ăn gà', 0)");
+        db.execSQL("INSERT INTO category (cat_name, cat_description, is_deleted) VALUES ('Pizza', 'Các món ăn về Pizza', 0)");
+
         //TẠO BẢNG PRODUCT
         String CREATE_PRODUCT_TABLE = "CREATE TABLE product (" +
                 "pro_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -83,6 +98,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'French Fries', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 80, 2.99, 0, 'Crispy golden fries', '2025-03-05', 0)");
         db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Burger Combo', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 40, 7.99, 0.15, 'Burger with fries and drink', '2025-03-05', 0)");
         db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Hot Wings', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
+        
+      Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sample_food);
+        String imagePath = saveImageToInternalStorage(context, bitmap, "sample_food.png");
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                "VALUES (1, 'Gà rán KFC', '" + imagePath + "', 10, 99000, 0.1, 'Gà rán giòn rụm', '2025-03-06', 0)");
 
         // TẠO BẢNG CART
         String CREATE_CART_TABLE = "CREATE TABLE cart (" +
@@ -157,5 +177,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS orders");
         db.execSQL("DROP TABLE IF EXISTS order_detail");
         onCreate(db);
+    }
+
+    public String saveImageToInternalStorage(Context context, Bitmap bitmap, String imageName) {
+        File directory = context.getFilesDir(); // Thư mục nội bộ của app
+        File file = new File(directory, imageName);
+
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos); // Lưu ảnh dưới dạng PNG
+            fos.flush();
+            return file.getAbsolutePath(); // Trả về đường dẫn để lưu vào SQLite
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

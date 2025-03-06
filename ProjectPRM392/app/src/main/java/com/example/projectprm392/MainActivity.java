@@ -1,5 +1,7 @@
 package com.example.projectprm392;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.ProfileControl.ClientProfileFragment;
 import com.example.projectprm392.ProfileControl.ProfileFragment;
 import com.example.projectprm392.SearchControl.SearchProduct;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,7 +46,16 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_search) {
                 selectedFragment = new SearchProduct();
             } else if (item.getItemId() == R.id.nav_account) {
-                selectedFragment = new ProfileFragment();
+
+                // Kiểm tra trạng thái đăng nhập
+                SharedPreferences sharedPreferences = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE);
+                int userId = sharedPreferences.getInt("USER_ID", -1);
+
+                if (userId == -1) {
+                    selectedFragment = new ClientProfileFragment(); // Chưa đăng nhập
+                } else {
+                    selectedFragment = new ProfileFragment(); // Đã đăng nhập
+                }
             }
 
             if (selectedFragment != null) {

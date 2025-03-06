@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PermissionControl.RegisterActivity">
+    android:padding="16sp"
+    tools:context=".PermissionControl.RegisterFragment">
 
     <!-- Nút đóng -->
     <ImageView
