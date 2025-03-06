@@ -1,5 +1,6 @@
 package com.example.projectprm392.DAOs;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.example.projectprm392.Database.DatabaseHelper;
@@ -69,6 +70,42 @@ public class AccountDAO extends SingletonBaseDAO {
         cursor.close();
         return null;
     }
+    // CREATE - Thêm tài khoản mới
+    public long insertAccount(Account account) {
+        ContentValues values = new ContentValues();
+        values.put("role_id", account.getRoleId());
+        values.put("username", account.getUsername());
+        values.put("password", account.getPassword());
+        values.put("fullname", account.getFullName());
+        values.put("phone_number", account.getPhoneNumber());
+        values.put("email", account.getEmail());
+        values.put("birthday", account.getBirthday());
+        values.put("address", account.getAddress());
+        values.put("isDelete", account.getIsDelete());
 
+        return db.insert("account", null, values);
+    }
+
+    // UPDATE - Cập nhật thông tin tài khoản
+    public int updateAccount(Account account) {
+        ContentValues values = new ContentValues();
+        values.put("role_id", account.getRoleId());
+        values.put("username", account.getUsername());
+        values.put("password", account.getPassword());
+        values.put("fullname", account.getFullName());
+        values.put("phone_number", account.getPhoneNumber());
+        values.put("email", account.getEmail());
+        values.put("birthday", account.getBirthday());
+        values.put("address", account.getAddress());
+
+        return db.update("account", values, "acc_id = ?", new String[]{String.valueOf(account.getAccId())});
+    }
+
+    // DELETE - Xóa tài khoản (cập nhật isDelete = 1)
+    public int deleteAccount(int accId) {
+        ContentValues values = new ContentValues();
+        values.put("isDelete", 1);
+        return db.update("account", values, "acc_id = ?", new String[]{String.valueOf(accId)});
+    }
 
 }
