@@ -20,11 +20,15 @@
             android:exported="true"/>
         <activity android:name=".ProductControl.ProductDetailAdmin"
             android:exported="true"/>
-
-<<<<<<< HEAD
-        <!--<activity
-=======
         <activity android:name=".Admin.Dashboard"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".PermissionControl.ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,35 +37,8 @@
             </intent-filter>
         </activity>
         <activity
->>>>>>> main
-            android:name=".PermissionControl.RegisterFragment"
-            android:exported="false" />-->
-        <activity
-            android:name=".PermissionControl.RegisterInfoFragment"
-            android:exported="true"></activity>
-        <!--<activity
-            android:name=".PermissionControl.OTPFragment"
-            android:exported="false" />-->
-        <activity
-            android:name=".PermissionControl.ForgotPassword"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
             android:name=".CartActivity"
             android:exported="true" />
-<<<<<<< HEAD
-        <!--<activity
-=======
-
-        <activity
->>>>>>> main
-            android:name=".PermissionControl.LoginFragment"
-            android:exported="true">
-        </activity>-->
     </application>
 
 </manifest>
