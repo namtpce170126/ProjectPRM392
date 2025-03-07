@@ -42,7 +42,7 @@ public class OrderDAO extends SingletonBaseDAO {
     // Get order by ID
     public Order getOrderById(int orderId) {
         open();
-        Cursor cursor = db.rawQuery("SELECT * FROM orders WHERE orderId = ?", new String[]{String.valueOf(orderId)});
+        Cursor cursor = db.rawQuery("SELECT * FROM orders WHERE o_id = ?", new String[]{String.valueOf(orderId)});
         if (cursor.moveToFirst()) {
             Order order = new Order(
                     cursor.getInt(0),
@@ -67,12 +67,12 @@ public class OrderDAO extends SingletonBaseDAO {
     public long insertOrder(Order order) {
         open();
         ContentValues values = new ContentValues();
-        values.put("accountId", order.getAccountId());
+        values.put("account_id", order.getAccountId());
         values.put("payment", order.getPayment());
         values.put("address", order.getAddress());
         values.put("status", order.getStatus());
-        values.put("orderDate", order.getOrderDate());
-        values.put("totalPrice", order.getTotalPrice());
+        values.put("o_date", order.getOrderDate());
+        values.put("total_price", order.getTotalPrice());
         values.put("isDelete", order.getIsDelete());
 
         long result = db.insert("orders", null, values);
@@ -84,14 +84,14 @@ public class OrderDAO extends SingletonBaseDAO {
     public int updateOrder(Order order) {
         open();
         ContentValues values = new ContentValues();
-        values.put("accountId", order.getAccountId());
+        values.put("account_id", order.getAccountId());
         values.put("payment", order.getPayment());
         values.put("address", order.getAddress());
         values.put("status", order.getStatus());
-        values.put("orderDate", order.getOrderDate());
-        values.put("totalPrice", order.getTotalPrice());
+        values.put("o_date", order.getOrderDate());
+        values.put("total_price", order.getTotalPrice());
 
-        int result = db.update("orders", values, "orderId = ?", new String[]{String.valueOf(order.getOrderId())});
+        int result = db.update("orders", values, "o_id = ?", new String[]{String.valueOf(order.getOrderId())});
         close();
         return result;
     }
@@ -101,7 +101,7 @@ public class OrderDAO extends SingletonBaseDAO {
         open();
         ContentValues values = new ContentValues();
         values.put("isDelete", 1);
-        int result = db.update("orders", values, "orderId = ?", new String[]{String.valueOf(orderId)});
+        int result = db.update("orders", values, "o_id = ?", new String[]{String.valueOf(orderId)});
         close();
         return result;
     }
