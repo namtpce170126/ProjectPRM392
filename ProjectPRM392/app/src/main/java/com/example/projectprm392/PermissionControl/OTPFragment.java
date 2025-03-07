@@ -45,6 +45,7 @@ public class OTPFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Tải trang OTP
         View view = inflater.inflate(R.layout.activity_otpactivity, container, false);
 
         tvPhoneNumber = view.findViewById(R.id.tvPhoneNumber);
@@ -71,7 +72,7 @@ public class OTPFragment extends Fragment {
         // Xử lý xác nhận OTP
         btnConfirmOTP.setOnClickListener(v -> validateOTP());
 
-        // Xử lý nút đóng
+        // Xử lý quay về
         btnClose.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
 
         // Xử lý gửi lại mã
@@ -117,9 +118,12 @@ public class OTPFragment extends Fragment {
         for (int i = 0; i < otpInputs.length; i++) {
             final int index = i;
             otpInputs[i].addTextChangedListener(new TextWatcher() {
+
+                // Phương thức xử lý trước khi nhập văn bản (chưa sử dụng)
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+                // Phương thức xử lý khi nhập văn bản (chưa sử dụng)
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (s.length() == 1 && index < otpInputs.length - 1) {
@@ -127,6 +131,7 @@ public class OTPFragment extends Fragment {
                     }
                 }
 
+                // Phương thức xử lý sau khi nhập văn bản (chưa sử dụng)
                 @Override
                 public void afterTextChanged(Editable s) {}
             });
@@ -155,6 +160,7 @@ public class OTPFragment extends Fragment {
         Toast.makeText(getContext(), "Mã OTP mới đã được gửi!", Toast.LENGTH_SHORT).show();
     }
 
+    // Xử lý chuyển sang RegisterInfoFragment
     private void registerInfoComfirm(){
         RegisterInfoFragment registerInfoFragment = new RegisterInfoFragment();
         requireActivity().getSupportFragmentManager()
@@ -163,16 +169,4 @@ public class OTPFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_otpactivity);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-    }*/
 }
