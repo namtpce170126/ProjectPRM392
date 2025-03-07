@@ -54,7 +54,7 @@ public class OrderDetailDAO extends SingletonBaseDAO {
         values.put("quantity", orderDetail.getQuantity());
 
         int result = db.update("order_detail", values,
-                "o_id = ? AND o_id = ?",
+                "o_id = ? AND pro_id = ?",
                 new String[]{String.valueOf(orderDetail.getOrderId()), String.valueOf(orderDetail.getProId())});
         close();
         return result;

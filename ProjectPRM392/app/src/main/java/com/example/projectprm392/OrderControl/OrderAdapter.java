@@ -9,7 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projectprm392.Order;
+import com.example.projectprm392.DAOs.OrderDetailDAO;
+import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.Models.Order;
+import com.example.projectprm392.Models.OrderDetail;
 import com.example.projectprm392.R;
 
 import java.util.ArrayList;
@@ -34,12 +37,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         Order order = orderList.get(position);
 
-        holder.txtOrderStatus.setText("Status: " + order.getOrderStatus());
+        // Hiển thị thông tin đơn hàng
+        holder.txtOrderStatus.setText("Status: " + order.getStatus());
         holder.txtOrderDate.setText("Date: " + order.getOrderDate());
-        holder.txtTotalPrice.setText(String.valueOf(order.getTotalOrderPrice()));
+        holder.txtTotalPrice.setText(String.format("%.2f", order.getTotalPrice()));
 
-        // Thiết lập RecyclerView cho OrderDetails
-        OrderDetailAdapter detailAdapter = new OrderDetailAdapter(order.getOrderDetails());
+        // Lấy danh sách chi tiết đơn hàng từ OrderDetailDAO
+        DatabaseHelper dbHelper = new DatabaseHelper(holder.itemView.getContext());
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO(dbHelper);
+        List<OrderDetail> orderDetails = orderDetailDAO.getOrderDetailsByOrderId(order.getOrderId());
+
+        // Thiết lập RecyclerView cho chi tiết đơn hàng
+        OrderDetailAdapter detailAdapter = new OrderDetailAdapter(orderDetails);
         holder.recyclerViewDetails.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
         holder.recyclerViewDetails.setAdapter(detailAdapter);
     }
@@ -52,7 +61,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     // Phương thức cập nhật danh sách và thông báo thay đổi
     public void updateList(List<Order> newList) {
         this.orderList = new ArrayList<>(newList);
-        notifyDataSetChanged(); // Thông báo RecyclerView cập nhật giao diện
+        notifyDataSetChanged();
     }
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
@@ -66,6 +75,5 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             txtTotalPrice = itemView.findViewById(R.id.txtTotalPrice);
             recyclerViewDetails = itemView.findViewById(R.id.recyclerViewDetails);
         }
-
     }
 }

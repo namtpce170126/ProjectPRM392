@@ -92,15 +92,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(cat_id) REFERENCES category(cat_id))";
         db.execSQL(CREATE_PRODUCT_TABLE);
 
-        // Chèn 5 sản phẩm mẫu (Tất cả thuộc Fast Food)
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Fried Chicken Drumstick', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 50, 5.99, 0.1, 'Crispy fried chicken', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Chicken Nuggets', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 60, 4.99, 0.05, 'Golden crispy nuggets', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'French Fries', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 80, 2.99, 0, 'Crispy golden fries', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Burger Combo', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 40, 7.99, 0.15, 'Burger with fries and drink', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Hot Wings', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
-        
-      Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sample_food);
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sample_food);
         String imagePath = saveImageToInternalStorage(context, bitmap, "sample_food.png");
+
+        // Chèn 5 sản phẩm mẫu (Tất cả thuộc Fast Food)
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Fried Chicken Drumstick', '" + imagePath + "', 50, 5.99, 0.1, 'Crispy fried chicken', '2025-03-05', 0)");
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Chicken Nuggets', '" + imagePath + "', 60, 4.99, 0.05, 'Golden crispy nuggets', '2025-03-05', 0)");
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'French Fries', '" + imagePath + "', 80, 2.99, 0, 'Crispy golden fries', '2025-03-05', 0)");
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Burger Combo', '" + imagePath + "', 40, 7.99, 0.15, 'Burger with fries and drink', '2025-03-05', 0)");
+        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Hot Wings', '" + imagePath + "', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
+        
         db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
                 "VALUES (1, 'Gà rán KFC', '" + imagePath + "', 10, 99000, 0.1, 'Gà rán giòn rụm', '2025-03-06', 0)");
 

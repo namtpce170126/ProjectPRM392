@@ -13,12 +13,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.projectprm392.Order;
-import com.example.projectprm392.OrderDetail;
+import com.example.projectprm392.DAOs.OrderDAO;
+import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.Models.Order;
 import com.example.projectprm392.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,12 +35,10 @@ public class OrderHistoryFragment extends Fragment {
     private List<Order> orderList;
     private LinearLayout lastSelectedButton = null;
     private TextView textView11;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private OrderDAO orderDAO;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -77,58 +75,34 @@ public class OrderHistoryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_history, container, false);
 
-        // Khởi tạo RecyclerView từ view đã inflated
         recyclerView = view.findViewById(R.id.OrderHistoryRecycleView);
         btnBackToProfile = view.findViewById(R.id.btnBackToProfile);
-        // Thiết lập LinearLayoutManager, sử dụng getContext() hoặc requireContext()
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Khởi tạo DatabaseHelper và OrderDAO
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        orderDAO = new OrderDAO(dbHelper);
 
         btnBackToProfile.setOnClickListener(v -> {
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(
-                                R.anim.slide_in_left,   // Fragment trước vào từ trái
-                                R.anim.slide_out_right  // Fragment hiện tại ra bên phải
+                                R.anim.slide_in_left,
+                                R.anim.slide_out_right
                         )
                         .commit();
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
-        // Tạo dữ liệu mẫu
-        orderList = new ArrayList<>();
-        orderList.add(new Order("1", "2025-02-21", "Ordered", Arrays.asList(
-                new OrderDetail("Gà rán", 100000, 2),
-                new OrderDetail("Coca", 20000, 1)
-        )));
-        orderList.add(new Order("2", "2025-02-26", "Preparing", Arrays.asList(
-                new OrderDetail("Pizza", 150000, 1)
-        )));
-        orderList.add(new Order("3", "2025-02-26", "Delivering", Arrays.asList(
-                new OrderDetail("Burger", 80000, 3),
-                new OrderDetail("Pepsi", 25000, 2)
-        )));
-        orderList.add(new Order("4", "2025-02-27", "Delivered", Arrays.asList(
-                new OrderDetail("Sushi", 120000, 2)
-        )));
-        orderList.add(new Order("5", "2025-02-26", "Cancelled", Arrays.asList(
-                new OrderDetail("Phở", 60000, 4),
-                new OrderDetail("Trà đá", 10000, 4)
-        )));
-        orderList.add(new Order("6", "2025-02-26", "Delivered", Arrays.asList(
-                new OrderDetail("Phở", 60000, 4),
-                new OrderDetail("Trà đá", 10000, 4)
-        )));
-        orderList.add(new Order("7", "2025-02-26", "Preparing", Arrays.asList(
-                new OrderDetail("Phở", 60000, 4),
-                new OrderDetail("Trà đá", 10000, 4)
-        )));
+        // Lấy danh sách đơn hàng cho account_id = 1
+        // Khi đăng nhập lấy account id ở đây
+        orderList = getOrdersForAccount(1); // Lấy đơn hàng cho account_id = 1
+        Collections.reverse(orderList); // Đảo ngược danh sách nếu muốn hiển thị mới nhất trước
 
-        Collections.reverse(orderList);
         // Thiết lập adapter
         orderAdapter = new OrderAdapter(orderList);
         recyclerView.setAdapter(orderAdapter);
@@ -151,10 +125,22 @@ public class OrderHistoryFragment extends Fragment {
         return view;
     }
 
+    // Phương thức lấy danh sách đơn hàng cho một account_id cụ thể
+    private List<Order> getOrdersForAccount(int accountId) {
+        List<Order> allOrders = orderDAO.getAllOrders();
+        List<Order> filteredOrders = new ArrayList<>();
+        for (Order order : allOrders) {
+            if (order.getAccountId() == accountId) {
+                filteredOrders.add(order);
+            }
+        }
+        return filteredOrders;
+    }
+
     private void filterOrders(String status) {
         List<Order> filteredList = new ArrayList<>();
         for (Order order : orderList) {
-            if (order.getOrderStatus().equals(status)) {
+            if (order.getStatus().equals(status)) {
                 filteredList.add(order);
             }
         }
@@ -164,23 +150,17 @@ public class OrderHistoryFragment extends Fragment {
     // Phương thức lọc danh sách và thay đổi giao diện nút
     private void setButtonSelected(LinearLayout button, String status) {
         if (lastSelectedButton == button) {
-            // Nếu nút đã được chọn, bỏ chọn nó
             button.getChildAt(0).setBackgroundResource(R.drawable.bg_rounded_square);
             lastSelectedButton = null;
-            // Hiển thị toàn bộ danh sách
-            orderAdapter.updateList(new ArrayList<>(orderList));
+            orderAdapter.updateList(orderList); // Hiển thị toàn bộ danh sách
             textView11.setText("Order");
         } else {
-            // Nếu chọn nút mới
             if (lastSelectedButton != null) {
-                // Trả lại background mặc định cho nút trước đó
                 lastSelectedButton.getChildAt(0).setBackgroundResource(R.drawable.bg_rounded_square);
             }
-            // Đặt background bg_rounded_square_selected cho nút được chọn
             button.getChildAt(0).setBackgroundResource(R.drawable.bg_rounded_square_selected);
             lastSelectedButton = button;
-            // Lọc danh sách theo trạng thái
-            filterOrders(status);
+            filterOrders(status); // Lọc danh sách theo trạng thái
             textView11.setText(status);
         }
     }
