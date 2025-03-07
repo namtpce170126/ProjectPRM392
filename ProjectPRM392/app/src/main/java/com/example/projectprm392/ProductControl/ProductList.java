@@ -60,7 +60,18 @@ public class ProductList extends AppCompatActivity {
             Toast.makeText(this, "There is no product", Toast.LENGTH_SHORT).show();
         }
 
-        adapter = new AdProductAdapter(this, listProduct, new DatabaseHelper(this));
+        adapter = new AdProductAdapter(this, listProduct, new DatabaseHelper(this), product -> {
+            // Chuyển sang ProductDetailActivity khi click vào sản phẩm
+            Intent intent = new Intent(ProductList.this, ProductDetailAdmin.class);
+            intent.putExtra("product_id", product.getProId()); // Truyền ID sản phẩm
+            intent.putExtra("cat_id", product.getCatId());
+            intent.putExtra("product_name", product.getProName());
+            intent.putExtra("product_price", product.getProPrice());
+            intent.putExtra("product_image", product.getProImage());
+            intent.putExtra("product_quantity", product.getProQuantity());
+            intent.putExtra("product_description", product.getDescription());
+            startActivity(intent);
+        });
         listProductAdmin.setLayoutManager(new LinearLayoutManager(this));
         listProductAdmin.setAdapter(adapter);
     }

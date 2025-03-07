@@ -26,11 +26,17 @@ public class AdProductAdapter extends RecyclerView.Adapter<AdProductAdapter.AdPr
     private Context context;
     private List<Product> listProduct;
     private CategoryDAO categoryDAO;
+    private OnItemClickListener listener;
 
-    public AdProductAdapter(Context context, List<Product> listProduct, DatabaseHelper db) {
+    public AdProductAdapter(Context context, List<Product> listProduct, DatabaseHelper db, OnItemClickListener listener) {
         this.context = context;
         this.listProduct = listProduct;
         this.categoryDAO = new CategoryDAO(db);
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Product product);
     }
 
     @NonNull
@@ -59,6 +65,13 @@ public class AdProductAdapter extends RecyclerView.Adapter<AdProductAdapter.AdPr
         } else {
             holder.itemImage.setImageResource(R.drawable.sample_food); // Ảnh mặc định
         }
+
+        //XỬ LÝ SỰ KIỆN CLICK VÀO ITEM
+        holder.itemView.setOnClickListener(v -> {
+            if(listener != null) {
+                listener.onItemClick(product);
+            }
+        });
     }
 
     @Override

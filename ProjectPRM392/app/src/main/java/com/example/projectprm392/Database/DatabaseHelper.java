@@ -91,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "isDelete INTEGER DEFAULT 0, " +
                 "FOREIGN KEY(cat_id) REFERENCES category(cat_id))";
         db.execSQL(CREATE_PRODUCT_TABLE);
-
+        
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sample_food);
         String imagePath = saveImageToInternalStorage(context, bitmap, "sample_food.png");
 
@@ -101,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'French Fries', '" + imagePath + "', 80, 2.99, 0, 'Crispy golden fries', '2025-03-05', 0)");
         db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Burger Combo', '" + imagePath + "', 40, 7.99, 0.15, 'Burger with fries and drink', '2025-03-05', 0)");
         db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Hot Wings', '" + imagePath + "', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
-        
+
         db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
                 "VALUES (1, 'Gà rán KFC', '" + imagePath + "', 10, 99000, 0.1, 'Gà rán giòn rụm', '2025-03-06', 0)");
 
