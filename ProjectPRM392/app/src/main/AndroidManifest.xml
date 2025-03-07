@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+
 
     <application
         android:allowBackup="true"
@@ -18,17 +22,11 @@
         <activity
             android:name=".ProductControl.ProductList"
             android:exported="true"/>
+
         <activity android:name=".ProductControl.ProductDetailAdmin"
             android:exported="true"/>
-        <activity android:name=".Admin.Dashboard"
-            android:exported="true">
 
-        </activity>
-        <activity
-            android:name=".PermissionControl.ForgotPassword"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+        <activity android:name=".Admin.Dashboard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,6 +34,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".PermissionControl.ForgotPassword"
+            android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
+        </activity>
+
         <activity
             android:name=".CartActivity"
             android:exported="true" />
