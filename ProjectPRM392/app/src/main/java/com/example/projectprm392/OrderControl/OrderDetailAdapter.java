@@ -1,5 +1,8 @@
 package com.example.projectprm392.OrderControl;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projectprm392.OrderDetail;
+import com.example.projectprm392.DAOs.ProductDAO;
+import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.Models.OrderDetail;
+import com.example.projectprm392.Models.Product;
 import com.example.projectprm392.R;
 
 import java.util.List;
@@ -33,15 +39,42 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     @Override
     public void onBindViewHolder(@NonNull OrderDetailViewHolder holder, int position) {
         OrderDetail detail = orderDetails.get(position);
-        holder.txtFoodName.setText(detail.getFoodName());
-        holder.txtFoodPrice.setText(String.valueOf(detail.getPrice()));
-        holder.txtFoodQuantity.setText(String.valueOf(detail.getQuantity()));
-        Log.d("OrderDetailDebug", "Binding detail at position " + position + ": " + detail.getFoodName());
+
+        // Lấy thông tin sản phẩm từ ProductDAO
+        DatabaseHelper dbHelper = new DatabaseHelper(holder.itemView.getContext());
+        ProductDAO productDAO = new ProductDAO(dbHelper);
+        Product product = productDAO.getProductById(detail.getProId());
+
+        if (product != null) {
+            // Hiển thị thông tin sản phẩm
+            holder.txtFoodName.setText(product.getProName());
+            holder.txtFoodPrice.setText(String.format("%.2f", product.getProPrice()));
+            holder.txtFoodQuantity.setText(String.valueOf(detail.getQuantity()));
+
+            // Hiển thị hình ảnh sản phẩm từ internal storage
+            String imagePath = product.getProImage();
+            if (imagePath != null && !imagePath.isEmpty()) {
+                // Đọc ảnh từ đường dẫn file
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+                if (bitmap != null) {
+                    holder.imgFood.setImageBitmap(bitmap);
+                } else {
+                    holder.imgFood.setImageResource(R.drawable.download); // Hình mặc định nếu không đọc được
+                }
+            } else {
+                holder.imgFood.setImageResource(R.drawable.download); // Hình mặc định nếu imagePath rỗng
+            }
+        } else {
+            // Nếu không tìm thấy sản phẩm
+            holder.txtFoodName.setText("Unknown Product");
+            holder.txtFoodPrice.setText("0.00");
+            holder.txtFoodQuantity.setText(String.valueOf(detail.getQuantity()));
+            holder.imgFood.setImageResource(R.drawable.download);
+        }
     }
 
     @Override
     public int getItemCount() {
-        Log.d("OrderDetailDebug", "Total OrderDetails: " + orderDetails.size());
         return orderDetails.size();
     }
 

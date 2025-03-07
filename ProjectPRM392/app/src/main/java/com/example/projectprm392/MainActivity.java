@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_account) {
 
                 // Kiểm tra trạng thái đăng nhập
-                SharedPreferences sharedPreferences = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE);
-                int userId = sharedPreferences.getInt("USER_ID", -1);
+                SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                int userId = sharedPreferences.getInt("logged_in_user_id", -1);
 
                 if (userId == -1) {
                     selectedFragment = new ClientProfileFragment(); // Chưa đăng nhập
