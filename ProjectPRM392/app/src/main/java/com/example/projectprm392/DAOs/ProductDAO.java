@@ -45,8 +45,16 @@ public class ProductDAO extends SingletonBaseDAO{
     public Product getOne(int productId, int isActived) {
         open();
         Product product = null;
-        String query = "SELECT * FROM product WHERE pro_id = ? AND isDelete = ? LIMIT 1";
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(productId), String.valueOf(isActived)});
+        String query;
+        Cursor cursor;
+
+        if(isActived == 0 || isActived == 1) {
+            query = "SELECT * FROM product WHERE pro_id = ? AND isDelete = ? LIMIT 1";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(productId), String.valueOf(isActived)});
+        } else {
+            query = "SELECT * FROM product WHERE pro_id = ? LIMIT 1";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(productId)});
+        }
 
         if(cursor.moveToFirst()) {
             product = new Product(
@@ -91,4 +99,8 @@ public class ProductDAO extends SingletonBaseDAO{
         close();
         return product;
     }
+
+//    public boolean updateProduct(Product product) {
+//
+//    }
 }

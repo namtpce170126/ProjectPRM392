@@ -1,12 +1,13 @@
 package com.example.projectprm392.ProductControl;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectprm392.DAOs.CategoryDAO;
+import com.example.projectprm392.DAOs.ImageDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
 import com.example.projectprm392.Models.Category;
 import com.example.projectprm392.R;
@@ -60,6 +62,18 @@ public class ProductDetailAdmin extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
 
+        //Sự kiện khi chọn mới 1 category thì lấy được categoryId thay vì categoryName
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedCategoryId = categoryList.get(position).getCatId();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        //Sự kiện trở về list product
         btnBackListProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +87,19 @@ public class ProductDetailAdmin extends AppCompatActivity {
 
         // LOAD DATA FROM INTENT
         loadProductData();
+
+        //Su kien nhan nut Update
+//        btnUpdateProduct.setOnClickListener(new View.OnClickListener() {
+//            String productName = edtProname.getText().toString();
+//            int productPrice = Integer.parseInt(edtPrice.getText().toString());
+//            int productQuantity = Integer.parseInt(edtQuantity.getText().toString());
+//            String productDescription = edtDescription.getText().toString();
+//
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
     }
 
     private void openFileChooser() {
@@ -99,9 +126,15 @@ public class ProductDetailAdmin extends AppCompatActivity {
             edtDescription.setText(intent.getStringExtra("product_description"));
 
             // Load ảnh sản phẩm
-            String imagePath = intent.getStringExtra("product_image");
-            if (imagePath != null && !imagePath.isEmpty()) {
-                imgProduct.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+            String imageFileName = intent.getStringExtra("product_image");
+
+            if (imageFileName != null && !imageFileName.isEmpty()) {
+                Bitmap bitmap = ImageDAO.getImageFromDatabase(this, imageFileName);
+                if (bitmap != null) {
+                    imgProduct.setImageBitmap(bitmap);
+                } else {
+                    imgProduct.setImageResource(R.drawable.sample_food); // Ảnh mặc định nếu không tìm thấy file
+                }
             } else {
                 imgProduct.setImageResource(R.drawable.sample_food);
             }

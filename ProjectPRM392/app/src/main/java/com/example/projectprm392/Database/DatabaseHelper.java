@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import androidx.annotation.Nullable;
 
 
+import com.example.projectprm392.DAOs.ImageDAO;
 import com.example.projectprm392.R;
 
 import java.io.File;
@@ -18,7 +19,7 @@ import java.io.IOException;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ecommerce.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private Context context;
 
     public DatabaseHelper(@Nullable Context context) {
@@ -91,19 +92,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "isDelete INTEGER DEFAULT 0, " +
                 "FOREIGN KEY(cat_id) REFERENCES category(cat_id))";
         db.execSQL(CREATE_PRODUCT_TABLE);
-        
+
+        // Lưu ảnh vào bộ nhớ và lấy tên file
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sample_food);
-        String imagePath = saveImageToInternalStorage(context, bitmap, "sample_food.png");
+        String fileName = ImageDAO.uploadImage(context, bitmap, "sample_food.png");
 
-        // Chèn 5 sản phẩm mẫu (Tất cả thuộc Fast Food)
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Fried Chicken Drumstick', '" + imagePath + "', 50, 5.99, 0.1, 'Crispy fried chicken', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Chicken Nuggets', '" + imagePath + "', 60, 4.99, 0.05, 'Golden crispy nuggets', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'French Fries', '" + imagePath + "', 80, 2.99, 0, 'Crispy golden fries', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Burger Combo', '" + imagePath + "', 40, 7.99, 0.15, 'Burger with fries and drink', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Hot Wings', '" + imagePath + "', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
-
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
-                "VALUES (1, 'Gà rán KFC', '" + imagePath + "', 10, 99000, 0.1, 'Gà rán giòn rụm', '2025-03-06', 0)");
+        if (fileName != null) {
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'Fried Chicken Drumstick', '" + fileName + "', 50, 5.99, 0.1, 'Crispy fried chicken', '2025-03-05', 0)");
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'Chicken Nuggets', '" + fileName + "', 60, 4.99, 0.05, 'Golden crispy nuggets', '2025-03-05', 0)");
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'French Fries', '" + fileName + "', 80, 2.99, 0, 'Crispy golden fries', '2025-03-05', 0)");
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'Burger Combo', '" + fileName + "', 40, 7.99, 0.15, 'Burger with fries and drink', '2025-03-05', 0)");
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'Hot Wings', '" + fileName + "', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
+        }
 
         // TẠO BẢNG CART
         String CREATE_CART_TABLE = "CREATE TABLE cart (" +
