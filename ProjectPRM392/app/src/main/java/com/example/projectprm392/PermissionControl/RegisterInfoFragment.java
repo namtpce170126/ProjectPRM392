@@ -44,6 +44,7 @@ public class RegisterInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Tải trang register info
         View view = inflater.inflate(R.layout.register_info, container, false);
 
         etFullname = view.findViewById(R.id.etFullName);
@@ -56,14 +57,17 @@ public class RegisterInfoFragment extends Fragment {
         btnDatePicker = view.findViewById(R.id.ivCalender);
         btnConfirmRegister = view.findViewById(R.id.btnComplete);
 
+        // Xóa nội dung trong ô Fullname
         ivDeleteSign1.setOnClickListener(v -> {
             etFullname.setText("");
         });
 
+        // Xóa nội dung trong ô Email
         ivDeleteSign2.setOnClickListener(v -> {
             etEmail.setText("");
         });
 
+        // Ẩn/hiện mật khẩu
         ivTogglePassword.setOnClickListener(v -> {
             if (isPasswordVisible) {
                 // Chuyển về kiểu nhập mật khẩu (ẩn)
@@ -88,11 +92,13 @@ public class RegisterInfoFragment extends Fragment {
         return view;
     }
 
+    // Hiển thị dialog lịch để chọn ngaày
     private void showDatePicker() {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        // Hiện thị lịch cùng với ngày hiện tại
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 requireContext(),
                 (view, selectedYear, selectedMonth, selectedDay) -> {
@@ -115,6 +121,7 @@ public class RegisterInfoFragment extends Fragment {
         return sharedPreferences.getString("phone_number", "Số không xác định");
     }
 
+    // Đăng ký, tạo tài khoản
     private void registerAccount() {
         String fullName = etFullname.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
@@ -141,8 +148,9 @@ public class RegisterInfoFragment extends Fragment {
 
         // Thêm tài khoản vào database
         Account newAccount = new Account(0, 2, fullName, password, fullName, phoneNumber, email, birthday, "", 0);
-        Account createdAccount = accountDAO.insertAccount(newAccount);
+        Account createdAccount = accountDAO.insertAccountByClient(newAccount);
 
+        // Kiểm tra đã tạo tài khoản chưa
         if (createdAccount != null) {
             saveSession(phoneNumber);
             startActivity(new Intent(requireActivity(), MainActivity.class));
@@ -152,6 +160,7 @@ public class RegisterInfoFragment extends Fragment {
         }
     }
 
+    // Lưu session đăng nhập(bằng số điện thoại)
     private void saveSession(String phoneNumber) {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

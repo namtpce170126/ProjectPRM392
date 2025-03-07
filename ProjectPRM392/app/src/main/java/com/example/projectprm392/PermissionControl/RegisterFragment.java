@@ -68,7 +68,6 @@ public class RegisterFragment extends Fragment {
             String phoneNumber = etPhoneNumber.getText().toString();
             if (validatePhoneNumber(phoneNumber)) {
                 // Thực thi chuyển dữ liệu số điện thoại sang fragment khác
-                /*sendPhoneToNextFragment(phoneNumber);*/
                 savePhoneNumber(phoneNumber); // Lưu số điện thoại vào SharedPreferences
                 Toast.makeText(getContext(), "Số điện thoại đã lưu!", Toast.LENGTH_SHORT).show();
 
@@ -106,19 +105,6 @@ public class RegisterFragment extends Fragment {
             return true;
         }
     }
-
-    // Hàm truyền dữ liệu sang fragment khác
-    /*private void sendPhoneToNextFragment(String phoneNumber) {
-        LoginFragment loginFragment = new LoginFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("phone_number", phoneNumber);
-        loginFragment.setArguments(bundle);
-
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, loginFragment)
-                .addToBackStack(null)
-                .commit();
-    }*/
 
     // Hàm lưu số điện thoại vào SharedPreferences
     private void savePhoneNumber(String phoneNumber) {
