@@ -135,4 +135,29 @@ public class AccountDAO extends SingletonBaseDAO {
         account.setAccId((int) id);
         return account;
     }
+
+    // Lấy tài khoản theo sđt và password
+    public Account getAccountByPhoneAndPass(String phone, String password) {
+        open();
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM account WHERE phone_number = ? AND password = ? AND isDelete = 0",
+                new String[]{phone, password}
+        );
+
+        if (cursor.moveToFirst()) {
+            Account account = new Account(
+                    cursor.getInt(0), cursor.getInt(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getString(4), cursor.getString(5),
+                    cursor.getString(6), cursor.getString(7), cursor.getString(8),
+                    cursor.getInt(9)
+            );
+            cursor.close();
+            close();
+            return account;
+        }
+        cursor.close();
+        close();
+        return null; // Không tìm thấy tài khoản
+    }
+
 }

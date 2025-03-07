@@ -160,12 +160,12 @@
 
     <!-- Nút tiếp tục -->
     <Button
-        android:id="@+id/btnContinue"
+        android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/bg_button_enable"
-        android:enabled="false"
+        android:enabled="true"
         android:text="Tiếp tục"
         android:textColor="@android:color/white"
         android:textSize="16sp"

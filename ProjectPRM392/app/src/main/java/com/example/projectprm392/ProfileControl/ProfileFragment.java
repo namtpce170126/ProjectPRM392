@@ -1,5 +1,7 @@
 package com.example.projectprm392.ProfileControl;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.fragment.app.Fragment;
@@ -22,7 +24,7 @@ public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
     private Button btnUpdateProfile;
     private LinearLayout btnOrderHistory;
-    private TextView txtFullName, txtBirthday, txtPhone, txtMail, txtProfileName, textView10;
+    private TextView txtFullName, txtBirthday, txtPhone, txtMail, txtProfileName, textView10, txtLogout;
     private String mParam1;
     private String mParam2;
     private AccountDAO accountDAO;
@@ -66,6 +68,7 @@ public class ProfileFragment extends Fragment {
         txtMail = view.findViewById(R.id.txtMail);
         txtProfileName = view.findViewById(R.id.textView2);
         textView10 = view.findViewById(R.id.textView10);
+        txtLogout = view.findViewById(R.id.txtLogout);
 
         // Kiểm tra null cho các view
         if (txtFullName == null || txtBirthday == null || txtPhone == null || txtMail == null || txtProfileName == null ||
@@ -104,9 +107,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // Bấm nút đăng xuất
+        txtLogout.setOnClickListener(v -> logoutAccount());
+
         return view;
     }
 
+    // Tải dữ liệu profile
     private void loadProfileData() {
         try {
             accountDAO.open();
@@ -123,6 +130,7 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    // Load lại dữ liệu mới
     private void updateUI(Account account) {
         txtFullName.setText(account.getFullName());
         txtBirthday.setText(account.getBirthday());
@@ -156,5 +164,21 @@ public class ProfileFragment extends Fragment {
         if (accountDAO != null) {
             accountDAO.close();
         }
+    }
+
+    // Xử lý đăng xuất tài khoản
+    private void logoutAccount(){
+        // Xóa session đăng nhập
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("logged_in_user_id"); // Xóa ID người dùng
+        editor.apply();
+
+        ClientProfileFragment clientProfileFragment = new ClientProfileFragment();
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, clientProfileFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
