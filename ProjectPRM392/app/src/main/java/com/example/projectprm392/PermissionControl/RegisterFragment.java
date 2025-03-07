@@ -27,7 +27,7 @@ public class RegisterFragment extends Fragment {
     TextView linkLogin;
     EditText etPhoneNumber;
     ImageView btnClose;
-    Button btnContinue;
+    Button btnRegister;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -46,7 +46,7 @@ public class RegisterFragment extends Fragment {
 
         linkLogin = view.findViewById(R.id.tvLogin);
         etPhoneNumber = view.findViewById(R.id.etPhone);
-        btnContinue = view.findViewById(R.id.btnContinue);
+        btnRegister = view.findViewById(R.id.btnContinue);
         btnClose = view.findViewById(R.id.btnClose);
 
         // Bắt lỗi nhập số điện thoại
@@ -64,7 +64,7 @@ public class RegisterFragment extends Fragment {
         });
 
         // Nút "Tiếp tục"
-        btnContinue.setOnClickListener(v -> {
+        btnRegister.setOnClickListener(v -> {
             String phoneNumber = etPhoneNumber.getText().toString();
             if (validatePhoneNumber(phoneNumber)) {
                 // Thực thi chuyển dữ liệu số điện thoại sang fragment khác
@@ -96,12 +96,12 @@ public class RegisterFragment extends Fragment {
     // Hàm kiểm tra số điện thoại
     private boolean validatePhoneNumber(String phone) {
         if (phone.length() != 10 || !phone.matches("^0[0-9]{9}$")) {
-            btnContinue.setEnabled(false);
-            btnContinue.setBackgroundResource(R.drawable.bg_button_disable); // Cập nhật background
+            btnRegister.setEnabled(false);
+            btnRegister.setBackgroundResource(R.drawable.bg_button_disable); // Cập nhật background
             return false;
         } else {
-            btnContinue.setEnabled(true);
-            btnContinue.setBackgroundResource(R.drawable.bg_button_enable);
+            btnRegister.setEnabled(true);
+            btnRegister.setBackgroundResource(R.drawable.bg_button_enable);
             return true;
         }
     }
