@@ -37,7 +37,7 @@ public class UpdateAddressFragment extends DialogFragment {
 
     private Spinner spinnerCountry, spinnerProvince, spinnerDistrict, spinnerWard;
     private EditText edtDetailAddress;
-    private Button btnUpdateProfile;
+    private Button btnUpdateProfile, btnCancel;
     private RequestQueue requestQueue;
 
     private List<String> countryList = new ArrayList<>();
@@ -91,6 +91,7 @@ public class UpdateAddressFragment extends DialogFragment {
         spinnerWard = view.findViewById(R.id.spinnerWard);
         edtDetailAddress = view.findViewById(R.id.edtDetailAddress);
         btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
+        btnCancel = view.findViewById(R.id.btnCancel); // Thêm nút Cancel
 
         requestQueue = Volley.newRequestQueue(getContext());
 
@@ -155,10 +156,11 @@ public class UpdateAddressFragment extends DialogFragment {
             public void onNothingSelected(android.widget.AdapterView<?> parent) {}
         });
 
-        btnUpdateProfile.setOnClickListener(v -> {
-            saveAddress(accountId);
-            dismiss();
-        });
+        // Xử lý sự kiện cho nút Save
+        btnUpdateProfile.setOnClickListener(v -> saveAddress(accountId));
+
+        // Xử lý sự kiện cho nút Cancel
+        btnCancel.setOnClickListener(v -> dismiss());
 
         return view;
     }
@@ -292,11 +294,12 @@ public class UpdateAddressFragment extends DialogFragment {
         String province = spinnerProvince.getSelectedItem() != null ? spinnerProvince.getSelectedItem().toString() : "";
         String district = spinnerDistrict.getSelectedItem() != null ? spinnerDistrict.getSelectedItem().toString() : "";
         String ward = spinnerWard.getSelectedItem() != null ? spinnerWard.getSelectedItem().toString() : "";
-        String detailAddress = edtDetailAddress.getText().toString();
+        String detailAddress = edtDetailAddress.getText().toString().trim();
 
+        // Kiểm tra xem các trường có được điền đầy đủ không
         if (province.isEmpty() || district.isEmpty() || ward.isEmpty() || detailAddress.isEmpty()) {
-            Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(getContext(), "Please enter detail address!", Toast.LENGTH_SHORT).show();
+            return; // Không đóng fragment, chỉ hiển thị thông báo
         }
 
         String fullAddress = detailAddress + "\n" + ward + ", " + district + ", " + province + ", " + country;
@@ -319,6 +322,7 @@ public class UpdateAddressFragment extends DialogFragment {
                 if (addressUpdatedListener != null) {
                     addressUpdatedListener.onAddressUpdated(fullAddress);
                 }
+                dismiss(); // Đóng fragment khi cập nhật thành công
             } else {
                 Toast.makeText(getContext(), "Failed to update address", Toast.LENGTH_LONG).show();
             }

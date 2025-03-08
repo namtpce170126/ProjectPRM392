@@ -78,10 +78,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext"
+                android:backgroundTint="@color/lightOrange"
                 android:hint="Phone Number"
+                android:focusable="false"
+                android:clickable="false"
                 android:inputType="text"
                 android:padding="12dp" />
-
 
             <TextView
                 android:id="@+id/txtEmail"
@@ -99,17 +101,19 @@
                 android:inputType="text"
                 android:padding="12dp" />
 
+            <Button
+                android:id="@+id/btnUpdateProfile"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/orange"
+                android:text="SAVE"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnUpdateProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/orange"
-            android:text="SAVE"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+
 
     </LinearLayout>
 
