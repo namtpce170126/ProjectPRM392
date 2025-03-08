@@ -59,12 +59,25 @@ public class AdProductAdapter extends RecyclerView.Adapter<AdProductAdapter.AdPr
         holder.itemCatgory.setText(categoryName);
         holder.itemPrice.setText(String.format(Locale.getDefault(), "%.2f VNĐ", product.getProPrice()));
 
-        // Hiển thị ảnh từ SQLite bằng ImageDAO
-        Bitmap productImage = ImageDAO.getImageFromDatabase(holder.itemView.getContext(), product.getProImage());
-        if (productImage != null) {
-            holder.itemImage.setImageBitmap(productImage);
+        // Kiểm tra và hiển thị ảnh sản phẩm
+        String imageName = product.getProImage();
+        if (imageName != null && !imageName.isEmpty()) {
+            if (imageName.equals("default_food.png")) {
+                // Nếu là ảnh mặc định, hiển thị từ drawable
+                holder.itemImage.setImageResource(R.drawable.default_food);
+            } else {
+                // Nếu là ảnh thật, load từ bộ nhớ trong
+                Bitmap productImage = ImageDAO.getImageFromDatabase(holder.itemView.getContext(), imageName);
+                if (productImage != null) {
+                    holder.itemImage.setImageBitmap(productImage);
+                } else {
+                    // Nếu file bị mất hoặc không tồn tại, hiển thị ảnh mặc định
+                    holder.itemImage.setImageResource(R.drawable.default_food);
+                }
+            }
         } else {
-            holder.itemImage.setImageResource(R.drawable.sample_food); // Ảnh mặc định nếu không có ảnh
+            // Nếu database NULL hoặc trống, hiển thị ảnh mặc định
+            holder.itemImage.setImageResource(R.drawable.default_food);
         }
 
         //XỬ LÝ SỰ KIỆN CLICK VÀO ITEM
