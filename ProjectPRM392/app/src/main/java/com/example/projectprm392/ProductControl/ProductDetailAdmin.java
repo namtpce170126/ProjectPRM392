@@ -3,6 +3,7 @@ package com.example.projectprm392.ProductControl;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -20,12 +22,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectprm392.DAOs.CategoryDAO;
 import com.example.projectprm392.DAOs.ImageDAO;
+import com.example.projectprm392.DAOs.ProductDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
 import com.example.projectprm392.Models.Category;
+import com.example.projectprm392.Models.Product;
 import com.example.projectprm392.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductDetailAdmin extends AppCompatActivity {
     ImageButton btnBackListProduct;
@@ -36,8 +43,11 @@ public class ProductDetailAdmin extends AppCompatActivity {
     private Button btnUpdateProduct;
     private Uri imageUri;
     private CategoryDAO categoryDAO;
+    private ProductDAO productDAO;
     private List<Category> categoryList;
     private int selectedCategoryId;
+    private int productId;
+    private String product_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,7 @@ public class ProductDetailAdmin extends AppCompatActivity {
         btnUpdateProduct = findViewById(R.id.btnUpdateProduct);
 
         categoryDAO = new CategoryDAO(new DatabaseHelper(this));
+        productDAO = new ProductDAO(new DatabaseHelper(this));
         categoryList = categoryDAO.getAll();
 
         // Load danh sách category vào Spinner
@@ -89,17 +100,61 @@ public class ProductDetailAdmin extends AppCompatActivity {
         loadProductData();
 
         //Su kien nhan nut Update
-//        btnUpdateProduct.setOnClickListener(new View.OnClickListener() {
-//            String productName = edtProname.getText().toString();
-//            int productPrice = Integer.parseInt(edtPrice.getText().toString());
-//            int productQuantity = Integer.parseInt(edtQuantity.getText().toString());
-//            String productDescription = edtDescription.getText().toString();
-//
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        btnUpdateProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Lấy dữ liệu từ EditText
+                String productName = edtProname.getText().toString().trim();
+                int categoryId = selectedCategoryId;
+                String productDescription = edtDescription.getText().toString().trim();
+                double productPrice = 0;
+                int productQuantity = 0;
+
+                try {
+                    productPrice = Double.parseDouble(edtPrice.getText().toString().trim());
+                    productQuantity = Integer.parseInt(edtQuantity.getText().toString().trim());
+                } catch (NumberFormatException e) {
+                    Toast.makeText(view.getContext(), "Vui lòng nhập số hợp lệ!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Kiểm tra dữ liệu hợp lệ
+                if (productName.isEmpty() || productDescription.isEmpty()) {
+                    Toast.makeText(view.getContext(), "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Lấy ảnh từ ImageButton
+                imgProduct.setDrawingCacheEnabled(true);
+                imgProduct.buildDrawingCache();
+                Bitmap bitmap = ((BitmapDrawable) imgProduct.getDrawable()).getBitmap();
+
+                String savedImagePath;
+                if (imageUri != null) {
+                    // Nếu chọn ảnh mới, lưu ảnh mới
+                    String fileName = "product_" + System.currentTimeMillis() + ".png";
+                    savedImagePath = ImageDAO.uploadImage(view.getContext(), bitmap, fileName);
+                } else {
+                    // Nếu không chọn ảnh mới, giữ ảnh cũ
+                    savedImagePath = product_image;
+                }
+
+                // Cập nhật sản phẩm vào database
+                if(productId <= 0) {
+                    Toast.makeText(view.getContext(), "Product ID not existing", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                Product updatedProduct = new Product(productId, categoryId, productName, savedImagePath,
+                        productQuantity, productPrice, 0, productDescription, currentDate, 0);
+                boolean isUpdated = productDAO.updateProduct(updatedProduct);
+                if (isUpdated) {
+                    Toast.makeText(view.getContext(), "Cập nhật sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(view.getContext(), "Cập nhật thất bại!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void openFileChooser() {
@@ -120,8 +175,10 @@ public class ProductDetailAdmin extends AppCompatActivity {
     private void loadProductData() {
         Intent intent = getIntent();
         if(intent != null) {
+            productId = intent.getIntExtra("product_id", -1);
+            product_image = intent.getStringExtra("product_image");
             edtProname.setText(intent.getStringExtra("product_name"));
-            edtPrice.setText(String.valueOf(intent.getIntExtra("product_price", 0)));
+            edtPrice.setText(String.valueOf(intent.getDoubleExtra("product_price", 0)));
             edtQuantity.setText(String.valueOf(intent.getIntExtra("product_quantity", 0)));
             edtDescription.setText(intent.getStringExtra("product_description"));
 
