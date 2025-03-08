@@ -1,5 +1,6 @@
 package com.example.projectprm392.DAOs;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.example.projectprm392.Database.DatabaseHelper;
@@ -100,7 +101,17 @@ public class ProductDAO extends SingletonBaseDAO{
         return product;
     }
 
-//    public boolean updateProduct(Product product) {
-//
-//    }
+    public boolean updateProduct(Product product) {
+        open();
+        ContentValues values = new ContentValues();
+        values.put("pro_name", product.getProName());
+        values.put("cat_id", product.getCatId());
+        values.put("pro_price", product.getProPrice());
+        values.put("pro_quantity", product.getProQuantity());
+        values.put("description", product.getDescription());
+        values.put("pro_image", product.getProImage());
+        int rowsAffected = db.update("product", values, "pro_id = ?", new String[]{String.valueOf(product.getProId())});
+        close();
+        return rowsAffected > 0;
+    }
 }
