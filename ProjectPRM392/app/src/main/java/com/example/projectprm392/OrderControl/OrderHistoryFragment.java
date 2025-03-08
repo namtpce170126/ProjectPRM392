@@ -1,5 +1,6 @@
 package com.example.projectprm392.OrderControl;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -57,7 +58,6 @@ public class OrderHistoryFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment OrderHistoryFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static OrderHistoryFragment newInstance(String param1, String param2) {
         OrderHistoryFragment fragment = new OrderHistoryFragment();
         Bundle args = new Bundle();
@@ -119,6 +119,9 @@ public class OrderHistoryFragment extends Fragment {
             // Thiết lập adapter
             orderAdapter = new OrderAdapter(orderList);
             recyclerView.setAdapter(orderAdapter);
+
+            // Thiết lập listener cho nút Cancel Order
+            orderAdapter.setOnCancelOrderListener(orderId -> showCancelConfirmationDialog(orderId));
         }
 
         // Lấy tham chiếu đến các nút trạng thái
@@ -184,6 +187,44 @@ public class OrderHistoryFragment extends Fragment {
             lastSelectedButton = button;
             filterOrders(status); // Lọc danh sách theo trạng thái
             textView11.setText(status);
+        }
+    }
+
+    // Phương thức hiển thị dialog xác nhận hủy đơn hàng
+    private void showCancelConfirmationDialog(int orderId) {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Confirm Cancellation")
+                .setMessage("Are you sure you want to cancel this order?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // Xác nhận hủy, cập nhật trạng thái
+                    updateOrderStatus(orderId, "Cancelled");
+                    dialog.dismiss();
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    dialog.dismiss(); // Đóng dialog nếu chọn "No"
+                })
+                .setCancelable(true) // Cho phép đóng dialog bằng nút Back
+                .show();
+    }
+
+    // Phương thức cập nhật trạng thái đơn hàng
+    private void updateOrderStatus(int orderId, String newStatus) {
+        Order order = orderDAO.getOrderById(orderId);
+        if (order != null) {
+            order.setStatus(newStatus);
+            int rowsAffected = orderDAO.updateOrder(order);
+            if (rowsAffected > 0) {
+                Toast.makeText(getContext(), "Order cancelled successfully!", Toast.LENGTH_SHORT).show();
+                // Làm mới danh sách đơn hàng
+                int accountId = getLoggedInAccountId();
+                orderList = getOrdersForAccount(accountId);
+                Collections.reverse(orderList);
+                orderAdapter.updateList(orderList);
+            } else {
+                Toast.makeText(getContext(), "Failed to cancel order!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getContext(), "Order not found!", Toast.LENGTH_SHORT).show();
         }
     }
 
