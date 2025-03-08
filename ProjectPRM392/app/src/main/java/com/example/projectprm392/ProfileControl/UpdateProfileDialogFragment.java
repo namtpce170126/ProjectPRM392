@@ -24,7 +24,7 @@ import java.util.Locale;
 
 public class UpdateProfileDialogFragment extends DialogFragment {
 
-    private EditText txtFullName, txtBirthday, txtPhone, txtMail;
+    private EditText edtFullName, edtBirthday, edtPhone, edtEmail;
     private Button btnSave;
     private AccountDAO accountDAO;
     private DatabaseHelper dbHelper;
@@ -62,30 +62,30 @@ public class UpdateProfileDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_update_profile_dialog, container, false);
 
         // Khởi tạo các view
-        txtFullName = view.findViewById(R.id.txtFullName);
-        txtBirthday = view.findViewById(R.id.txtBirthday);
-        txtPhone = view.findViewById(R.id.txtPhone);
-        txtMail = view.findViewById(R.id.txtMail);
+        edtFullName = view.findViewById(R.id.edtFullName);
+        edtBirthday = view.findViewById(R.id.edtBirthday);
+        edtPhone = view.findViewById(R.id.edtPhoneNumber);
+        edtEmail = view.findViewById(R.id.edtEmail);
         btnSave = view.findViewById(R.id.btnUpdateProfile);
 
         // Lấy tài khoản hiện tại từ arguments
         Bundle args = getArguments();
         if (args != null) {
-            int accId = args.getInt("acc_id", 1); // Mặc định acc_id = 1 nếu không có
+            int accId = args.getInt("acc_id", -1); // Mặc định acc_id = -1 nếu không có
             accountDAO.open();
             currentAccount = accountDAO.getAccountById(accId);
             if (currentAccount != null) {
                 // Đổ dữ liệu hiện tại vào các EditText
-                txtFullName.setText(currentAccount.getFullName() != null ? currentAccount.getFullName() : "");
-                txtBirthday.setText(currentAccount.getBirthday() != null ? currentAccount.getBirthday() : "");
-                txtPhone.setText(currentAccount.getPhoneNumber() != null ? currentAccount.getPhoneNumber() : "");
-                txtMail.setText(currentAccount.getEmail() != null ? currentAccount.getEmail() : "");
+                edtFullName.setText(currentAccount.getFullName() != null ? currentAccount.getFullName() : "");
+                edtBirthday.setText(currentAccount.getBirthday() != null ? currentAccount.getBirthday() : "");
+                edtPhone.setText(currentAccount.getPhoneNumber() != null ? currentAccount.getPhoneNumber() : "");
+                edtEmail.setText(currentAccount.getEmail() != null ? currentAccount.getEmail() : "");
             }
             accountDAO.close();
         }
 
         // Thêm DatePicker cho txtBirthday
-        txtBirthday.setOnClickListener(v -> showDatePickerDialog());
+        edtBirthday.setOnClickListener(v -> showDatePickerDialog());
 
         // Xử lý sự kiện click nút Save
         btnSave.setOnClickListener(v -> {
@@ -117,7 +117,7 @@ public class UpdateProfileDialogFragment extends DialogFragment {
                     selectedCalendar.set(yearSelected, monthOfYear, dayOfMonth);
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     String selectedDate = sdf.format(selectedCalendar.getTime());
-                    txtBirthday.setText(selectedDate);
+                    edtBirthday.setText(selectedDate);
                 },
                 year, month, day
         );
@@ -127,10 +127,10 @@ public class UpdateProfileDialogFragment extends DialogFragment {
     private void saveUpdatedProfile() {
         if (currentAccount != null) {
             accountDAO.open();
-            currentAccount.setFullName(txtFullName.getText().toString().trim());
-            currentAccount.setBirthday(txtBirthday.getText().toString().trim());
-            currentAccount.setPhoneNumber(txtPhone.getText().toString().trim());
-            currentAccount.setEmail(txtMail.getText().toString().trim());
+            currentAccount.setFullName(edtFullName.getText().toString().trim());
+            currentAccount.setBirthday(edtBirthday.getText().toString().trim());
+            currentAccount.setPhoneNumber(edtPhone.getText().toString().trim());
+            currentAccount.setEmail(edtEmail.getText().toString().trim());
 
             int rowsAffected = accountDAO.updateAccount(currentAccount);
             if (rowsAffected > 0) {
