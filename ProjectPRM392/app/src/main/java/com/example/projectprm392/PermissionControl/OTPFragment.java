@@ -3,6 +3,7 @@ package com.example.projectprm392.PermissionControl;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -140,6 +141,7 @@ public class OTPFragment extends Fragment {
 
     // Kiểm tra mã OTP nhập vào có đúng không
     private void validateOTP() {
+        String checkForgotPassSession = checkForgotPassSession();
         StringBuilder enteredOTP = new StringBuilder();
         for (EditText editText : otpInputs) {
             enteredOTP.append(editText.getText().toString().trim());
@@ -147,7 +149,11 @@ public class OTPFragment extends Fragment {
 
         if (enteredOTP.toString().equals(generatedOTP)) {
             Toast.makeText(getContext(), "Xác thực thành công!", Toast.LENGTH_SHORT).show();
-            registerInfoComfirm();
+            if (checkForgotPassSession == null){
+                registerInfoComfirm();
+            } else {
+                resetPassword();
+            }
         } else {
             Toast.makeText(getContext(), "Mã OTP không đúng. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
         }
@@ -166,6 +172,22 @@ public class OTPFragment extends Fragment {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, registerInfoFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    // Kiểm tra session quên mk
+    private String checkForgotPassSession() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("phone_forgot_pass", null);
+    }
+
+    // Xử lý chuyển sang ResetPasswordFragment
+    private void resetPassword(){
+        ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, resetPasswordFragment)
                 .addToBackStack(null)
                 .commit();
     }

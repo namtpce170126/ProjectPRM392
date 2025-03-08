@@ -28,7 +28,7 @@ import com.example.projectprm392.R;
 public class LoginFragment extends Fragment {
     EditText etPhone, etPassword;
     ImageView ivTogglePassword, ivDeleteSign, btnClose;
-    TextView linkRegister;
+    TextView linkRegister, txtForgotPass;
     Button btnLogin;
     boolean isPasswordVisible = false;
 
@@ -53,6 +53,17 @@ public class LoginFragment extends Fragment {
         ivDeleteSign = view.findViewById(R.id.ivDeleteSign);
         btnClose = view.findViewById(R.id.btnClose);
         btnLogin = view.findViewById(R.id.btnLogin);
+        txtForgotPass = view.findViewById(R.id.tvForgot);
+
+        // Chuyển sang ForgotPasswordFragment
+        txtForgotPass.setOnClickListener(v -> {
+            ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, forgotPasswordFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
 
         // Xóa ký tự ô nhập
         ivDeleteSign.setOnClickListener(new View.OnClickListener() {
