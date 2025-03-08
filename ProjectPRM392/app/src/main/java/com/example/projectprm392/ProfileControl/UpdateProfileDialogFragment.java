@@ -125,23 +125,45 @@ public class UpdateProfileDialogFragment extends DialogFragment {
     }
 
     private void saveUpdatedProfile() {
-        if (currentAccount != null) {
-            accountDAO.open();
-            currentAccount.setFullName(edtFullName.getText().toString().trim());
-            currentAccount.setBirthday(edtBirthday.getText().toString().trim());
-            currentAccount.setPhoneNumber(edtPhone.getText().toString().trim());
-            currentAccount.setEmail(edtEmail.getText().toString().trim());
+        if (currentAccount == null) {
+            Toast.makeText(getContext(), "Không tìm thấy tài khoản để cập nhật", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        // Lấy giá trị từ các EditText
+        String fullName = edtFullName.getText().toString().trim();
+        String birthday = edtBirthday.getText().toString().trim();
+        String phone = edtPhone.getText().toString().trim();
+        String email = edtEmail.getText().toString().trim();
+
+        // Kiểm tra xem có trường nào rỗng không
+        if (fullName.isEmpty() || birthday.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+            Toast.makeText(getContext(), "Please enter full your information!", Toast.LENGTH_SHORT).show();
+            return; // Không thực hiện cập nhật nếu có trường rỗng
+        }
+
+        // Nếu tất cả trường đều hợp lệ, tiến hành cập nhật
+        accountDAO.open();
+        currentAccount.setFullName(fullName);
+        currentAccount.setBirthday(birthday);
+        currentAccount.setPhoneNumber(phone);
+        currentAccount.setEmail(email);
+
+        try {
             int rowsAffected = accountDAO.updateAccount(currentAccount);
             if (rowsAffected > 0) {
                 Toast.makeText(getContext(), "Information updated successfully!", Toast.LENGTH_SHORT).show();
                 // Cập nhật ProfileFragment
                 refreshParentFragment();
+                dismiss(); // Đóng dialog khi cập nhật thành công
             } else {
                 Toast.makeText(getContext(), "Update information failed!", Toast.LENGTH_SHORT).show();
             }
+        } catch (Exception e) {
+            Log.e(TAG, "Error updating profile: " + e.getMessage());
+            Toast.makeText(getContext(), "Error updating profile: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        } finally {
             accountDAO.close();
-            dismiss();
         }
     }
 
