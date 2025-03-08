@@ -15,11 +15,19 @@ public class ProductDAO extends SingletonBaseDAO{
         super(dbHelper);
     }
 
-    public List<Product> getAll() {
+    public List<Product> getAll(int isDelete) {
         open();
         List<Product> listProduct = new ArrayList<>();
-        String query = "SELECT * FROM product";
-        Cursor cursor = db.rawQuery(query, null);
+        String query;
+        Cursor cursor;
+
+        if(isDelete == 0 || isDelete == 1) {
+            query = "SELECT * FROM product WHERE isDelete = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(isDelete)});
+        } else {
+            query = "SELECT * FROM product";
+            cursor = db.rawQuery(query, null);
+        }
 
         if(cursor.moveToFirst()) {
             do {
@@ -101,6 +109,23 @@ public class ProductDAO extends SingletonBaseDAO{
         return product;
     }
 
+    public boolean insertProduct(Product product) {
+        open();
+        ContentValues values = new ContentValues();
+        values.put("pro_name", product.getProName());
+        values.put("cat_id", product.getCatId());
+        values.put("pro_price", product.getProPrice());
+        values.put("pro_quantity", product.getProQuantity());
+        values.put("description", product.getDescription());
+        values.put("pro_image", product.getProImage());
+        values.put("discount", product.getDiscount());
+        values.put("create_date", product.getCreateDate());
+        values.put("isDelete", 0);
+        long rowsAffected = db.insert("product", null, values);
+        close();
+        return rowsAffected != -1; // Trả về true nếu chèn thành công
+    }
+
     public boolean updateProduct(Product product) {
         open();
         ContentValues values = new ContentValues();
@@ -110,7 +135,15 @@ public class ProductDAO extends SingletonBaseDAO{
         values.put("pro_quantity", product.getProQuantity());
         values.put("description", product.getDescription());
         values.put("pro_image", product.getProImage());
+        values.put("isDelete", 0);
         int rowsAffected = db.update("product", values, "pro_id = ?", new String[]{String.valueOf(product.getProId())});
+        close();
+        return rowsAffected > 0;
+    }
+
+    public boolean deleteProduct(int productId) {
+        open();
+        int rowsAffected = db.delete("product", "pro_id = ?", new String[]{String.valueOf(productId)});
         close();
         return rowsAffected > 0;
     }

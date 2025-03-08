@@ -33,7 +33,7 @@
 
             <!-- Nút Add New -->
             <LinearLayout
-                android:id="@+id/btnAddProduct"
+                android:id="@+id/btnToAddProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
@@ -56,7 +56,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thêm"
+                    android:text="Create new"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:textSize="20dp" />
@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quản lý sản phẩm"
+            android:text="Product management"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Danh sách sản phẩm"
+            android:text="Product list"
             android:textColor="@color/lightBlack"
             android:textStyle="bold"
             android:textSize="25dp" />
