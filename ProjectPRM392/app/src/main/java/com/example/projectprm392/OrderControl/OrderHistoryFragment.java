@@ -1,5 +1,7 @@
 package com.example.projectprm392.OrderControl;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projectprm392.DAOs.OrderDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
@@ -33,7 +36,7 @@ public class OrderHistoryFragment extends Fragment {
     private ImageView btnBackToProfile;
     private OrderAdapter orderAdapter;
     private List<Order> orderList;
-    private LinearLayout lastSelectedButton = null;
+    private LinearLayout lastSelectedButton = null, linearLayoutNoOrder = null;
     private TextView textView11;
     private OrderDAO orderDAO;
     private static final String ARG_PARAM1 = "param1";
@@ -77,7 +80,9 @@ public class OrderHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_history, container, false);
 
+        // Khởi tạo các view
         recyclerView = view.findViewById(R.id.OrderHistoryRecycleView);
+        linearLayoutNoOrder = view.findViewById(R.id.linearLayoutNoOrder);
         btnBackToProfile = view.findViewById(R.id.btnBackToProfile);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -98,14 +103,23 @@ public class OrderHistoryFragment extends Fragment {
             }
         });
 
-        // Lấy danh sách đơn hàng cho account_id = 1
-        // Khi đăng nhập lấy account id ở đây
-        orderList = getOrdersForAccount(1); // Lấy đơn hàng cho account_id = 1
+        // Lấy danh sách đơn hàng cho account_id
+        int accountId = getLoggedInAccountId();
+        orderList = getOrdersForAccount(accountId); // Lấy đơn hàng cho account_id
         Collections.reverse(orderList); // Đảo ngược danh sách nếu muốn hiển thị mới nhất trước
 
-        // Thiết lập adapter
-        orderAdapter = new OrderAdapter(orderList);
-        recyclerView.setAdapter(orderAdapter);
+        // Kiểm tra nếu orderList rỗng thì hiển thị txtNoOrder, ngược lại hiển thị RecyclerView
+        if (orderList == null || orderList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE); // Ẩn RecyclerView
+            linearLayoutNoOrder.setVisibility(View.VISIBLE); // Hiển thị TextView
+        } else {
+            recyclerView.setVisibility(View.VISIBLE); // Hiển thị RecyclerView
+            linearLayoutNoOrder.setVisibility(View.GONE); // Ẩn TextView
+
+            // Thiết lập adapter
+            orderAdapter = new OrderAdapter(orderList);
+            recyclerView.setAdapter(orderAdapter);
+        }
 
         // Lấy tham chiếu đến các nút trạng thái
         LinearLayout btnOrdered = view.findViewById(R.id.btnOrdered);
@@ -144,7 +158,15 @@ public class OrderHistoryFragment extends Fragment {
                 filteredList.add(order);
             }
         }
-        orderAdapter.updateList(filteredList); // Cập nhật adapter với danh sách đã lọc
+        linearLayoutNoOrder = getView().findViewById(R.id.linearLayoutNoOrder);
+        if (filteredList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            linearLayoutNoOrder.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            linearLayoutNoOrder.setVisibility(View.GONE);
+            orderAdapter.updateList(filteredList); // Cập nhật adapter với danh sách đã lọc
+        }
     }
 
     // Phương thức lọc danh sách và thay đổi giao diện nút
@@ -163,5 +185,11 @@ public class OrderHistoryFragment extends Fragment {
             filterOrders(status); // Lọc danh sách theo trạng thái
             textView11.setText(status);
         }
+    }
+
+    // Lấy account_id từ session
+    private int getLoggedInAccountId() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("logged_in_user_id", -1);
     }
 }

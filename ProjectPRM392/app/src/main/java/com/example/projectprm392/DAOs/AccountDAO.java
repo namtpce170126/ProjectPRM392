@@ -47,11 +47,9 @@ public class AccountDAO extends SingletonBaseDAO {
                     cursor.getInt(9)
             );
             cursor.close();
-            close();
             return account;
         }
         cursor.close();
-        close();
         return null;
     }
 
