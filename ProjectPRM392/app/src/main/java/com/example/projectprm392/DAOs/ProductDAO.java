@@ -147,4 +147,60 @@ public class ProductDAO extends SingletonBaseDAO{
         close();
         return rowsAffected > 0;
     }
+
+    public List<Product> getRandomProduct(int numberProduct) {
+        open();
+        List<Product> productList = new ArrayList<>();
+        String query = "SELECT * FROM product ORDER BY RANDOM() LIMIT ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(numberProduct)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Product product = new Product(
+                        cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getDouble(5),
+                        cursor.getDouble(6),
+                        cursor.getString(7),
+                        cursor.getString(8),
+                        cursor.getInt(9)
+                );
+                productList.add(product);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return productList;
+    }
+
+    public List<Product> getProductsByKeyword(String productName) {
+        open();
+        List<Product> productList = new ArrayList<>();
+        String query = "SELECT * FROM product WHERE pro_name LIKE ?";
+        Cursor cursor = db.rawQuery(query, new String[]{"%" + productName + "%"});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Product product = new Product(
+                        cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getDouble(5),
+                        cursor.getDouble(6),
+                        cursor.getString(7),
+                        cursor.getString(8),
+                        cursor.getInt(9)
+                );
+                productList.add(product);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return productList;
+    }
 }
