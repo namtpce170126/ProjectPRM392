@@ -1,6 +1,7 @@
 package com.example.projectprm392.PermissionControl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import com.example.projectprm392.R;
 public class ForgotPasswordFragment extends Fragment {
 
     private EditText etPhoneForgot;
-    private ImageView ivDeleteSign, btnClose;
+    private ImageView ivDeleteSign, btnBack;
     private Button btnFotgotPass;
 
     public ForgotPasswordFragment(){
@@ -39,7 +40,7 @@ public class ForgotPasswordFragment extends Fragment {
         etPhoneForgot = view.findViewById(R.id.etPhoneForgot);
         ivDeleteSign = view.findViewById(R.id.ivDeleteSign);
         btnFotgotPass = view.findViewById(R.id.btnContinue);
-        btnClose = view.findViewById(R.id.btnClose);
+        btnBack = view.findViewById(R.id.btnBack);
 
         // Bắt sự kiện click để xóa nội dung EditText
         ivDeleteSign.setOnClickListener(v -> {
@@ -52,7 +53,13 @@ public class ForgotPasswordFragment extends Fragment {
         });
 
         // Nút đóng fragment
-        btnClose.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
+        /*btnClose.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());*/
+
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
 
         return view;
     }
@@ -88,7 +95,7 @@ public class ForgotPasswordFragment extends Fragment {
 
         // Chuyển sang RegisterFragment
         getParentFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new OTPFragment())
+                .replace(R.id.fragment_container_permission, new OTPFragment())
                 .addToBackStack(null)
                 .commit();
     }

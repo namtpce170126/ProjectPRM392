@@ -37,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
+        boolean openProfileClient = getIntent().getBooleanExtra("open_client_profile", false);
+        if (savedInstanceState == null && openProfileClient) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ClientProfileFragment())
+                    .commit();
+        }
+
         // Sử dụng setOnItemSelectedListener() thay cho setOnNavigationItemSelectedListener()
         bottomNavigation.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;

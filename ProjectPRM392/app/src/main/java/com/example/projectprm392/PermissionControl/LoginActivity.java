@@ -5,64 +5,65 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
+import com.example.projectprm392.Admin.Dashboard;
 import com.example.projectprm392.DAOs.AccountDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.MainActivity;
 import com.example.projectprm392.Models.Account;
 import com.example.projectprm392.ProfileControl.ProfileFragment;
 import com.example.projectprm392.R;
 
-public class LoginFragment extends Fragment {
+public class LoginActivity extends AppCompatActivity {
+
     EditText etPhone, etPassword;
     ImageView ivTogglePassword, ivDeleteSign, btnClose;
     TextView linkRegister, txtForgotPass;
     Button btnLogin;
     boolean isPasswordVisible = false;
 
-    public LoginFragment() {
-        // Required empty public constructor
-    }
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_login);
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Tải trang login
-        View view = inflater.inflate(R.layout.login, container, false);
-
-        etPassword = view.findViewById(R.id.etPassword);
-        ivTogglePassword = view.findViewById(R.id.ivTogglePassword);
-        linkRegister = view.findViewById(R.id.tvRegister);
-        etPhone = view.findViewById(R.id.etPhone);
-        ivDeleteSign = view.findViewById(R.id.ivDeleteSign);
-        btnClose = view.findViewById(R.id.btnClose);
-        btnLogin = view.findViewById(R.id.btnLogin);
-        txtForgotPass = view.findViewById(R.id.tvForgot);
+        etPassword = findViewById(R.id.etPassword);
+        ivTogglePassword = findViewById(R.id.ivTogglePassword);
+        linkRegister = findViewById(R.id.tvRegister);
+        etPhone = findViewById(R.id.etPhone);
+        ivDeleteSign = findViewById(R.id.ivDeleteSign);
+        btnClose = findViewById(R.id.btnClose);
+        btnLogin = findViewById(R.id.btnLogin);
+        txtForgotPass = findViewById(R.id.tvForgot);
 
         // Chuyển sang ForgotPasswordFragment
         txtForgotPass.setOnClickListener(v -> {
-            ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, forgotPasswordFragment)
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(LoginActivity.this, Permisson.class);
+            intent.putExtra("login_step", true); // Gửi dữ liệu để MainActivity biết cần mở ClientProfileFragment
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
+
+        btnClose.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("open_client_profile", true); // Gửi dữ liệu để MainActivity biết cần mở ClientProfileFragment
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
         });
 
         // Xóa ký tự ô nhập
@@ -94,17 +95,9 @@ public class LoginFragment extends Fragment {
 
         // Chuyển trang đăng ký
         linkRegister.setOnClickListener(v -> {
-            // Chuyển sang RegisterFragment
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new RegisterFragment())
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
-
-        // Nút đóng fragment
-        btnClose.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
-
-        return view;
     }
 
     // Xử lý đăng nhập
@@ -138,28 +131,36 @@ public class LoginFragment extends Fragment {
         }
 
         // Kiểm tra tài khoản trong database
-        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        DatabaseHelper dbHelper = new DatabaseHelper(LoginActivity.this);
         AccountDAO accountDAO = new AccountDAO(dbHelper);
         Account account = accountDAO.getAccountByPhoneAndPass(phone, password);
 
+        // Kiểm tra tk
         if (account == null) {
-            Toast.makeText(requireContext(), "Số điện thoại hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Số điện thoại hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Lưu tài khoản đăng nhập
         saveSessionLogin(account.getAccId());
 
-        // Chuyển sang HomeFragment
-        Toast.makeText(requireContext(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new ProfileFragment())
-                .commit();
+        // Kiểm tra role tài khoản
+        if (account.getRoleId() == 1){
+            // Chuyển sang DashboardActivity
+            Intent intent = new Intent(LoginActivity.this, Dashboard.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa stack trước đó
+            startActivity(intent);
+        } else {
+            // Chuyển sang HomeFragment
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa stack trước đó
+            startActivity(intent);
+        }
     }
 
     // Lưu session đăng nhập(bằng accId)
     private void saveSessionLogin(int accID) {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("logged_in_user_id", accID);
         editor.apply();
