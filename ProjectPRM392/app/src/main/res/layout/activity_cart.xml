@@ -157,7 +157,7 @@
             android:layout_marginStart="29dp"
             android:layout_marginTop="30dp"
             android:backgroundTint="#FFFFFF"
-            android:onClick="goToProductDetail"
+
             app:srcCompat="@drawable/iconbacku"/>
 
 

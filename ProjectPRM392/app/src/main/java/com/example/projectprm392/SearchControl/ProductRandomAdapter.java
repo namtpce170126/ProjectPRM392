@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectprm392.DAOs.ImageDAO;
-import com.example.projectprm392.HomeControl.Food;
 import com.example.projectprm392.Models.Product;
 import com.example.projectprm392.R;
 
