@@ -15,18 +15,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginStart="103dp"
+        android:layout_marginTop="39dp"
         android:text="3" />
 
     <TextView
-        android:id="@+id/txtTenMonHang1"
+        android:id="@+id/txtPrice1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="39dp"
         android:text="Bánh cam" />
 
     <TextView
@@ -35,8 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="183dp"
-        android:layout_marginTop="41dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="39dp"
         android:text="x" />
 
     <ImageButton
@@ -51,13 +51,14 @@
 
     <ImageView
         android:id="@+id/hinhHangInCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
 
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="10dp"
+
+        android:layout_marginTop="11dp"
         app:srcCompat="@drawable/voucher" />
 
     <TextView
@@ -82,13 +83,13 @@
         app:srcCompat="@drawable/tru" />
 
     <TextView
-        android:id="@+id/priceInCart"
+        android:id="@+id/totalPriceInCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="83dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginEnd="45dp"
         android:fontFamily="sans-serif"
         android:text="500.000"
         android:textColor="#F00505"
@@ -96,27 +97,23 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="83dp"
-        android:layout_marginEnd="11dp"
-        android:fontFamily="sans-serif"
-        android:text="đ"
-        android:textColor="#F00505"
-        android:textSize="12sp" />
-
-    <TextView
         android:id="@+id/soLuong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="17dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="72dp"
         android:layout_toEndOf="@+id/imageButton3"
         android:text="3" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="19dp" />
 
 
 </RelativeLayout>
