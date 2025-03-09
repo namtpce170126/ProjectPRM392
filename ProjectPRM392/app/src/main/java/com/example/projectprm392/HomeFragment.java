@@ -17,10 +17,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectprm392.DAOs.ProductDAO;
+import com.example.projectprm392.Database.DatabaseHelper;
 import com.example.projectprm392.HomeControl.Category;
 import com.example.projectprm392.HomeControl.CategoryAdapter;
 import com.example.projectprm392.HomeControl.DiscountProductAdapter;
-import com.example.projectprm392.HomeControl.Food;
+import com.example.projectprm392.Models.Product;
 
 import java.util.ArrayList;
 
@@ -30,7 +32,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView recyclerBestSeller;
     private DiscountProductAdapter foodAdapter;
-    private ArrayList<Food> foodList;
+    private ArrayList<Product> foodList;
+    private ProductDAO productDAO;
 
     private RecyclerView recyclerCategory;
     private CategoryAdapter categoryAdapter;
@@ -63,20 +66,28 @@ public class HomeFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
 
-        foodList = new ArrayList<>();
-        foodList.add(new Food("Pizza", "120.000đ", R.drawable.sample_food));
-        foodList.add(new Food("Burger", "75.000đ", R.drawable.sample_food));
-        foodList.add(new Food("Gà rán", "95.000đ", R.drawable.sample_food));
-        foodList.add(new Food("Mì Ý", "85.000đ", R.drawable.sample_food));
-        foodList.add(new Food("Khoai tây chiên", "45.000đ", R.drawable.sample_food));
+        productDAO = new ProductDAO(new DatabaseHelper(getContext()));
+        foodList = new ArrayList<>(productDAO.getAll(0));
 
         foodAdapter = new DiscountProductAdapter(getContext(), foodList);
         recyclerView.setAdapter(foodAdapter);
 
-        // RECYCLERVIEW FOR BEST SELLER
-        recyclerBestSeller = view.findViewById(R.id.recyclerBestSeller);
-        recyclerBestSeller.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
-        recyclerBestSeller.setAdapter(new DiscountProductAdapter(getContext(), foodList));
+
+
+//        foodList = new ArrayList<>();
+//        foodList.add(new Pro("Pizza", "120.000đ", R.drawable.sample_food));
+//        foodList.add(new Food("Burger", "75.000đ", R.drawable.sample_food));
+//        foodList.add(new Food("Gà rán", "95.000đ", R.drawable.sample_food));
+//        foodList.add(new Food("Mì Ý", "85.000đ", R.drawable.sample_food));
+//        foodList.add(new Food("Khoai tây chiên", "45.000đ", R.drawable.sample_food));
+//
+//        foodAdapter = new DiscountProductAdapter(getContext(), foodList);
+//        recyclerView.setAdapter(foodAdapter);
+//
+//        // RECYCLERVIEW FOR BEST SELLER
+//        recyclerBestSeller = view.findViewById(R.id.recyclerBestSeller);
+//        recyclerBestSeller.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
+//        recyclerBestSeller.setAdapter(new DiscountProductAdapter(getContext(), foodList));
 
         // RECYCLER VIEW FOR CATEGORY
         recyclerCategory = view.findViewById(R.id.recyclerCategories);

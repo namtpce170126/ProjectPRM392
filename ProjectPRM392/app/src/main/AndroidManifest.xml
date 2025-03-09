@@ -49,8 +49,9 @@
         <activity
             android:name=".ProductControlU.CartActivity"
             android:exported="true" />
+
         <activity
-            android:name=".ProductControlU.ProductActivity"
+            android:name=".MainActivity"
             android:exported="true">
 
         </activity>
@@ -63,6 +64,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ProductControlU.ProductActivity"
+            android:exported="true" />
         <activity
             android:name=".ProductControlU.DashboardActivity"
             android:exported="true" />

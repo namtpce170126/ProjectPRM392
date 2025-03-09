@@ -44,6 +44,28 @@ public class CartDAOU extends SingletonBaseDAO{
         return cartList;
     }
 
+
+    public Cart getCartItemByProductId(int customerId, int productId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cart cartItem = null;
+
+        String query = "SELECT * FROM cart WHERE acc_id = ? AND pro_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(customerId), String.valueOf(productId)});
+
+        if (cursor.moveToFirst()) {
+            cartItem = new Cart(
+                    cursor.getInt(0), // cartId
+                    cursor.getInt(1), // customerId
+                    cursor.getInt(2), // productId
+                    cursor.getInt(3), // quantity
+                    cursor.getDouble(4) // totalPrice
+            );
+        }
+        cursor.close();
+        db.close();
+        return cartItem;
+    }
+
     public Map<Integer, String> getProductImages(List<Cart> cartList) {
         open();
         Map<Integer, String> productImages = new HashMap<>();
@@ -90,4 +112,21 @@ public class CartDAOU extends SingletonBaseDAO{
             }
         }
     }
+
+
+    public boolean updateCart(Cart cart) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("pro_quantity", cart.getProQuantity());
+        values.put("cart_price", cart.getCartPrice());
+
+        // Cập nhật dựa trên customer_id (acc_id) và product_id (pro_id)
+        int rows = db.update("cart", values, "acc_id = ? AND pro_id = ?",
+                new String[]{String.valueOf(cart.getCusId()), String.valueOf(cart.getProId())});
+
+        db.close();
+        return rows > 0;
+    }
+
+
 }
