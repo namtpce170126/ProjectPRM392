@@ -4,10 +4,13 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -21,17 +24,36 @@
         tools:targetApi="31">
 
         <activity
+            android:name=".ProductControl.AddingProduct"
+            android:exported="false" />
+        <activity
             android:name=".ProductControl.ProductList"
-            android:exported="true"/>
-
-        <activity android:name=".ProductControl.ProductDetailAdmin"
-            android:exported="true"/>
-
-        <activity android:name=".Admin.Dashboard"
+            android:exported="true" />
+        <activity
+            android:name=".ProductControl.ProductDetailAdmin"
+            android:exported="true" />
+        <activity
+            android:name=".Admin.Dashboard"
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".PermissionControl.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PermissionControl.RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PermissionControl.Permisson"
+            android:exported="true" />
+        <activity
+            android:name=".ProductControlU.CartActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ProductControlU.ProductActivity"
+            android:exported="true">
 
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -41,9 +63,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".CartActivity"
+            android:name=".ProductControlU.DashboardActivity"
             android:exported="true" />
     </application>
 
