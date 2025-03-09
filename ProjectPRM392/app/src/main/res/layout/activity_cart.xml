@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E4E0E0"
-    tools:context=".CartActivity">
+    tools:context=".ProductControlU.CartActivity">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F2EDED">
+        android:background="#FFFFFF">
 
 
         <TextView
@@ -151,12 +151,14 @@
         <ImageButton
             android:id="@+id/imageButton2"
             android:layout_width="23dp"
-            android:layout_height="26dp"
+            android:layout_height="36dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="29dp"
             android:layout_marginTop="30dp"
-            app:srcCompat="@drawable/address_icon" />
+            android:backgroundTint="#FFFFFF"
+            android:onClick="goToProductDetail"
+            app:srcCompat="@drawable/iconbacku"/>
 
 
     </RelativeLayout>

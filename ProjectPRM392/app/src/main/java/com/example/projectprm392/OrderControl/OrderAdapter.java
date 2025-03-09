@@ -3,6 +3,7 @@ package com.example.projectprm392.OrderControl;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,9 +21,20 @@ import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
     private List<Order> orderList;
+    private OnCancelOrderListener cancelOrderListener; // Thêm listener
 
     public OrderAdapter(List<Order> orderList) {
         this.orderList = orderList;
+    }
+
+    // Interface để xử lý sự kiện hủy đơn hàng
+    public interface OnCancelOrderListener {
+        void onCancelOrderClicked(int orderId);
+    }
+
+    // Thiết lập listener
+    public void setOnCancelOrderListener(OnCancelOrderListener listener) {
+        this.cancelOrderListener = listener;
     }
 
     @NonNull
@@ -41,6 +53,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.txtOrderStatus.setText("Status: " + order.getStatus());
         holder.txtOrderDate.setText("Date: " + order.getOrderDate());
         holder.txtTotalPrice.setText(String.format("%.2f", order.getTotalPrice()));
+
+        // Hiển thị hoặc ẩn nút CancelOrder dựa trên trạng thái
+        if ("Ordered".equals(order.getStatus())) {
+            holder.btnCancelOrder.setVisibility(View.VISIBLE);
+            holder.btnCancelOrder.setOnClickListener(v -> {
+                if (cancelOrderListener != null) {
+                    cancelOrderListener.onCancelOrderClicked(order.getOrderId());
+                }
+            });
+        } else {
+            holder.btnCancelOrder.setVisibility(View.GONE);
+        }
 
         // Lấy danh sách chi tiết đơn hàng từ OrderDetailDAO
         DatabaseHelper dbHelper = new DatabaseHelper(holder.itemView.getContext());
@@ -67,6 +91,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
         TextView txtOrderStatus, txtOrderDate, txtTotalPrice;
         RecyclerView recyclerViewDetails;
+        Button btnCancelOrder;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +99,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
             txtTotalPrice = itemView.findViewById(R.id.txtTotalPrice);
             recyclerViewDetails = itemView.findViewById(R.id.recyclerViewDetails);
+            btnCancelOrder = itemView.findViewById(R.id.btnCancelOrder);
         }
     }
 }
