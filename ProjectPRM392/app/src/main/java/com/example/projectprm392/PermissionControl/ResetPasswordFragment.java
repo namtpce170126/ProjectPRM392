@@ -1,6 +1,7 @@
 package com.example.projectprm392.PermissionControl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -23,7 +24,7 @@ import com.example.projectprm392.R;
 
 public class ResetPasswordFragment extends Fragment {
 
-    private ImageView btnClose, ivTogglePassword1, ivTogglePassword2;
+    private ImageView btnBack, ivTogglePassword1, ivTogglePassword2;
     private EditText etNewPass, etConfirmPass;
     private Button btnResetPass;
     boolean isPasswordVisible1 = false;
@@ -40,7 +41,7 @@ public class ResetPasswordFragment extends Fragment {
         // Tải trang reset password
         View view =  inflater.inflate(R.layout.reset_password, container, false);
 
-        btnClose = view.findViewById(R.id.btnClose);
+        btnBack = view.findViewById(R.id.btnBack);
         etNewPass = view.findViewById(R.id.etNewPass);
         etConfirmPass = view.findViewById(R.id.etConfirmPass);
         btnResetPass = view.findViewById(R.id.btnResetPass);
@@ -85,7 +86,7 @@ public class ResetPasswordFragment extends Fragment {
         btnResetPass.setOnClickListener(v -> resetPassword());
 
         // Nút đóng fragment
-        btnClose.setOnClickListener(v -> backForgotPass());
+        btnBack.setOnClickListener(v -> backForgotPass());
 
         return view;
     }
@@ -96,7 +97,7 @@ public class ResetPasswordFragment extends Fragment {
         ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, forgotPasswordFragment)
+                .replace(R.id.fragment_container_permission, forgotPasswordFragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -142,22 +143,6 @@ public class ResetPasswordFragment extends Fragment {
     }
 
     private boolean validatePassword(String newPassword, String confirmPassword) {
-        /*if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(requireContext(), "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (newPassword.length() < 8 || !newPassword.matches(".*[A-Z].*") ||
-                !newPassword.matches(".*[a-z].*") || !newPassword.matches(".*\\d.*") ||
-                !newPassword.matches(".*[!@#$%^&*()].*")) {
-            Toast.makeText(requireContext(), "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt!", Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        if (!newPassword.equals(confirmPassword)) {
-            Toast.makeText(requireContext(), "Mật khẩu xác nhận không khớp!", Toast.LENGTH_SHORT).show();
-            return false;
-        }*/
 
         // Validate dữ liệu
         if (newPassword.isEmpty()) {
@@ -184,11 +169,9 @@ public class ResetPasswordFragment extends Fragment {
     // Quay về trang đăng nhập
     private void backToLogin() {
         removeForgotPassSession();
-        LoginFragment loginFragment = new LoginFragment();
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, loginFragment)
-                .commit();
+        Intent intent = new Intent(requireContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
 }

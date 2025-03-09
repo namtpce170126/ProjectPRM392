@@ -32,7 +32,7 @@ import java.util.Locale;
 
 public class RegisterInfoFragment extends Fragment {
     private EditText etFullname, etEmail, etPass, etBirth;
-    private ImageView ivDeleteSign1, ivDeleteSign2, ivTogglePassword, btnDatePicker;
+    private ImageView ivDeleteSign1, ivDeleteSign2, ivTogglePassword, btnDatePicker, btnBack;
     private Button btnConfirmRegister;
     boolean isPasswordVisible = false;
     private final Calendar calendar = Calendar.getInstance();
@@ -56,6 +56,7 @@ public class RegisterInfoFragment extends Fragment {
         ivTogglePassword = view.findViewById(R.id.ivTogglePassword);
         btnDatePicker = view.findViewById(R.id.ivCalender);
         btnConfirmRegister = view.findViewById(R.id.btnComplete);
+        btnBack = view.findViewById(R.id.btnBack);
 
         // Xóa nội dung trong ô Fullname
         ivDeleteSign1.setOnClickListener(v -> {
@@ -88,6 +89,8 @@ public class RegisterInfoFragment extends Fragment {
         btnDatePicker.setOnClickListener(v -> showDatePicker());
 
         btnConfirmRegister.setOnClickListener(v -> registerAccount());
+
+        btnBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
 
         return view;
     }
