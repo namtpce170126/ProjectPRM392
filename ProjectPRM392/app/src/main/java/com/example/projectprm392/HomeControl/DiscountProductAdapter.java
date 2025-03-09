@@ -76,13 +76,13 @@ public class DiscountProductAdapter extends RecyclerView.Adapter<DiscoutProductV
     }
 
     private void addToCart(Product product) {
-        int customerId = 1; // ID khách hàng giả định, có thể lấy từ session hoặc SharedPreferences
-        int stockQuantity = product.getProQuantity(); // Lấy số lượng sản phẩm có trong kho
+        int customerId = 1;
+        int stockQuantity = product.getProQuantity();
 
         Cart existingCartItem = cartDAO.getCartItemByProductId(customerId, product.getProId());
 
         if (existingCartItem != null) {
-            // Nếu sản phẩm đã có trong giỏ, tăng số lượng nhưng không vượt quá tồn kho
+
             int newQuantity = existingCartItem.getProQuantity() + 1;
 
             if (newQuantity > stockQuantity) {
@@ -100,7 +100,7 @@ public class DiscountProductAdapter extends RecyclerView.Adapter<DiscoutProductV
                 Toast.makeText(context, "Lỗi khi cập nhật giỏ hàng!", Toast.LENGTH_SHORT).show();
             }
         } else {
-            // Nếu sản phẩm chưa có trong giỏ, kiểm tra số lượng trước khi thêm mới
+
             if (stockQuantity < 1) {
                 Toast.makeText(context, "Sản phẩm đã hết hàng!", Toast.LENGTH_SHORT).show();
                 return;

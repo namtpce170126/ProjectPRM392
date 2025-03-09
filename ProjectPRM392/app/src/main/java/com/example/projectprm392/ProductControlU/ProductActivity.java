@@ -80,7 +80,7 @@ private int productQuantity;
 
     }
     private void addToCart() {
-        int customerId = 1;  // ID khách hàng, có thể lấy từ session hoặc user đăng nhập
+        int customerId = 1;
         int productId = getIntent().getIntExtra("pro_id", -1);
 
         if (productId == -1) {
@@ -96,7 +96,7 @@ private int productQuantity;
         Cart existingCartItem = cartDAO.getCartItemByProductId(customerId, productId);
 
         if (existingCartItem != null) {
-            // Nếu sản phẩm đã có trong giỏ, cộng dồn số lượng
+
             int newQuantity = existingCartItem.getProQuantity() + quantity;
 
             if (newQuantity > stockQuantity) {
@@ -114,7 +114,7 @@ private int productQuantity;
                 Toast.makeText(this, "Lỗi khi cập nhật giỏ hàng!", Toast.LENGTH_SHORT).show();
             }
         } else {
-            // Nếu sản phẩm chưa có trong giỏ, kiểm tra số lượng trước khi thêm mới
+
             if (quantity > stockQuantity) {
                 Toast.makeText(this, "Không đủ hàng trong kho! Chỉ còn " + stockQuantity + " sản phẩm.", Toast.LENGTH_SHORT).show();
                 return;
