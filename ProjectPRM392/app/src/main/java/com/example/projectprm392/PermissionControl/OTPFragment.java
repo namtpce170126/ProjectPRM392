@@ -3,11 +3,14 @@ package com.example.projectprm392.PermissionControl;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.projectprm392.Admin.Dashboard;
 import com.example.projectprm392.R;
 
 import java.util.Random;
@@ -37,7 +41,7 @@ public class OTPFragment extends Fragment {
     private String generatedOTP;
     private TextView tvPhoneNumber, tvResendCode, tvTimer;
     private Button btnConfirmOTP;
-    private ImageView btnClose;
+    private ImageView btnBack;
 
     public OTPFragment(){
 
@@ -53,7 +57,7 @@ public class OTPFragment extends Fragment {
         tvResendCode = view.findViewById(R.id.tvResendCode);
         tvTimer = view.findViewById(R.id.tvTimer);
         btnConfirmOTP = view.findViewById(R.id.btnConfirmOTP);
-        btnClose = view.findViewById(R.id.btnClose);
+        btnBack = view.findViewById(R.id.btnBack);
 
         // Mảng chứa 6 mã số
         otpInputs[0] = view.findViewById(R.id.otp1);
@@ -73,8 +77,24 @@ public class OTPFragment extends Fragment {
         // Xử lý xác nhận OTP
         btnConfirmOTP.setOnClickListener(v -> validateOTP());
 
+
         // Xử lý quay về
-        btnClose.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
+        btnBack.setOnClickListener(v -> {
+            Bundle bundle = getArguments();
+            if (bundle == null) {
+                Log.d("OTPFragment", "Bundle is NULL"); // Kiểm tra nếu bundle không tồn tại
+                requireActivity().getSupportFragmentManager().popBackStack();
+            } else {
+                boolean regToOTP = bundle.getBoolean("reg_to_otp", false);
+                Log.d("OTPFragment", "check: " + regToOTP);
+                if (regToOTP) {
+                    Intent intent = new Intent(requireContext(), RegisterActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }
+
+        });
 
         // Xử lý gửi lại mã
         tvResendCode.setOnClickListener(v -> resendOTP());
@@ -171,7 +191,7 @@ public class OTPFragment extends Fragment {
         RegisterInfoFragment registerInfoFragment = new RegisterInfoFragment();
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, registerInfoFragment)
+                .replace(R.id.fragment_container_permission, registerInfoFragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -187,7 +207,7 @@ public class OTPFragment extends Fragment {
         ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, resetPasswordFragment)
+                .replace(R.id.fragment_container_permission, resetPasswordFragment)
                 .addToBackStack(null)
                 .commit();
     }

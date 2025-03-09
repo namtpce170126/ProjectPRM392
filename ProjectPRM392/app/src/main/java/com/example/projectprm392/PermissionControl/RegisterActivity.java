@@ -6,48 +6,46 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
+import com.example.projectprm392.MainActivity;
 import com.example.projectprm392.R;
 
-public class RegisterFragment extends Fragment {
+public class RegisterActivity extends AppCompatActivity {
 
+    private ImageView btnClose;
     TextView linkLogin;
     EditText etPhoneNumber;
-    ImageView btnClose;
     Button btnRegister;
 
-    public RegisterFragment() {
-        // Required empty public constructor
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_register);
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Tải trang register
-        View view = inflater.inflate(R.layout.register, container, false);
+        btnClose = findViewById(R.id.btnClose);
+        linkLogin = findViewById(R.id.tvLogin);
+        etPhoneNumber = findViewById(R.id.etPhone);
+        btnRegister = findViewById(R.id.btnContinue);
 
-        linkLogin = view.findViewById(R.id.tvLogin);
-        etPhoneNumber = view.findViewById(R.id.etPhone);
-        btnRegister = view.findViewById(R.id.btnContinue);
-        btnClose = view.findViewById(R.id.btnClose);
+        btnClose.setOnClickListener(view -> {
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            intent.putExtra("open_client_profile", true); // Gửi dữ liệu để MainActivity biết cần mở ClientProfileFragment
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
 
         // Bắt lỗi nhập số điện thoại
         etPhoneNumber.addTextChangedListener(new TextWatcher() {
@@ -69,28 +67,22 @@ public class RegisterFragment extends Fragment {
             if (validatePhoneNumber(phoneNumber)) {
                 // Thực thi chuyển dữ liệu số điện thoại sang fragment khác
                 savePhoneNumber(phoneNumber); // Lưu số điện thoại vào SharedPreferences
-                Toast.makeText(getContext(), "Số điện thoại đã lưu!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Số điện thoại đã lưu!", Toast.LENGTH_SHORT).show();
 
-                // Chuyển sang RegisterFragment
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new OTPFragment())
-                        .addToBackStack(null)
-                        .commit();
+                // Chuyển sang Permission OTPFragment
+                Intent intent = new Intent(RegisterActivity.this, Permisson.class);
+                intent.putExtra("register_step", true); // Gửi dữ liệu để MainActivity biết cần mở ClientProfileFragment
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 
-        // Nút đóng fragment
-        btnClose.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
-
-        // Chuyển sang Login
+        // Chuyển trang đăng nhập
         linkLogin.setOnClickListener(v -> {
-            // Quay lại LoginFragment
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new LoginFragment())
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
-        return view;
     }
 
     // Hàm kiểm tra số điện thoại
@@ -108,7 +100,7 @@ public class RegisterFragment extends Fragment {
 
     // Hàm lưu số điện thoại vào SharedPreferences
     private void savePhoneNumber(String phoneNumber) {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("phone_number", phoneNumber);
         editor.apply();

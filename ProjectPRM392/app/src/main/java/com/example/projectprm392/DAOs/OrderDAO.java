@@ -105,4 +105,33 @@ public class OrderDAO extends SingletonBaseDAO {
         close();
         return result;
     }
+
+    // Lấy danh sách đơn hàng theo trạng thái
+    // Get orders by status
+    public List<Order> getOrdersByStatus(String status) {
+        open();
+        List<Order> orders = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM orders WHERE status = ? AND isDelete = 0", new String[]{status});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Order order = new Order(
+                        cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getDouble(6),
+                        cursor.getInt(7)
+                );
+                orders.add(order);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        close();
+        return orders;
+    }
+
 }

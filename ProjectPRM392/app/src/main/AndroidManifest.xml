@@ -34,9 +34,28 @@
             android:exported="true" />
         <activity
             android:name=".Admin.Dashboard"
-            android:exported="true"></activity>
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".PermissionControl.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PermissionControl.RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PermissionControl.Permisson"
+            android:exported="true" />
+        <activity
+            android:name=".ProductControlU.CartActivity"
+            android:exported="true" />
         <activity
             android:name=".ProductControlU.ProductActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,12 +63,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ProductControlU.CartActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
         <activity
             android:name=".ProductControlU.DashboardActivity"
             android:exported="true" />
