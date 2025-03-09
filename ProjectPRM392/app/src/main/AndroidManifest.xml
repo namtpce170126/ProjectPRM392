@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,21 +16,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectPRM392"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ProductControlU.ProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductControl.ProductDetailAdmin"
+            android:exported="false" />
         <activity
             android:name=".ProductControl.ProductList"
-            android:exported="true"/>
-        <activity android:name=".ProductControl.ProductDetailAdmin"
-            android:exported="true"/>
-        <activity android:name=".Admin.Dashboard"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Admin.Dashboard"
+            android:exported="true" />
         <activity
             android:name=".PermissionControl.ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ProductControlU.DashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CartActivity"
+            android:name=".ProductControlU.CartActivity"
             android:exported="true" />
     </application>
 

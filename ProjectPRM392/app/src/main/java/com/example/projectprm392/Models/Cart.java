@@ -14,4 +14,44 @@ public class Cart {
         this.proQuantity = proQuantity;
         this.cartPrice = cartPrice;
     }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+
+    public int getCusId() {
+        return cusId;
+    }
+
+    public void setCusId(int cusId) {
+        this.cusId = cusId;
+    }
+
+    public int getProId() {
+        return proId;
+    }
+
+    public void setProId(int proId) {
+        this.proId = proId;
+    }
+
+    public int getProQuantity() {
+        return proQuantity;
+    }
+
+    public void setProQuantity(int proQuantity) {
+        this.proQuantity = proQuantity;
+    }
+
+    public double getCartPrice() {
+        return cartPrice;
+    }
+
+    public void setCartPrice(double cartPrice) {
+        this.cartPrice = cartPrice;
+    }
 }

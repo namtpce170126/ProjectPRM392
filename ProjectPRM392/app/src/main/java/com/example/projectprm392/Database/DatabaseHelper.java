@@ -107,13 +107,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // TẠO BẢNG CART
         String CREATE_CART_TABLE = "CREATE TABLE cart (" +
                 "cart_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "cus_id INTEGER, " +
+                "acc_id INTEGER, " +
                 "pro_id INTEGER, " +
                 "pro_quantity INTEGER, " +
                 "cart_price DOUBLE, " +
-                "FOREIGN KEY (cus_id) REFERENCES account(acc_id), " +
+                "FOREIGN KEY (acc_id) REFERENCES account(acc_id), " +
                 "FOREIGN KEY (pro_id) REFERENCES product(pro_id))";
         db.execSQL(CREATE_CART_TABLE);
+
+
+        db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
+                " VALUES (1,5,5,6.0)");
+        db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
+                " VALUES (1,4,4,6.0)");
+        db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
+                " VALUES (1,6,5,10.0)");
+        db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
+                " VALUES (1,1,8,6.0)");
+        db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
+                " VALUES (1,2,54,6.0)");
+
+
 
         // Tạo bảng Orders
         String CREATE_ORDERS_TABLE = "CREATE TABLE orders (" +
