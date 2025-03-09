@@ -1,5 +1,8 @@
 package com.example.projectprm392.OrderControl;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,13 +15,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.projectprm392.Order;
-import com.example.projectprm392.OrderDetail;
+import com.example.projectprm392.DAOs.OrderDAO;
+import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.Models.Order;
 import com.example.projectprm392.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,14 +37,12 @@ public class OrderHistoryFragment extends Fragment {
     private ImageView btnBackToProfile;
     private OrderAdapter orderAdapter;
     private List<Order> orderList;
-    private LinearLayout lastSelectedButton = null;
+    private LinearLayout lastSelectedButton = null, linearLayoutNoOrder = null;
     private TextView textView11;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private OrderDAO orderDAO;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -56,7 +58,6 @@ public class OrderHistoryFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment OrderHistoryFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static OrderHistoryFragment newInstance(String param1, String param2) {
         OrderHistoryFragment fragment = new OrderHistoryFragment();
         Bundle args = new Bundle();
@@ -77,61 +78,51 @@ public class OrderHistoryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_history, container, false);
 
-        // Khởi tạo RecyclerView từ view đã inflated
+        // Khởi tạo các view
         recyclerView = view.findViewById(R.id.OrderHistoryRecycleView);
+        linearLayoutNoOrder = view.findViewById(R.id.linearLayoutNoOrder);
         btnBackToProfile = view.findViewById(R.id.btnBackToProfile);
-        // Thiết lập LinearLayoutManager, sử dụng getContext() hoặc requireContext()
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Khởi tạo DatabaseHelper và OrderDAO
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        orderDAO = new OrderDAO(dbHelper);
 
         btnBackToProfile.setOnClickListener(v -> {
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(
-                                R.anim.slide_in_left,   // Fragment trước vào từ trái
-                                R.anim.slide_out_right  // Fragment hiện tại ra bên phải
+                                R.anim.slide_in_left,
+                                R.anim.slide_out_right
                         )
                         .commit();
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
-        // Tạo dữ liệu mẫu
-        orderList = new ArrayList<>();
-        orderList.add(new Order("1", "2025-02-21", "Ordered", Arrays.asList(
-                new OrderDetail("Gà rán", 100000, 2),
-                new OrderDetail("Coca", 20000, 1)
-        )));
-        orderList.add(new Order("2", "2025-02-26", "Preparing", Arrays.asList(
-                new OrderDetail("Pizza", 150000, 1)
-        )));
-        orderList.add(new Order("3", "2025-02-26", "Delivering", Arrays.asList(
-                new OrderDetail("Burger", 80000, 3),
-                new OrderDetail("Pepsi", 25000, 2)
-        )));
-        orderList.add(new Order("4", "2025-02-27", "Delivered", Arrays.asList(
-                new OrderDetail("Sushi", 120000, 2)
-        )));
-        orderList.add(new Order("5", "2025-02-26", "Cancelled", Arrays.asList(
-                new OrderDetail("Phở", 60000, 4),
-                new OrderDetail("Trà đá", 10000, 4)
-        )));
-        orderList.add(new Order("6", "2025-02-26", "Delivered", Arrays.asList(
-                new OrderDetail("Phở", 60000, 4),
-                new OrderDetail("Trà đá", 10000, 4)
-        )));
-        orderList.add(new Order("7", "2025-02-26", "Preparing", Arrays.asList(
-                new OrderDetail("Phở", 60000, 4),
-                new OrderDetail("Trà đá", 10000, 4)
-        )));
+        // Lấy danh sách đơn hàng cho account_id
+        int accountId = getLoggedInAccountId();
+        orderList = getOrdersForAccount(accountId); // Lấy đơn hàng cho account_id
+        Collections.reverse(orderList); // Đảo ngược danh sách nếu muốn hiển thị mới nhất trước
 
-        Collections.reverse(orderList);
-        // Thiết lập adapter
-        orderAdapter = new OrderAdapter(orderList);
-        recyclerView.setAdapter(orderAdapter);
+        // Kiểm tra nếu orderList rỗng thì hiển thị txtNoOrder, ngược lại hiển thị RecyclerView
+        if (orderList == null || orderList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE); // Ẩn RecyclerView
+            linearLayoutNoOrder.setVisibility(View.VISIBLE); // Hiển thị TextView
+        } else {
+            recyclerView.setVisibility(View.VISIBLE); // Hiển thị RecyclerView
+            linearLayoutNoOrder.setVisibility(View.GONE); // Ẩn TextView
+
+            // Thiết lập adapter
+            orderAdapter = new OrderAdapter(orderList);
+            recyclerView.setAdapter(orderAdapter);
+
+            // Thiết lập listener cho nút Cancel Order
+            orderAdapter.setOnCancelOrderListener(orderId -> showCancelConfirmationDialog(orderId));
+        }
 
         // Lấy tham chiếu đến các nút trạng thái
         LinearLayout btnOrdered = view.findViewById(R.id.btnOrdered);
@@ -151,37 +142,95 @@ public class OrderHistoryFragment extends Fragment {
         return view;
     }
 
+    // Phương thức lấy danh sách đơn hàng cho một account_id cụ thể
+    private List<Order> getOrdersForAccount(int accountId) {
+        List<Order> allOrders = orderDAO.getAllOrders();
+        List<Order> filteredOrders = new ArrayList<>();
+        for (Order order : allOrders) {
+            if (order.getAccountId() == accountId) {
+                filteredOrders.add(order);
+            }
+        }
+        return filteredOrders;
+    }
+
     private void filterOrders(String status) {
         List<Order> filteredList = new ArrayList<>();
         for (Order order : orderList) {
-            if (order.getOrderStatus().equals(status)) {
+            if (order.getStatus().equals(status)) {
                 filteredList.add(order);
             }
         }
-        orderAdapter.updateList(filteredList); // Cập nhật adapter với danh sách đã lọc
+        linearLayoutNoOrder = getView().findViewById(R.id.linearLayoutNoOrder);
+        if (filteredList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            linearLayoutNoOrder.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            linearLayoutNoOrder.setVisibility(View.GONE);
+            orderAdapter.updateList(filteredList); // Cập nhật adapter với danh sách đã lọc
+        }
     }
 
     // Phương thức lọc danh sách và thay đổi giao diện nút
     private void setButtonSelected(LinearLayout button, String status) {
         if (lastSelectedButton == button) {
-            // Nếu nút đã được chọn, bỏ chọn nó
             button.getChildAt(0).setBackgroundResource(R.drawable.bg_rounded_square);
             lastSelectedButton = null;
-            // Hiển thị toàn bộ danh sách
-            orderAdapter.updateList(new ArrayList<>(orderList));
+            orderAdapter.updateList(orderList); // Hiển thị toàn bộ danh sách
             textView11.setText("Order");
         } else {
-            // Nếu chọn nút mới
             if (lastSelectedButton != null) {
-                // Trả lại background mặc định cho nút trước đó
                 lastSelectedButton.getChildAt(0).setBackgroundResource(R.drawable.bg_rounded_square);
             }
-            // Đặt background bg_rounded_square_selected cho nút được chọn
             button.getChildAt(0).setBackgroundResource(R.drawable.bg_rounded_square_selected);
             lastSelectedButton = button;
-            // Lọc danh sách theo trạng thái
-            filterOrders(status);
+            filterOrders(status); // Lọc danh sách theo trạng thái
             textView11.setText(status);
         }
+    }
+
+    // Phương thức hiển thị dialog xác nhận hủy đơn hàng
+    private void showCancelConfirmationDialog(int orderId) {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Confirm Cancellation")
+                .setMessage("Are you sure you want to cancel this order?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // Xác nhận hủy, cập nhật trạng thái
+                    updateOrderStatus(orderId, "Cancelled");
+                    dialog.dismiss();
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    dialog.dismiss(); // Đóng dialog nếu chọn "No"
+                })
+                .setCancelable(true) // Cho phép đóng dialog bằng nút Back
+                .show();
+    }
+
+    // Phương thức cập nhật trạng thái đơn hàng
+    private void updateOrderStatus(int orderId, String newStatus) {
+        Order order = orderDAO.getOrderById(orderId);
+        if (order != null) {
+            order.setStatus(newStatus);
+            int rowsAffected = orderDAO.updateOrder(order);
+            if (rowsAffected > 0) {
+                Toast.makeText(getContext(), "Order cancelled successfully!", Toast.LENGTH_SHORT).show();
+                // Làm mới danh sách đơn hàng
+                int accountId = getLoggedInAccountId();
+                orderList = getOrdersForAccount(accountId);
+                Collections.reverse(orderList);
+                orderAdapter.updateList(orderList);
+            } else {
+                Toast.makeText(getContext(), "Failed to cancel order!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getContext(), "Order not found!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Lấy account_id từ session
+    private int getLoggedInAccountId() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("logged_in_user_id", -1);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.projectprm392.SearchControl;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
@@ -39,7 +38,7 @@ public class SearchProduct extends Fragment {
 
                 if (!query.isEmpty() && query != null) {
                     // Thay đổi fragment khi tìm kiếm
-                    SearchFoodResultFragment searchResultFragment = SearchFoodResultFragment.newInstance(query);
+                    SearchProductResultFragment searchResultFragment = com.example.projectprm392.SearchControl.SearchProductResultFragment.newInstance(query);
                     loadFragment(searchResultFragment);
                 }
                 return false;

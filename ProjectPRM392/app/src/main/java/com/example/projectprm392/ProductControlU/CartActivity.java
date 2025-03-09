@@ -38,25 +38,6 @@ public class CartActivity extends AppCompatActivity implements MyAdapter.TotalPr
 
         TongCartCheck = findViewById(R.id.tongTien);
 
-//
-//        List<Cart> items = new ArrayList<Cart>();
-//        items.add(new Cart(R.drawable.voucher,"Banh Cam", 3,5.5));
-//        items.add(new Cart(R.drawable.voucher,"Banh Chung", 5,4.5));
-//        items.add(new Cart(R.drawable.voucher,"Banh Tieu", 38,2.5));
-//        items.add(new Cart(R.drawable.voucher,"Banh Cam", 3,5.5));
-//        items.add(new Cart(R.drawable.voucher,"Banh Chung", 5,4.5));
-//        items.add(new Cart(R.drawable.voucher,"Banh Tieu", 38,2.5));
-//        items.add(new Cart(R.drawable.voucher,"Banh Cam", 3,5.5));
-//        items.add(new Cart(R.drawable.voucher,"Banh Chung", 5,4.5));
-//        items.add(new Cart(R.drawable.voucher,"Banh Tieu", 38,2.5));
-
-
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(new MyAdapter(this,items));
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_cart);
-
-//        recyclerView = findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
@@ -72,7 +53,7 @@ public class CartActivity extends AppCompatActivity implements MyAdapter.TotalPr
 
 
         // Lấy danh sách sản phẩm từ database
-        List<Product> productList = productDAO.getAll();
+        List<Product> productList = productDAO.getAll(0);
         Map<Integer, Product> productMap = new HashMap<>();
         for (Product product : productList) {
             productMap.put(product.getProId(), product);

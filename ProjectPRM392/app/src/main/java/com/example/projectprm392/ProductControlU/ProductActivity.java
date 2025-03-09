@@ -27,8 +27,6 @@ public class ProductActivity extends AppCompatActivity {
     private ImageView imgPro,imgPro2,imgPro3,imgPro4;
     int quantity = 1;
     private ImageButton shareButton;
-    private String productName = "gà rán số 6!";
-    private String productUrl = "https://uyenvm.com/product/6";  // URL sản phẩm cố định
 
 
     @Override
@@ -50,7 +48,7 @@ public class ProductActivity extends AppCompatActivity {
         findViewById(R.id.button3).setOnClickListener(view -> addToCart());
 
 
-        Product getProductDetail = productDAO.getProductDetailsByProductId(6);
+        Product getProductDetail = productDAO.getProductDetailsByProductId(5);
         pricePro.setText(getProductDetail.getProPrice()+"");
         namePro.setText(getProductDetail.getProName());
         desPro.setText(getProductDetail.getDescription());
@@ -69,14 +67,7 @@ public class ProductActivity extends AppCompatActivity {
         findViewById(R.id.imageButton8).setOnClickListener(view -> decreaseQuantity());
 
 
-        shareButton = findViewById(R.id.imageButton6);
 
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareToAnyApp(productName, productUrl);
-            }
-        });
 
     }
 
@@ -84,11 +75,11 @@ public class ProductActivity extends AppCompatActivity {
         int customerId = 1;
 
         // Lấy thông tin sản phẩm từ DAO
-        Product product = productDAO.getProductDetailsByProductId(6);
+        Product product = productDAO.getProductDetailsByProductId(5);
 
         // Tạo đối tượng Cart
         Cart cartItem = new Cart(
-                0, // Giả sử cartId tự động tăng trong database
+                0, //cartId tự động tăng
                 customerId,
                 product.getProId(),
                 quantity,
@@ -106,13 +97,13 @@ public class ProductActivity extends AppCompatActivity {
         }
     }
 
-    // Hàm tăng số lượng
+    //  tăng số lượng
     private void increaseQuantity() {
         quantity++;
         quantityText.setText(String.valueOf(quantity));
     }
 
-    // Hàm giảm số lượng (không cho xuống dưới 1)
+    //  giảm số lượng (không cho xuống dưới 1)
     private void decreaseQuantity() {
         if (quantity > 1) {
             quantity--;
@@ -133,13 +124,13 @@ public class ProductActivity extends AppCompatActivity {
 
 
 
-    private void shareToAnyApp(String name, String url) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, "🔥 " + name + " - Xem ngay tại: " + url);
-
-        // Mở trình chọn ứng dụng
-        startActivity(Intent.createChooser(intent, "Chia sẻ sản phẩm"));
-    }
+//    private void shareToAnyApp(String name, String url) {
+//        Intent intent = new Intent(Intent.ACTION_SEND);
+//        intent.setType("text/plain");
+//        intent.putExtra(Intent.EXTRA_TEXT, "🔥 " + name + " - Xem ngay tại: " + url);
+//
+//        // Mở trình chọn ứng dụng
+//        startActivity(Intent.createChooser(intent, "Chia sẻ sản phẩm"));
+//    }
 
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +25,7 @@ import java.util.List;
 public class ProductList extends AppCompatActivity {
     private RecyclerView listProductAdmin;
     private ImageButton btnBackDashboard;
+    private LinearLayout btnToAddProduct;
     private List<Product> listProduct;
 
     private AdProductAdapter adapter;
@@ -38,6 +40,7 @@ public class ProductList extends AppCompatActivity {
 
         btnBackDashboard = findViewById(R.id.btnBackDashboard);
         listProductAdmin = findViewById(R.id.listProductAdmin);
+        btnToAddProduct = findViewById(R.id.btnToAddProduct);
         productDAO = new ProductDAO(new DatabaseHelper(this));
 
         //TRỞ VỀ DASHBOARD
@@ -49,18 +52,38 @@ public class ProductList extends AppCompatActivity {
             }
         });
 
+        //Su kien nhan nut add
+        btnToAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentToAdd = new Intent(ProductList.this, AddingProduct.class);
+                startActivity(intentToAdd);
+            }
+        });
+
         //XỬ LÝ HIỂN THỊ DANH SÁCH SẢN PHẨM
         loadProductList();
     }
 
     private void loadProductList() {
-        listProduct = new ArrayList<>(productDAO.getAll());
+        listProduct = new ArrayList<>(productDAO.getAll(0));
 
         if(listProduct.isEmpty()) {
             Toast.makeText(this, "There is no product", Toast.LENGTH_SHORT).show();
         }
 
-        adapter = new AdProductAdapter(this, listProduct, new DatabaseHelper(this));
+        adapter = new AdProductAdapter(this, listProduct, new DatabaseHelper(this), product -> {
+            // Chuyển sang ProductDetailActivity khi click vào sản phẩm
+            Intent intent = new Intent(ProductList.this, ProductDetailAdmin.class);
+            intent.putExtra("product_id", product.getProId()); // Truyền ID sản phẩm
+            intent.putExtra("cat_id", product.getCatId());
+            intent.putExtra("product_name", product.getProName());
+            intent.putExtra("product_price", product.getProPrice());
+            intent.putExtra("product_image", product.getProImage());
+            intent.putExtra("product_quantity", product.getProQuantity());
+            intent.putExtra("product_description", product.getDescription());
+            startActivity(intent);
+        });
         listProductAdmin.setLayoutManager(new LinearLayoutManager(this));
         listProductAdmin.setAdapter(adapter);
     }

@@ -152,7 +152,7 @@ public class RegisterInfoFragment extends Fragment {
 
         // Kiểm tra đã tạo tài khoản chưa
         if (createdAccount != null) {
-            saveSession(phoneNumber);
+            saveSessionLogin(createdAccount.getAccId());
             startActivity(new Intent(requireActivity(), MainActivity.class));
             requireActivity().finish();
         } else {
@@ -160,11 +160,11 @@ public class RegisterInfoFragment extends Fragment {
         }
     }
 
-    // Lưu session đăng nhập(bằng số điện thoại)
-    private void saveSession(String phoneNumber) {
+    // Lưu session đăng nhập(bằng accId)
+    private void saveSessionLogin(int accID) {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("logged_in_user", phoneNumber);
+        editor.putInt("logged_in_user_id", accID);
         editor.apply();
     }
 }

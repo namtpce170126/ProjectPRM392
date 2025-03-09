@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ProductControl.ProductDetailAdmin"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ProductControl.AddingProduct">
 
     <!--    HEADER-->
     <LinearLayout
@@ -29,44 +30,13 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/icon_back_white"/>
 
-            <!-- Nút Add New -->
-            <LinearLayout
-                android:id="@+id/btnAddProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="6dp"
-                android:orientation="horizontal"
-                android:layout_alignParentEnd="true"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:drawablePadding="4dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="@drawable/btn_add_product">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/icon_add_white"
-                    android:scaleType="centerInside"
-                    android:background="@null"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Create new"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
         </RelativeLayout>
 
         <!-- Hàng thứ hai: Tiêu đề -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product Detail"
+            android:text="Create new product"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -86,7 +56,7 @@
             android:id="@+id/imgProduct"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:src="@drawable/sample_food"
+            android:src="@drawable/default_food"
             android:scaleType="centerInside"
             android:clickable="true"
             android:focusable="true"
@@ -116,7 +86,7 @@
                     android:textSize="16sp"/>
 
                 <EditText
-                    android:id="@+id/edtProname"
+                    android:id="@+id/addProname"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -144,7 +114,7 @@
                     android:text="Category:"/>
 
                 <Spinner
-                    android:id="@+id/spnCategory"
+                    android:id="@+id/spnAddCategory"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"/>
@@ -167,7 +137,7 @@
                     android:text="Price:"/>
 
                 <EditText
-                    android:id="@+id/edtPrice"
+                    android:id="@+id/addPrice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -195,7 +165,7 @@
                     android:text="Quantity"/>
 
                 <EditText
-                    android:id="@+id/edtQuantity"
+                    android:id="@+id/addQuantity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -223,7 +193,7 @@
                     android:text="Description"/>
 
                 <EditText
-                    android:id="@+id/edtDescription"
+                    android:id="@+id/addDescription"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -243,18 +213,18 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/btnDeleteProduct"
+                    android:id="@+id/btnResetForm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Delete"
+                    android:text="Reset"
                     android:background="@drawable/bg_item_product_admin"
                     android:textColor="@color/orange"
                     android:textStyle="bold"
                     android:layout_marginEnd="10dp"/>
 
                 <Button
-                    android:id="@+id/btnUpdateProduct"
+                    android:id="@+id/btnAddProduct"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

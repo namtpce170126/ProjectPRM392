@@ -18,7 +18,7 @@ public class OrderDetailDAO extends SingletonBaseDAO {
     public List<OrderDetail> getOrderDetailsByOrderId(int orderId) {
         open();
         List<OrderDetail> orderDetails = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM order_details WHERE orderId = ?", new String[]{String.valueOf(orderId)});
+        Cursor cursor = db.rawQuery("SELECT * FROM order_detail WHERE o_id = ?", new String[]{String.valueOf(orderId)});
         if (cursor.moveToFirst()) {
             do {
                 OrderDetail detail = new OrderDetail(
@@ -38,11 +38,11 @@ public class OrderDetailDAO extends SingletonBaseDAO {
     public long insertOrderDetail(OrderDetail orderDetail) {
         open();
         ContentValues values = new ContentValues();
-        values.put("orderId", orderDetail.getOrderId());
-        values.put("proId", orderDetail.getProId());
+        values.put("o_id", orderDetail.getOrderId());
+        values.put("pro_id", orderDetail.getProId());
         values.put("quantity", orderDetail.getQuantity());
 
-        long result = db.insert("order_details", null, values);
+        long result = db.insert("order_detail", null, values);
         close();
         return result;
     }
@@ -53,8 +53,8 @@ public class OrderDetailDAO extends SingletonBaseDAO {
         ContentValues values = new ContentValues();
         values.put("quantity", orderDetail.getQuantity());
 
-        int result = db.update("order_details", values,
-                "orderId = ? AND proId = ?",
+        int result = db.update("order_detail", values,
+                "o_id = ? AND pro_id = ?",
                 new String[]{String.valueOf(orderDetail.getOrderId()), String.valueOf(orderDetail.getProId())});
         close();
         return result;
@@ -63,8 +63,8 @@ public class OrderDetailDAO extends SingletonBaseDAO {
     // Delete order detail
     public int deleteOrderDetail(int orderId, int proId) {
         open();
-        int result = db.delete("order_details",
-                "orderId = ? AND proId = ?",
+        int result = db.delete("order_detail",
+                "o_id = ? AND pro_id = ?",
                 new String[]{String.valueOf(orderId), String.valueOf(proId)});
         close();
         return result;

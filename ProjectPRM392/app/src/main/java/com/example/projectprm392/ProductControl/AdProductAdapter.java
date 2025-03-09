@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectprm392.DAOs.CategoryDAO;
+import com.example.projectprm392.DAOs.ImageDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
 import com.example.projectprm392.Models.Category;
 import com.example.projectprm392.Models.Product;
@@ -26,11 +27,17 @@ public class AdProductAdapter extends RecyclerView.Adapter<AdProductAdapter.AdPr
     private Context context;
     private List<Product> listProduct;
     private CategoryDAO categoryDAO;
+    private OnItemClickListener listener;
 
-    public AdProductAdapter(Context context, List<Product> listProduct, DatabaseHelper db) {
+    public AdProductAdapter(Context context, List<Product> listProduct, DatabaseHelper db, OnItemClickListener listener) {
         this.context = context;
         this.listProduct = listProduct;
         this.categoryDAO = new CategoryDAO(db);
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Product product);
     }
 
     @NonNull
@@ -52,13 +59,33 @@ public class AdProductAdapter extends RecyclerView.Adapter<AdProductAdapter.AdPr
         holder.itemCatgory.setText(categoryName);
         holder.itemPrice.setText(String.format(Locale.getDefault(), "%.2f VNĐ", product.getProPrice()));
 
-        // Hiển thị ảnh từ đường dẫn đã lưu trong SQLite
-        if (product.getProImage() != null && !product.getProImage().isEmpty()) {
-            Bitmap bitmap = BitmapFactory.decodeFile(product.getProImage());
-            holder.itemImage.setImageBitmap(bitmap);
+        // Kiểm tra và hiển thị ảnh sản phẩm
+        String imageName = product.getProImage();
+        if (imageName != null && !imageName.isEmpty()) {
+            if (imageName.equals("default_food.png")) {
+                // Nếu là ảnh mặc định, hiển thị từ drawable
+                holder.itemImage.setImageResource(R.drawable.default_food);
+            } else {
+                // Nếu là ảnh thật, load từ bộ nhớ trong
+                Bitmap productImage = ImageDAO.getImageFromDatabase(holder.itemView.getContext(), imageName);
+                if (productImage != null) {
+                    holder.itemImage.setImageBitmap(productImage);
+                } else {
+                    // Nếu file bị mất hoặc không tồn tại, hiển thị ảnh mặc định
+                    holder.itemImage.setImageResource(R.drawable.default_food);
+                }
+            }
         } else {
-            holder.itemImage.setImageResource(R.drawable.sample_food); // Ảnh mặc định
+            // Nếu database NULL hoặc trống, hiển thị ảnh mặc định
+            holder.itemImage.setImageResource(R.drawable.default_food);
         }
+
+        //XỬ LÝ SỰ KIỆN CLICK VÀO ITEM
+        holder.itemView.setOnClickListener(v -> {
+            if(listener != null) {
+                listener.onItemClick(product);
+            }
+        });
     }
 
     @Override

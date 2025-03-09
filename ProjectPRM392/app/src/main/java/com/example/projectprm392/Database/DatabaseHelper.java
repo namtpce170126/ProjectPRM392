@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import androidx.annotation.Nullable;
 
 
+import com.example.projectprm392.DAOs.ImageDAO;
 import com.example.projectprm392.R;
 
 import java.io.File;
@@ -18,7 +19,7 @@ import java.io.IOException;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ecommerce.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private Context context;
 
     public DatabaseHelper(@Nullable Context context) {
@@ -92,17 +93,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(cat_id) REFERENCES category(cat_id))";
         db.execSQL(CREATE_PRODUCT_TABLE);
 
-        // Chèn 5 sản phẩm mẫu (Tất cả thuộc Fast Food)
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Fried Chicken Drumstick', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 50, 5.99, 0.1, 'Crispy fried chicken', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Chicken Nuggets', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 60, 4.99, 0.05, 'Golden crispy nuggets', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'French Fries', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 80, 2.99, 0, 'Crispy golden fries', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Burger Combo', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 40, 7.99, 0.15, 'Burger with fries and drink', '2025-03-05', 0)");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) VALUES (1, 'Hot Wings', 'https://product.hstatic.net/200000605103/product/dui-ga-gion_b57cd7734a324493aa2df6ba941929eb_master.png', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
-        
-      Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sample_food);
-        String imagePath = saveImageToInternalStorage(context, bitmap, "sample_food.png");
-        db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
-                "VALUES (1, 'Gà rán KFC', '" + imagePath + "', 10, 99000, 0.1, 'Gà rán giòn rụm', '2025-03-06', 0)");
+        // Lưu ảnh vào bộ nhớ và lấy tên file
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sample_food);
+        String fileName = ImageDAO.uploadImage(context, bitmap, "sample_food.png");
+
+        if (fileName != null) {
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'Fried Chicken Drumstick', '" + fileName + "', 50, 5.99, 0.1, 'Crispy fried chicken', '2025-03-05', 0)");
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'Chicken Nuggets', '" + fileName + "', 60, 4.99, 0.05, 'Golden crispy nuggets', '2025-03-05', 0)");
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'French Fries', '" + fileName + "', 80, 2.99, 0, 'Crispy golden fries', '2025-03-05', 0)");
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'Burger Combo', '" + fileName + "', 40, 7.99, 0.15, 'Burger with fries and drink', '2025-03-05', 0)");
+            db.execSQL("INSERT INTO product (cat_id, pro_name, pro_image, pro_quantity, pro_price, discount, description, create_date, isDelete) " +
+                    "VALUES (1, 'Hot Wings', '" + fileName + "', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
+        }
 
         // TẠO BẢNG CART
         String CREATE_CART_TABLE = "CREATE TABLE cart (" +
@@ -121,7 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
                 " VALUES (1,4,4,6.0)");
         db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
-                " VALUES (1,6,5,10.0)");
+                " VALUES (1,4,5,10.0)");
         db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
                 " VALUES (1,1,8,6.0)");
         db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+

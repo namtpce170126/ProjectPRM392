@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
@@ -13,25 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.projectprm392.HomeControl.Food;
+import com.example.projectprm392.DAOs.ProductDAO;
+import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.Models.Product;
 import com.example.projectprm392.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchFoodResultFragment extends Fragment {
+public class SearchProductResultFragment extends Fragment {
     private RecyclerView recyclerView;
-    private FoodRandomAdapter foodAdapter;
-    private List<Food> allFoods;
+    private ProductRandomAdapter productAdapter;
     private String query;
+    private ProductDAO productDAO;
 
-    public SearchFoodResultFragment() {
+    public SearchProductResultFragment() {
         // Required empty public constructor
     }
 
-    public static SearchFoodResultFragment newInstance(String query) {
-        SearchFoodResultFragment fragment = new SearchFoodResultFragment();
+    public static SearchProductResultFragment newInstance(String query) {
+        SearchProductResultFragment fragment = new SearchProductResultFragment();
         Bundle args = new Bundle();
         args.putString("query", query);
         fragment.setArguments(args);
@@ -52,36 +52,17 @@ public class SearchFoodResultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_food_result_frragment, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        productDAO = new ProductDAO(new DatabaseHelper(this.getContext()));
 
         int spanCount = calculateSpanCount();
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
 
-        allFoods = getAllFoods();  // Lấy danh sách toàn bộ món ăn
-        List<Food> searchResults = filterFoods(query);
+        List<Product> searchResults = productDAO.getProductsByKeyword(query);
 
-        foodAdapter = new FoodRandomAdapter(this.getContext(), searchResults);
-        recyclerView.setAdapter(foodAdapter);
+        productAdapter = new ProductRandomAdapter(this.getContext(), searchResults);
+        recyclerView.setAdapter(productAdapter);
         return view;
-    }
-    private List<Food> filterFoods(String query) {
-        List<Food> filteredList = new ArrayList<>();
-        for (Food food : allFoods) {
-            if (food.getName().toLowerCase().contains(query.toLowerCase())) {
-                filteredList.add(food);
-            }
-        }
-        return filteredList;
-    }
-
-    private List<Food> getAllFoods() {
-        List<Food> foods = new ArrayList<>();
-        foods.add(new Food("Pizza", "120.000đ", R.drawable.sample_food));
-        foods.add(new Food("Burger", "75.000đ", R.drawable.sample_food));
-        foods.add(new Food("Gà rán", "95.000đ", R.drawable.sample_food));
-        foods.add(new Food("Mì Ý", "85.000đ", R.drawable.sample_food));
-        foods.add(new Food("Khoai tây chiên", "45.000đ", R.drawable.sample_food));
-        return foods;
     }
 
     private int calculateSpanCount() {
