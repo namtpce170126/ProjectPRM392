@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Debug;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -42,6 +43,8 @@ public class OTPFragment extends Fragment {
     private TextView tvPhoneNumber, tvResendCode, tvTimer;
     private Button btnConfirmOTP;
     private ImageView btnBack;
+    private CountDownTimer countDownTimer;
+    private static final long OTP_VALIDITY_DURATION = 2 * 60 * 1000; // 2 phút (đơn vị: milliseconds)
 
     public OTPFragment(){
 
@@ -67,9 +70,15 @@ public class OTPFragment extends Fragment {
         otpInputs[4] = view.findViewById(R.id.otp5);
         otpInputs[5] = view.findViewById(R.id.otp6);
 
+        // Xóa nội dung cũ trên các ô OTP nếu có
+        /*for (EditText editText : otpInputs) {
+            editText.setText("");  // Xóa nội dung nhập trước đó
+        }*/
+
         // Tạo và hiển thị mã OTP
         generatedOTP = generateOTP();
         showNotificationOTP(generatedOTP);
+        startOTPTimer();
 
         // Xử lý nhập OTP tự động chuyển ô
         setupOTPInputs();
@@ -183,6 +192,7 @@ public class OTPFragment extends Fragment {
     private void resendOTP() {
         generatedOTP = generateOTP();
         showNotificationOTP(generatedOTP);
+        startOTPTimer();
         Toast.makeText(getContext(), "Mã OTP mới đã được gửi!", Toast.LENGTH_SHORT).show();
     }
 
@@ -210,5 +220,48 @@ public class OTPFragment extends Fragment {
                 .replace(R.id.fragment_container_permission, resetPasswordFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    // Đếm ngược thời gian hiệu lực
+    private void startOTPTimer() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+
+        countDownTimer = new CountDownTimer(OTP_VALIDITY_DURATION, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long minutes = millisUntilFinished / 60000;
+                long seconds = (millisUntilFinished % 60000) / 1000;
+                tvTimer.setText(String.format("(%02d:%02d)", minutes, seconds));
+            }
+
+            @Override
+            public void onFinish() {
+                tvTimer.setText("(Hết hiệu lực)");
+                generatedOTP = null; // Vô hiệu hóa OTP
+                Toast.makeText(getContext(), "Mã OTP đã hết hạn, vui lòng yêu cầu mã mới!", Toast.LENGTH_SHORT).show();
+            }
+        }.start();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        clearOTPInputs();
+    }
+
+    private void clearOTPInputs() {
+        for (EditText otpInput : otpInputs) {
+            otpInput.setText(""); // Xóa nội dung nhập vào
+        }
     }
 }
