@@ -42,4 +42,77 @@ public class ProductDetailDAOU extends SingletonBaseDAO {
         close();
         return product;
     }
+
+    public int getSumProid() {
+        open();
+        int sum = 0;
+        String query = "SELECT COUNT(pro_id) FROM product WHERE isDelete = 0";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            sum = cursor.getInt(0);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        close();
+        return sum;
+    }
+
+    public int getDangGiao() {
+        open();
+        int sum = 0;
+        String query = "SELECT COUNT(o_id) FROM orders WHERE status = 'Delivering' AND isDelete = 0";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            sum = cursor.getInt(0);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        close();
+        return sum;
+    }
+
+    public int getChoXacNhan() {
+        open();
+        int sum = 0;
+        String query = "SELECT COUNT(o_id) FROM orders WHERE status = 'Ordered' AND isDelete = 0";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            sum = cursor.getInt(0);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        close();
+        return sum;
+    }
+
+    public int getSumDoanhThu() {
+        open();
+        int sum = 0;
+        String query = "SELECT SUM(total_price) FROM orders WHERE isDelete = 0";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            sum = cursor.getInt(0);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        close();
+        return sum;
+    }
+
 }

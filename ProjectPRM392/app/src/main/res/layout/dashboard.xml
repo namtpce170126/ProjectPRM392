@@ -3,177 +3,189 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<!--    tools:context=".Admin.Dashboard">-->
+    android:layout_height="match_parent"
+    android:background="@color/orange"
+    android:backgroundTint="@color/orange"
+    tools:context=".ProductControlU.DashboardActivity">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="388dp"
-        android:layout_height="137dp"
-        android:background="@color/orange"
-        android:backgroundTint="@color/orange"
-        app:cardCornerRadius="50dp"
-        app:cardElevation="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="-16dp"
-        tools:ignore="MissingConstraints">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="89dp">
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:id="@+id/cardView4"-->
+    <!--        android:layout_width="388dp"-->
+    <!--        android:layout_height="137dp"-->
+    <!--        android:layout_marginBottom="16dp"-->
+    <!--        android:layout_marginTop="26dp"-->
+    <!--        android:background="@color/orange"-->
+    <!--        android:backgroundTint="@color/orange"-->
+    <!--        app:cardCornerRadius="50dp"-->
+    <!--        app:cardElevation="24dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/cardView3"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        tools:ignore="MissingConstraints">-->
 
-            <ImageView
-                android:id="@+id/imageCuaHang"
-                android:layout_width="70dp"
-                android:layout_height="68dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="29dp"
-                android:layout_marginTop="17dp"
-                app:srcCompat="@drawable/store" />
+    <!--        <RelativeLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="89dp"-->
+    <!--            android:layout_marginTop="20dp">-->
 
-            <TextView
-                android:id="@+id/tenCuaHang"
-                android:layout_width="257dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="102dp"
-                android:layout_marginTop="25dp"
-                android:fontFamily="sans-serif-black"
-                android:shadowColor="#00FFFF"
-                android:text="Sạp bánh cam Mih Uyn"
-                android:textColor="#FAFAFA"
-                android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="parent" />
+    <!--            <ImageView-->
+    <!--                android:id="@+id/imageCuaHang"-->
+    <!--                android:layout_width="70dp"-->
+    <!--                android:layout_height="68dp"-->
+    <!--                android:layout_alignParentStart="true"-->
+    <!--                android:layout_alignParentTop="true"-->
+    <!--                android:layout_marginStart="29dp"-->
+    <!--                android:layout_marginTop="17dp"-->
+    <!--                app:srcCompat="@drawable/store" />-->
 
-            <TextView
-                android:id="@+id/addressShop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="103dp"
-                android:layout_marginTop="59dp"
-                android:text="Kiên Giang"
-                android:textColor="#FFFFFF"
-                />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    <!--            <TextView-->
+    <!--                android:id="@+id/tenCuaHang"-->
+    <!--                android:layout_width="257dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_alignParentStart="true"-->
+    <!--                android:layout_alignParentTop="true"-->
+    <!--                android:layout_marginStart="102dp"-->
+    <!--                android:layout_marginTop="25dp"-->
+    <!--                android:fontFamily="sans-serif-black"-->
+    <!--                android:shadowColor="#00FFFF"-->
+    <!--                android:text="Sạp bánh cam Mih Uyn"-->
+    <!--                android:textColor="#FAFAFA"-->
+    <!--                android:textSize="20sp"-->
+    <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="152dp"
-        android:layout_height="82dp"
-        android:layout_marginStart="16dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="26dp"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="72dp"
-        tools:ignore="MissingConstraints">
+    <!--            <TextView-->
+    <!--                android:id="@+id/addressShop"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_alignParentStart="true"-->
+    <!--                android:layout_alignParentTop="true"-->
+    <!--                android:layout_marginStart="103dp"-->
+    <!--                android:layout_marginTop="59dp"-->
+    <!--                android:text="Kiên Giang"-->
+    <!--                android:textColor="#FFFFFF" />-->
+    <!--        </RelativeLayout>-->
+    <!--    </androidx.cardview.widget.CardView>-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:id="@+id/cardView2"-->
+    <!--        android:layout_width="152dp"-->
+    <!--        android:layout_height="82dp"-->
+    <!--        android:layout_marginStart="16dp"-->
 
-            <TextView
-                android:id="@+id/txtDoanhthu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="22dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="sans-serif-black"
-                android:text="Doanh Thu" />
+    <!--        android:background="#FFFFFF"-->
+    <!--        android:backgroundTint="#FFFFFF"-->
+    <!--        app:cardCornerRadius="30dp"-->
+    <!--        app:cardElevation="26dp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/cardView4"-->
+    <!--        tools:ignore="MissingConstraints">-->
 
-            <TextView
-                android:id="@+id/doanhThu"
-                android:layout_width="121dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="48dp"
-                android:fontFamily="sans-serif-black"
-                android:text="2.000.000"
-                android:textColor="#EE5324"
-                android:textSize="20sp" />
+    <!--        <RelativeLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
 
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="118dp"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/money" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    <!--            <TextView-->
+    <!--                android:id="@+id/txtDoanhthu"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_alignParentStart="true"-->
+    <!--                android:layout_alignParentTop="true"-->
+    <!--                android:layout_marginStart="22dp"-->
+    <!--                android:layout_marginTop="16dp"-->
+    <!--                android:fontFamily="sans-serif-black"-->
+    <!--                android:text="Doanh Thu" />-->
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="150dp"
-        android:layout_height="81dp"
-        android:layout_marginEnd="16dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
-        app:cardCornerRadius="30dp"
+    <!--            <TextView-->
+    <!--                android:id="@+id/doanhThu"-->
+    <!--                android:layout_width="121dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_alignParentStart="true"-->
+    <!--                android:layout_alignParentTop="true"-->
+    <!--                android:layout_marginStart="24dp"-->
+    <!--                android:layout_marginTop="48dp"-->
+    <!--                android:fontFamily="sans-serif-black"-->
+    <!--                android:text="2.000.000"-->
+    <!--                android:textColor="#EE5324"-->
+    <!--                android:textSize="20sp" />-->
 
-        app:cardElevation="26dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="72dp"
-        tools:ignore="MissingConstraints">
+    <!--            <ImageView-->
+    <!--                android:id="@+id/imageView10"-->
+    <!--                android:layout_width="23dp"-->
+    <!--                android:layout_height="23dp"-->
+    <!--                android:layout_alignParentStart="true"-->
+    <!--                android:layout_alignParentTop="true"-->
+    <!--                android:layout_marginStart="118dp"-->
+    <!--                android:layout_marginTop="8dp"-->
+    <!--                app:srcCompat="@drawable/money" />-->
+    <!--        </RelativeLayout>-->
+    <!--    </androidx.cardview.widget.CardView>-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:id="@+id/cardView3"-->
+    <!--        android:layout_width="150dp"-->
+    <!--        android:layout_height="81dp"-->
+    <!--        android:layout_marginEnd="16dp"-->
+    <!--        android:background="#FFFFFF"-->
+    <!--        android:layout_marginTop="1dp"-->
+    <!--        android:backgroundTint="#FFFFFF"-->
+    <!--        app:cardCornerRadius="30dp"-->
+    <!--        app:cardElevation="26dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        tools:ignore="MissingConstraints"-->
+    <!--        tools:layout_editor_absoluteY="89dp">-->
 
-            <TextView
-                android:id="@+id/tongSoSanPham"
-                android:layout_width="120dp"
-                android:layout_height="43dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="11dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="sans-serif-black"
-                android:text="Tổng sản phẩm đang bán" />
+    <!--        <RelativeLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="65dp"
-                android:layout_marginBottom="7dp"
-                android:fontFamily="sans-serif-black"
-                android:text="50"
-                android:textColor="#EE5324"
-                android:textSize="20sp" />
+    <!--            <TextView-->
+    <!--                android:id="@+id/tongSoSanPham"-->
+    <!--                android:layout_width="120dp"-->
+    <!--                android:layout_height="43dp"-->
+    <!--                android:layout_alignParentTop="true"-->
+    <!--                android:layout_alignParentEnd="true"-->
+    <!--                android:layout_marginTop="11dp"-->
+    <!--                android:layout_marginEnd="16dp"-->
+    <!--                android:fontFamily="sans-serif-black"-->
+    <!--                android:text="Tổng sản phẩm đang bán" />-->
 
-            <ImageView
-                android:id="@+id/imageView11"
-                android:layout_width="24dp"
-                android:layout_height="23dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="7dp"
-                app:srcCompat="@drawable/product" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    <!--            <TextView-->
+    <!--                android:id="@+id/textView8"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_alignParentEnd="true"-->
+    <!--                android:layout_alignParentBottom="true"-->
+    <!--                android:layout_marginEnd="65dp"-->
+    <!--                android:layout_marginBottom="7dp"-->
+    <!--                android:fontFamily="sans-serif-black"-->
+    <!--                android:text="50"-->
+    <!--                android:textColor="#EE5324"-->
+    <!--                android:textSize="20sp" />-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/imageView11"-->
+    <!--                android:layout_width="24dp"-->
+    <!--                android:layout_height="23dp"-->
+    <!--                android:layout_alignParentTop="true"-->
+    <!--                android:layout_alignParentEnd="true"-->
+    <!--                android:layout_marginTop="6dp"-->
+    <!--                android:layout_marginEnd="7dp"-->
+    <!--                app:srcCompat="@drawable/product" />-->
+    <!--        </RelativeLayout>-->
+    <!--    </androidx.cardview.widget.CardView>-->
+
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="367dp"
-        android:layout_height="482dp"
+        android:layout_height="477dp"
         android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="163dp"
         tools:ignore="MissingConstraints">
 
         <androidx.cardview.widget.CardView
@@ -222,9 +234,9 @@
                     android:layout_marginEnd="12dp"
                     android:layout_marginBottom="15dp"
                     android:backgroundTint="#FFFFFF"
+                    android:contentDescription="a"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@android:drawable/ic_input_add"
-                    android:contentDescription="a"/>
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -235,7 +247,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="-1dp"
-            android:layout_marginBottom="153dp" >
+            android:layout_marginBottom="153dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -272,8 +284,8 @@
                     android:layout_marginEnd="14dp"
                     android:layout_marginBottom="19dp"
                     android:backgroundTint="#FFFFFF"
-                    app:srcCompat="@android:drawable/ic_input_add"
-                    android:contentDescription="a"/>
+                    android:contentDescription="a"
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -342,11 +354,219 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="28dp"
-            android:layout_marginBottom="449dp"
+            android:layout_marginEnd="31dp"
+            android:layout_marginBottom="445dp"
             android:fontFamily="sans-serif"
             android:text="Xem Chi Tiết" />
 
+        <TextView
+            android:id="@+id/choXacNhanTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="138dp"
+            android:layout_marginTop="44dp"
+            android:fontFamily="sans-serif-black"
+            android:text="0"
+            android:textColor="#F40C0C"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/dangGiaoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="58dp"
+            android:fontFamily="sans-serif-black"
+            android:text="0"
+            android:textColor="#F40C0C"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="358dp"
+        android:layout_height="161dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:backgroundTint="@color/orange"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="358dp"
+            android:layout_height="73dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-2dp"
+            android:layout_marginTop="2dp"
+            android:backgroundTint="@color/orange">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/orange">
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="83dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginBottom="2dp"
+                    app:srcCompat="@drawable/avatar_sample" />
+
+                <TextView
+                    android:id="@+id/nameShop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="114dp"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Sạp bánh cam Mih Uyn"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/addressShop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="116dp"
+                    android:layout_marginTop="49dp"
+                    android:text="Kiên Giang"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/chiTietBieuDo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="25dp"
+                    android:onClick="thongKeBieuDo"
+                    android:text="Thống kê chi tiết"
+                    android:textColor="#E6D223"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="145dp"
+            android:layout_height="73dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="23dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="26dp"
+            android:layout_marginTop="80dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/sanPhamTxt"
+                    android:layout_width="113dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Tổng sản phẩm"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="67dp"
+                    android:layout_marginBottom="13dp"
+                    android:text="20"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/imageView100"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="6dp"
+                    app:srcCompat="@drawable/product" />
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="145dp"
+            android:layout_height="73dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="196dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="26dp"
+            android:layout_marginTop="81dp" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/doanhThuTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginBottom="47dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Tổng doanh thu"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="94dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="39dp"
+                    android:layout_marginBottom="14dp"
+                    android:text="20.000"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/imageView16"
+                    android:layout_width="33dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="7dp"
+                    android:layout_marginBottom="7dp"
+                    app:srcCompat="@drawable/money2" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.projectprm392.Database;
 
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -208,4 +209,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return null;
     }
+
+    public Cursor getProductSales() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT p.pro_name, SUM(o.quantity) as totalQuantity " +
+                "FROM order_detail o " +
+                "JOIN product p ON o.pro_id = p.pro_id " +
+                "GROUP BY o.pro_id";
+        return db.rawQuery(query, null);
+    }
+
 }
