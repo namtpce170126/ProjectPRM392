@@ -1,6 +1,7 @@
 package com.example.projectprm392.ProductControlU;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -52,6 +53,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolderView> {
         Cart cart = cartList.get(position);
 
         Product product = productMap.get(cart.getProId());
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ProductActivity.class);
+            intent.putExtra("pro_id", cart.getProId()); // Truyền productId
+            context.startActivity(intent);
+        });
+
+
 
         holder.nameView.setText(String.valueOf(product.getProName()));
         holder.quantityView.setText(String.valueOf(cart.getProQuantity())); // Ép kiểu về String
@@ -141,6 +149,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolderView> {
         }
         return total;
     }
+
+
 
 }
 

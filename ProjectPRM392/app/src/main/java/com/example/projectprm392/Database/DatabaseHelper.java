@@ -59,6 +59,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO account (role_id, username, password, fullname, phone_number, email, birthday, address, isDelete) " +
                 "VALUES (1, 'customer01', '123456', 'Nguyen Van A', '0123456789', 'customer01@example.com', '2000-01-01', 'Hanoi, Vietnam', 0)");
 
+        db.execSQL("INSERT INTO account (role_id, username, password, fullname, phone_number, email, birthday, address, isDelete) " +
+                "VALUES (1, 'customer02', '123456', 'Nguyen Van bb', '0123456789', 'customer01@example.com', '2000-01-01', 'Hanoi, Vietnam', 0)");
 
         //TẠO BẢNG CATEGORY
         String CREATE_CATEGORY_TABLE = "CREATE TABLE category (" +
@@ -126,13 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
                 " VALUES (1,5,5,6.0)");
         db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
-                " VALUES (1,4,4,6.0)");
-        db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
-                " VALUES (1,4,5,10.0)");
-        db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
-                " VALUES (1,1,8,6.0)");
-        db.execSQL("INSERT INTO cart (acc_id,pro_id,pro_quantity,cart_price)"+
-                " VALUES (1,2,54,6.0)");
+                " VALUES (2,5,5,6.0)");
 
 
 

@@ -3,7 +3,9 @@ package com.example.projectprm392.ProductControlU;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,7 +28,7 @@ public class CartActivity extends AppCompatActivity implements MyAdapter.TotalPr
     private MyAdapter cartAdapter;
     private CartDAOU cartDAO;
     private ProductDAO productDAO;
-
+    private int productId = -1;
     private TextView TongCartCheck;
 
     @Override
@@ -44,6 +46,25 @@ public class CartActivity extends AppCompatActivity implements MyAdapter.TotalPr
         cartDAO = new CartDAOU(dbHelper);
         productDAO = new ProductDAO(dbHelper);
 
+
+        ImageButton btnBack = findViewById(R.id.imageButton2);
+        btnBack.setOnClickListener(v -> {
+            if (productId != -1) {
+                Intent intent = new Intent(CartActivity.this, ProductActivity.class);
+                intent.putExtra("pro_id", productId);
+                startActivity(intent);
+                finish(); // Đóng CartActivity
+            } else {
+                finish(); // Nếu không có productId, chỉ đóng Activity
+            }
+        });
+
+
+
+
+
+        Intent intent = getIntent();
+        productId = intent.getIntExtra("pro_id", -1);
 
 
         int acc_id = 1; // Lấy ID khách hàng từ SharedPreferences hoặc Intent
@@ -78,8 +99,28 @@ public class CartActivity extends AppCompatActivity implements MyAdapter.TotalPr
         updateTotalPrice();
     }
 
-    public void goToProductDetail(View view) {
-        Intent intent = new Intent(this, ProductActivity.class);
-        startActivity(intent);
+//    public void goToProductDetail(View view) {
+//        if (productId != -1) {
+//            Intent intent = new Intent(this, ProductActivity.class);
+//            intent.putExtra("pro_id", productId);
+//            startActivity(intent);
+//        } else {
+//            Toast.makeText(this, "Không tìm thấy sản phẩm!", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
+    @Override
+    public void onBackPressed() {
+        if (productId != -1) {
+            Intent intent = new Intent(this, ProductActivity.class);
+            intent.putExtra("pro_id", productId);
+            startActivity(intent);
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
+
+
+
 }

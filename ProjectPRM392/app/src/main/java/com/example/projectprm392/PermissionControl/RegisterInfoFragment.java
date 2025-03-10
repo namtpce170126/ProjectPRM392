@@ -138,11 +138,15 @@ public class RegisterInfoFragment extends Fragment {
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(requireContext(), "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(requireContext(), "Email không hợp lệ!", Toast.LENGTH_SHORT).show();*/
+            etEmail.setError("Email không hợp lệ!");
+            etEmail.requestFocus();
             return;
         }
         if (password.length() < 6) {
-            Toast.makeText(requireContext(), "Mật khẩu phải có ít nhất 6 ký tự!", Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(requireContext(), "Mật khẩu phải có ít nhất 6 ký tự!", Toast.LENGTH_SHORT).show();*/
+            etPass.setError("Mật khẩu phải có ít nhất 6 ký tự");
+            etPass.requestFocus();
             return;
         }
 

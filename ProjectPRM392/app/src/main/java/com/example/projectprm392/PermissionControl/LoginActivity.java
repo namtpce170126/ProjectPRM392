@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         txtForgotPass = findViewById(R.id.tvForgot);
 
-        // Chuyển sang ForgotPasswordFragment
+        // Chuyển sang ForgotPassword
         txtForgotPass.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, Permisson.class);
             intent.putExtra("login_step", true); // Gửi dữ liệu để MainActivity biết cần mở ClientProfileFragment
@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
+        // Đóng trang Login
         btnClose.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("open_client_profile", true); // Gửi dữ liệu để MainActivity biết cần mở ClientProfileFragment

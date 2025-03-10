@@ -28,7 +28,7 @@ public class ProductActivity extends AppCompatActivity {
     int quantity = 1;
     private ImageButton shareButton;
 
-
+private int productQuantity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +46,17 @@ public class ProductActivity extends AppCompatActivity {
         quantityText = findViewById(R.id.textView12);
 
         findViewById(R.id.button3).setOnClickListener(view -> addToCart());
+        int productId = getIntent().getIntExtra("pro_id", -1);
+        if (productId == -1) {
+            Toast.makeText(this, "Lỗi: Không có sản phẩm!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
 
-        Product getProductDetail = productDAO.getProductDetailsByProductId(5);
+
+
+        Product getProductDetail = productDAO.getProductDetailsByProductId(productId);
         pricePro.setText(getProductDetail.getProPrice()+"");
         namePro.setText(getProductDetail.getProName());
         desPro.setText(getProductDetail.getDescription());
@@ -66,41 +74,115 @@ public class ProductActivity extends AppCompatActivity {
         // Xử lý sự kiện nút trừ
         findViewById(R.id.imageButton8).setOnClickListener(view -> decreaseQuantity());
 
+       productQuantity = getProductDetail.getProQuantity();
 
 
 
     }
-
     private void addToCart() {
         int customerId = 1;
+        int productId = getIntent().getIntExtra("pro_id", -1);
 
-        // Lấy thông tin sản phẩm từ DAO
-        Product product = productDAO.getProductDetailsByProductId(5);
+        if (productId == -1) {
+            Toast.makeText(this, "Lỗi: Không tìm thấy sản phẩm!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Tạo đối tượng Cart
-        Cart cartItem = new Cart(
-                0, //cartId tự động tăng
-                customerId,
-                product.getProId(),
-                quantity,
-                product.getProPrice() * quantity
-        );
+        // Lấy thông tin sản phẩm từ database
+        Product product = productDAO.getProductDetailsByProductId(productId);
+        int stockQuantity = product.getProQuantity(); // Lấy số lượng sản phẩm có trong kho
 
-        // Lưu vào database (hoặc danh sách giỏ hàng tạm thời)
         CartDAOU cartDAO = new CartDAOU(new DatabaseHelper(this));
-        boolean success = cartDAO.addToCart(cartItem);
+        Cart existingCartItem = cartDAO.getCartItemByProductId(customerId, productId);
 
-        if (success) {
-            makeText(this, "", Toast.LENGTH_SHORT).show();
+        if (existingCartItem != null) {
+
+            int newQuantity = existingCartItem.getProQuantity() + quantity;
+
+            if (newQuantity > stockQuantity) {
+                Toast.makeText(this, "Không đủ hàng trong kho! Chỉ còn " + stockQuantity + " sản phẩm.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            existingCartItem.setProQuantity(newQuantity);
+            existingCartItem.setCartPrice(newQuantity * product.getProPrice());
+            boolean success = cartDAO.updateCart(existingCartItem);
+
+            if (success) {
+                Toast.makeText(this, "Cập nhật giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Lỗi khi cập nhật giỏ hàng!", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            makeText(this, "Lỗi khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+
+            if (quantity > stockQuantity) {
+                Toast.makeText(this, "Không đủ hàng trong kho! Chỉ còn " + stockQuantity + " sản phẩm.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Cart cartItem = new Cart(
+                    0,  // cartId tự động tăng
+                    customerId,
+                    productId,
+                    quantity,
+                    product.getProPrice() * quantity
+            );
+
+            boolean success = cartDAO.addToCart(cartItem);
+
+            if (success) {
+                Toast.makeText(this, "Sản phẩm đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Lỗi khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
+
+
+//    private void addToCart() {
+//        int customerId = 1;
+//
+//
+//        int productId = getIntent().getIntExtra("pro_id", -1);
+//        if (productId == -1) {
+//            Toast.makeText(this, "Lỗi: Không có sản phẩm!", Toast.LENGTH_SHORT).show();
+//            finish();
+//            return;
+//        }
+//
+//
+//        // Lấy thông tin sản phẩm từ DAO
+//        Product product = productDAO.getProductDetailsByProductId(productId);
+//
+//        // Tạo đối tượng Cart
+//        Cart cartItem = new Cart(
+//                0, //cartId tự động tăng
+//                customerId,
+//                product.getProId(),
+//                quantity,
+//                product.getProPrice() * quantity
+//        );
+//
+//        // Lưu vào database (hoặc danh sách giỏ hàng tạm thời)
+//        CartDAOU cartDAO = new CartDAOU(new DatabaseHelper(this));
+//        boolean success = cartDAO.addToCart(cartItem);
+//
+//        if (success) {
+//            makeText(this, "", Toast.LENGTH_SHORT).show();
+//        } else {
+//            makeText(this, "Lỗi khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
     //  tăng số lượng
     private void increaseQuantity() {
-        quantity++;
-        quantityText.setText(String.valueOf(quantity));
+        if (quantity < productQuantity) {
+            quantity++;
+            quantityText.setText(String.valueOf(quantity));
+        } else {
+            Toast.makeText(this, "Số lượng tối đa là " + productQuantity, Toast.LENGTH_SHORT).show();
+        }
     }
 
     //  giảm số lượng (không cho xuống dưới 1)
