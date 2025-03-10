@@ -1,8 +1,10 @@
 package com.example.projectprm392.ProductControlU;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,5 +83,14 @@ public class ChartUActivity extends AppCompatActivity {
         barChart.getAxisRight().setEnabled(false); //  trục Y bên phải
         barChart.invalidate(); // refresh biểu đồ
     }
+
+
+    public void backDashboard(View view) {
+        Intent intent = new Intent(this, DashboardActivity.class);
+        startActivity(intent);
+    }
+
+
+
 
 }
