@@ -23,6 +23,7 @@ import com.example.projectprm392.DAOs.AccountDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
 import com.example.projectprm392.MainActivity;
 import com.example.projectprm392.Models.Account;
+import com.example.projectprm392.ProductControlU.DashboardActivity;
 import com.example.projectprm392.ProfileControl.ProfileFragment;
 import com.example.projectprm392.R;
 
@@ -148,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         // Kiểm tra role tài khoản
         if (account.getRoleId() == 1){
             // Chuyển sang DashboardActivity
-            Intent intent = new Intent(LoginActivity.this, Dashboard.class);
+            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa stack trước đó
             startActivity(intent);
         } else {
