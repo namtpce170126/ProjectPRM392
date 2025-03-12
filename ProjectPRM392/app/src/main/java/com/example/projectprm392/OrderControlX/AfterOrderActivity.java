@@ -11,7 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.projectprm392.MainActivity;
+import com.example.projectprm392.HomeControl.MainActivity;
 import com.example.projectprm392.R;
 
 public class AfterOrderActivity extends AppCompatActivity {

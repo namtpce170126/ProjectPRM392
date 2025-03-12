@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.projectprm392.DAOs.CategoryDAO;
 import com.example.projectprm392.DAOs.ProductDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
-import com.example.projectprm392.MainActivity;
+import com.example.projectprm392.HomeControl.MainActivity;
 import com.example.projectprm392.Models.Category;
 import com.example.projectprm392.Models.Product;
 import com.example.projectprm392.R;
