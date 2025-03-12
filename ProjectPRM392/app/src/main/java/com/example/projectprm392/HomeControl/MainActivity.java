@@ -1,10 +1,9 @@
-package com.example.projectprm392;
+package com.example.projectprm392.HomeControl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.example.projectprm392.Database.DatabaseHelper;
 import com.example.projectprm392.ProfileControl.ClientProfileFragment;
 import com.example.projectprm392.ProfileControl.ProfileFragment;
+import com.example.projectprm392.R;
 import com.example.projectprm392.SearchControl.SearchProduct;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

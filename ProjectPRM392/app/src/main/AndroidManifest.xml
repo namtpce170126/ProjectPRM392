@@ -57,7 +57,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeControl.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
