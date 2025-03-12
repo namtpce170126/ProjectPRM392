@@ -12,7 +12,7 @@ import com.example.projectprm392.R;
 
 public class DiscoutProductViewHolder extends RecyclerView.ViewHolder {
     TextView textFoodName, textFoodPrice;
-    ImageView imgFood;
+    ImageView imgFood, btnAddToFavorite;
     ImageButton btnAddToCart;
 
     public DiscoutProductViewHolder(@NonNull View itemView) {
@@ -21,5 +21,6 @@ public class DiscoutProductViewHolder extends RecyclerView.ViewHolder {
         textFoodPrice = itemView.findViewById(R.id.textFoodPrice);
         imgFood = itemView.findViewById(R.id.imgFood);
         btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
+        btnAddToFavorite = itemView.findViewById(R.id.btnAddToFavorite);
     }
 }

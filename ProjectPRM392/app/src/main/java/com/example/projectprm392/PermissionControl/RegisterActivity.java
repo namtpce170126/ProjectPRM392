@@ -15,13 +15,10 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.projectprm392.DAOs.AccountDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
-import com.example.projectprm392.MainActivity;
+import com.example.projectprm392.HomeControl.MainActivity;
 import com.example.projectprm392.Models.Account;
 import com.example.projectprm392.R;
 

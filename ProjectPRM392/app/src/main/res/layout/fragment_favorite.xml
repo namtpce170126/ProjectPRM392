@@ -48,9 +48,37 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Your favorites food list" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFavorites"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutNoFavorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+        <ImageView
+            android:id="@+id/imageNoOrdered"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/no_ordered" />
+
+        <TextView
+            android:id="@+id/txtNoOrdered"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You have no favorite food!"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
 </LinearLayout>

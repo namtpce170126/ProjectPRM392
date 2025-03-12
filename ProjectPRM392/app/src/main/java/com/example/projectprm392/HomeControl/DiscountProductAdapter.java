@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectprm392.DAOs.CartDAOU;
+import com.example.projectprm392.DAOs.FavoriteDAO;
 import com.example.projectprm392.DAOs.ImageDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
 import com.example.projectprm392.Models.Cart;
@@ -25,11 +26,12 @@ public class DiscountProductAdapter extends RecyclerView.Adapter<DiscoutProductV
     private Context context;
     private ArrayList<Product> foodList;
     private CartDAOU cartDAO;
-
+    private FavoriteDAO favoriteDAO; // Thêm FavoriteDAO
     public DiscountProductAdapter(Context context, ArrayList<Product> foodList) {
         this.context = context;
         this.foodList = foodList;
         this.cartDAO = new CartDAOU(new DatabaseHelper(context));
+        this.favoriteDAO = new FavoriteDAO(new DatabaseHelper(context)); // Khởi tạo FavoriteDAO
     }
 
     @NonNull
@@ -64,6 +66,12 @@ public class DiscountProductAdapter extends RecyclerView.Adapter<DiscoutProductV
             holder.imgFood.setImageResource(R.drawable.default_food);
         }
 
+        // Cập nhật trạng thái nút favorite dựa trên việc sản phẩm đã được yêu thích chưa
+        boolean isFavorite = favoriteDAO.isFavorite(1, product.getProId());
+        holder.btnAddToFavorite.setImageResource(
+                isFavorite ? R.drawable.heart_filled_icon : R.drawable.heart_icon
+        );
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductActivity.class);
             intent.putExtra("pro_id", product.getProId()); // Gửi productId sang trang chi tiết
@@ -73,6 +81,36 @@ public class DiscountProductAdapter extends RecyclerView.Adapter<DiscoutProductV
 
         // Xử lý sự kiện khi nhấn nút "Add to Cart"
         holder.btnAddToCart.setOnClickListener(v -> addToCart(product));
+
+        // Xử lý sự kiện khi nhấn nút "Add to Favorite" với toggle thêm/xóa
+        holder.btnAddToFavorite.setOnClickListener(v -> {
+            toggleFavorite(product, holder);
+        });
+    }
+
+    private void toggleFavorite(Product product, DiscoutProductViewHolder holder) {
+        int accountId = 1; // Giả sử accountId = 1, thay đổi theo logic thực tế
+        boolean isFavorite = favoriteDAO.isFavorite(accountId, product.getProId());
+
+        if (isFavorite) {
+            // Nếu đã là favorite thì xóa
+            int result = favoriteDAO.deleteFavorite(accountId, product.getProId());
+            if (result > 0) {
+                holder.btnAddToFavorite.setImageResource(R.drawable.heart_icon);
+                Toast.makeText(context, "Đã xóa khỏi danh sách yêu thích!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Lỗi khi xóa khỏi danh sách yêu thích!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // Nếu chưa là favorite thì thêm
+            boolean success = favoriteDAO.addToFavorite(accountId, product.getProId());
+            if (success) {
+                holder.btnAddToFavorite.setImageResource(R.drawable.heart_filled_icon);
+                Toast.makeText(context, "Đã thêm vào danh sách yêu thích!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Lỗi khi thêm vào danh sách yêu thích!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void addToCart(Product product) {
