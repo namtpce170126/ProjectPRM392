@@ -2,6 +2,7 @@ package com.example.projectprm392.DAOs;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.example.projectprm392.Database.DatabaseHelper;
 import com.example.projectprm392.Models.Category;
@@ -203,4 +204,67 @@ public class ProductDAO extends SingletonBaseDAO{
         close();
         return productList;
     }
+
+    //xuan update quanity
+    public void updateProductQuantity(int productId, int quantityChange) {
+        open();
+
+        // Lấy số lượng hiện tại của sản phẩm
+        Cursor cursor = db.rawQuery("SELECT pro_quantity FROM product WHERE pro_id = ?", new String[]{String.valueOf(productId)});
+        if (cursor.moveToFirst()) {
+            int currentQuantity = cursor.getInt(0);
+            int newQuantity = currentQuantity + quantityChange;
+
+            // Đảm bảo số lượng không âm
+            if (newQuantity < 0) {
+                newQuantity = 0;
+            }
+
+            // Cập nhật số lượng mới
+            ContentValues values = new ContentValues();
+            values.put("pro_quantity", newQuantity);
+
+            int rowsAffected = db.update("product", values, "pro_id = ?", new String[]{String.valueOf(productId)});
+            if (rowsAffected > 0) {
+                Log.d("DB_SUCCESS", "Cập nhật số lượng thành công! Số lượng mới: " + newQuantity);
+            } else {
+                Log.e("DB_ERROR", "Cập nhật số lượng thất bại!");
+            }
+        }
+        cursor.close();
+        close();
+    }
+    //get pro by cat_id
+    public List<Product> getListProByCatId(int catId) {
+        open(); // Đảm bảo database mở trước khi thao tác
+        List<Product> listProduct = new ArrayList<>();
+
+        String query = "SELECT * FROM product WHERE cat_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(catId)}); // Truyền tham số an toàn
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    Product product = new Product(
+                            cursor.getInt(0),  // ID sản phẩm
+                            cursor.getInt(1),  // Cat ID
+                            cursor.getString(2), // Tên sản phẩm
+                            cursor.getString(3), // Mô tả
+                            cursor.getInt(4),  // Số lượng
+                            cursor.getDouble(5), // Giá
+                            cursor.getDouble(6), // Giảm giá
+                            cursor.getString(7), // Ảnh
+                            cursor.getString(8), // Ngày tạo
+                            cursor.getInt(9)  // Trạng thái
+                    );
+                    listProduct.add(product);
+                } while (cursor.moveToNext());
+            }
+            cursor.close(); // Đóng Cursor sau khi sử dụng
+        }
+
+        close(); // Đóng database sau khi xử lý xong
+        return listProduct;
+    }
+
 }

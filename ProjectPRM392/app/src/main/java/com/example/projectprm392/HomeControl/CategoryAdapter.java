@@ -1,6 +1,9 @@
 package com.example.projectprm392.HomeControl;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectprm392.OrderControlX.ViewProductByCategoryActivity;
 import com.example.projectprm392.R;
 
 import java.util.ArrayList;
@@ -46,6 +50,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         // Gán màu nền dựa trên vị trí để tránh trùng lặp màu khi RecyclerView tái sử dụng ViewHolder
         int colorIndex = position % colors.length;
         holder.cardView.setCardBackgroundColor(colors[colorIndex]);
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ViewProductByCategoryActivity.class);
+            context.startActivity(intent);
+        });
     }
 
     @Override

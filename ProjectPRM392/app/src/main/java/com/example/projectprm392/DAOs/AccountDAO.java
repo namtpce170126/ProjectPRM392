@@ -192,4 +192,16 @@ public class AccountDAO extends SingletonBaseDAO {
         close();
         return rows > 0;
     }
+
+    ////xuan code  đay
+    public boolean updateAddress(int accId, String newAddress) {
+        open();
+        ContentValues values = new ContentValues();
+        values.put("address", newAddress);
+
+        int rowsAffected = db.update("account", values, "acc_id = ?", new String[]{String.valueOf(accId)});
+        close();
+
+        return rowsAffected > 0; // Trả về true nếu có ít nhất một dòng được cập nhật
+    }
 }
