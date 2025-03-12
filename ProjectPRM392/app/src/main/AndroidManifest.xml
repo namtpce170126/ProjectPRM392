@@ -87,7 +87,7 @@
             android:name=".ProductControlU.CartActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeControl.MainActivity"
             android:exported="true">
 
              <intent-filter>

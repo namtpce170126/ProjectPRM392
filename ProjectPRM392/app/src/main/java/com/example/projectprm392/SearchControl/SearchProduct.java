@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.projectprm392.HomeFragment;
+import com.example.projectprm392.HomeControl.HomeFragment;
 import com.example.projectprm392.R;
 
 public class SearchProduct extends Fragment {

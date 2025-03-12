@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_weight="1"
-    android:layout_margin="4dp"
-    android:background="@color/white"
-    android:elevation="4dp"
-    android:padding="8dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
 
-    <!-- Ảnh món ăn -->
-    <ImageView
-        android:id="@+id/imgFood"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/sample_food" />
-
-    <!-- Thông tin món ăn + nút Add -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="8dp"
+        android:layout_margin="10dp"
         android:gravity="center_vertical">
 
-        <!-- Thông tin món ăn -->
+        <!-- Hình ảnh bên trái -->
+        <ImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="12dp"
+            app:srcCompat="@drawable/download" />
+
+        <!-- Nội dung văn bản -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,22 +30,31 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textFoodName"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtProductName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tên món ăn"
+                android:text="Product Name"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textFoodPrice"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtProductPrice"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="99.000đ"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="14sp" />
+                android:text="product price"
+                android:textSize="14sp"
+                android:textColor="#666666" />
+
+            <TextView
+                android:id="@+id/txtProductCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ProductCategory"
+                android:textSize="14sp"
+                android:textColor="#666666" />
         </LinearLayout>
 
+        <!-- Nút xóa -->
         <LinearLayout
             android:layout_width="40dp"
             android:layout_height="wrap_content"
@@ -75,7 +79,7 @@
                 android:layout_weight="0"
                 android:layout_gravity="center"
                 android:padding="3dp"
-                app:srcCompat="@drawable/heart_icon" />
+                app:srcCompat="@drawable/heart_filled_icon" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

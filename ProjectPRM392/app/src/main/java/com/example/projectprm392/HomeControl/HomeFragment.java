@@ -1,4 +1,4 @@
-package com.example.projectprm392;
+package com.example.projectprm392.HomeControl;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -19,10 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectprm392.DAOs.ProductDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
-import com.example.projectprm392.HomeControl.Category;
-import com.example.projectprm392.HomeControl.CategoryAdapter;
-import com.example.projectprm392.HomeControl.DiscountProductAdapter;
 import com.example.projectprm392.Models.Product;
+import com.example.projectprm392.R;
 
 import java.util.ArrayList;
 

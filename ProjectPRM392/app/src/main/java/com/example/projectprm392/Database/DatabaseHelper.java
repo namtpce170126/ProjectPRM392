@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ecommerce.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private Context context;
 
     public DatabaseHelper(@Nullable Context context) {
@@ -113,6 +113,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "VALUES (1, 'Hot Wings', '" + fileName + "', 45, 6.49, 0.1, 'Spicy chicken wings', '2025-03-05', 0)");
         }
 
+        // TẠO BẢNG FAVORITES
+        String CREATE_FAVORITES_TABLE = "CREATE TABLE favorites (" +
+                "favorite_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "acc_id INTEGER, " +
+                "pro_id INTEGER, " +
+                "isDelete INTEGER DEFAULT 0, " +
+                "FOREIGN KEY (acc_id) REFERENCES account(acc_id), " +
+                "FOREIGN KEY (pro_id) REFERENCES product(pro_id))";
+        db.execSQL(CREATE_FAVORITES_TABLE);
+        // Chèn dữ liệu mẫu (tùy chọn)
+        db.execSQL("INSERT INTO favorites (acc_id, pro_id, isDelete) VALUES (1, 1, 0)");
+        db.execSQL("INSERT INTO favorites (acc_id, pro_id, isDelete) VALUES (1, 2, 0)");
+        db.execSQL("INSERT INTO favorites (acc_id, pro_id, isDelete) VALUES (2, 3, 0)");
+
         // TẠO BẢNG CART
         String CREATE_CART_TABLE = "CREATE TABLE cart (" +
                 "cart_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -193,6 +207,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS cart");
         db.execSQL("DROP TABLE IF EXISTS orders");
         db.execSQL("DROP TABLE IF EXISTS order_detail");
+        db.execSQL("DROP TABLE IF EXISTS favorites"); // Thêm bảng favorites vào onUpgrade
         onCreate(db);
     }
 

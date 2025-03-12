@@ -1,19 +1,12 @@
 package com.example.projectprm392.PermissionControl;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.projectprm392.HomeFragment;
-import com.example.projectprm392.MainActivity;
 import com.example.projectprm392.R;
 
 public class Permisson extends AppCompatActivity {

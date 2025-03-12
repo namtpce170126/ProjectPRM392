@@ -17,12 +17,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.projectprm392.DAOs.AccountDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
-import com.example.projectprm392.MainActivity;
+import com.example.projectprm392.HomeControl.MainActivity;
 import com.example.projectprm392.Models.Account;
 import com.example.projectprm392.R;
 

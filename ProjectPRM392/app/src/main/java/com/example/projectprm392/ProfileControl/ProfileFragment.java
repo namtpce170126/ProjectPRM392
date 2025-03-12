@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "ProfileFragment";
     private Button btnUpdateProfile;
-    private LinearLayout btnOrderHistory, btnShippingAddress;
+    private LinearLayout btnOrderHistory, btnShippingAddress, btnFavorite;
     private TextView txtFullName, txtBirthday, txtPhone, txtMail, txtProfileName, textView10, txtLogout;
     private String mParam1;
     private String mParam2;
@@ -61,6 +63,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Khởi tạo các view
+        btnFavorite = view.findViewById(R.id.btnFavorite);
         btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
         btnOrderHistory = view.findViewById(R.id.btnOrderHistory);
         btnShippingAddress = view.findViewById(R.id.btnShippingAddress);
@@ -122,6 +125,24 @@ public class ProfileFragment extends Fragment {
                                 R.anim.slide_out_right
                         )
                         .replace(R.id.fragment_container, addressFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        // Trong onCreateView, thay đổi sự kiện btnFavorite
+        btnFavorite.setOnClickListener(v -> {
+            FavoriteFragment favoriteFragment = new FavoriteFragment();
+            if (getParentFragmentManager() != null) {
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in_right,
+                                R.anim.slide_out_left,
+                                R.anim.slide_in_left,
+                                R.anim.slide_out_right
+                        )
+                        .replace(R.id.fragment_container, favoriteFragment)
                         .addToBackStack(null)
                         .commit();
             }
