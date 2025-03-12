@@ -51,15 +51,31 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Nút thêm vào giỏ hàng -->
-        <ImageButton
-            android:id="@+id/btnAddToCart"
+        <LinearLayout
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="8dp"
-            android:src="@drawable/baseline_add_shopping_cart_24"
-            app:tint="@color/white"
-            android:backgroundTint="@color/orange"
-            android:contentDescription="Cart"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="vertical">
+
+            <!-- Nút thêm vào giỏ hàng -->
+            <ImageButton
+                android:id="@+id/btnAddToCart"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:src="@drawable/baseline_add_shopping_cart_24"
+                app:tint="@color/white"
+                android:backgroundTint="@color/orange"
+                android:contentDescription="Cart"/>
+
+            <ImageView
+                android:id="@+id/btnAddToFavorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="0"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                app:srcCompat="@drawable/heart_icon" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
