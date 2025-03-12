@@ -290,6 +290,55 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-1dp"
+            android:layout_marginBottom="70dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView15"
+                    android:layout_width="43dp"
+                    android:layout_height="37dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginBottom="18dp"
+                    app:srcCompat="@drawable/xacnhan" />
+
+                <TextView
+                    android:id="@+id/quanLyDonHang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="67dp"
+                    android:layout_marginBottom="24dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Quản Lý Đơn Hàng"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonOrderManage"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginBottom="19dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:contentDescription="a"
+                    app:srcCompat="@android:drawable/ic_input_add" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="91dp"

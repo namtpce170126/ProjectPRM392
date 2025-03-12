@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -14,10 +15,12 @@ import com.example.projectprm392.Admin.AdminActivity;
 import com.example.projectprm392.Admin.Dashboard;
 import com.example.projectprm392.DAOs.ProductDetailDAOU;
 import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.OrderControlX.Confirm_edit_Order_Activity;
 import com.example.projectprm392.R;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    private ImageButton btnOrderManage;
     private TextView listOrderbtn;
     private CardView cardManageProduct;
     private FrameLayout fragmentContainer;
@@ -27,6 +30,12 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.dashboard);
+
+        btnOrderManage = findViewById(R.id.imageButtonOrderManage);
+        btnOrderManage.setOnClickListener(view -> {
+            Intent intent = new Intent(DashboardActivity.this, Confirm_edit_Order_Activity.class);
+            startActivity(intent);
+        });
 
         cardManageProduct = findViewById(R.id.cardManageProduct);
         listOrderbtn = findViewById(R.id.xemThem);

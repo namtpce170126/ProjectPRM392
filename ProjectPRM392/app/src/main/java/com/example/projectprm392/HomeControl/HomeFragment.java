@@ -98,6 +98,8 @@ public class HomeFragment extends Fragment {
         categoryList.add(new Category(5, "Burgers", R.drawable.sample_food));
         categoryList.add(new Category(6, "Asian Food", R.drawable.sample_food));
 
+
+
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerCategory.setLayoutManager(layoutManager1);
         categoryAdapter = new CategoryAdapter(getContext(), categoryList);

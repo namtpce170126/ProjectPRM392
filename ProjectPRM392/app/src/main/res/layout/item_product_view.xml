@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:layout_weight="1"
+    android:background="@color/white"
+    android:elevation="4dp"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Ảnh món ăn -->
+    <ImageView
+        android:id="@+id/imgFood"
+        android:layout_width="302dp"
+        android:layout_height="77dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_food" />
+
+    <!-- Thông tin món ăn + nút Add -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp">
+
+        <!-- Thông tin món ăn -->
+
+        <!-- Nút thêm vào giỏ hàng -->
+        <LinearLayout
+            android:layout_width="312dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textFoodName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên món ăn"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textFoodPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="99.000đ"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnAddToCart"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:backgroundTint="#FF9800"
+            android:contentDescription="Cart"
+            android:padding="8dp"
+            android:src="@drawable/baseline_add_shopping_cart_24"
+            app:tint="@android:color/white" />
+
+    </LinearLayout>
+</LinearLayout>
