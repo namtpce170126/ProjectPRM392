@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.projectprm392.DAOs.CartDAOU;
 import com.example.projectprm392.DAOs.ProductDetailDAOU;
 import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.HomeControl.HomeFragment;
 import com.example.projectprm392.Models.Cart;
 import com.example.projectprm392.Models.Product;
 import com.example.projectprm392.R;
@@ -26,7 +27,7 @@ public class ProductActivity extends AppCompatActivity {
     private TextView pricePro, namePro, desPro, quantityText;
     private ImageView imgPro,imgPro2,imgPro3,imgPro4;
     int quantity = 1;
-    private ImageButton shareButton;
+    private ImageButton shareButton,btnBack2;
 
 private int productQuantity;
     @Override
@@ -54,8 +55,6 @@ private int productQuantity;
         }
 
 
-
-
         Product getProductDetail = productDAO.getProductDetailsByProductId(productId);
         pricePro.setText(getProductDetail.getProPrice()+"");
         namePro.setText(getProductDetail.getProName());
@@ -77,8 +76,18 @@ private int productQuantity;
        productQuantity = getProductDetail.getProQuantity();
 
 
+        btnBack2 = findViewById(R.id.btnBack2);
+        btnBack2.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment()) // Thay R.id.fragment_container bằng ID của container chứa Fragment
+                    .addToBackStack(null) // Để có thể quay lại Fragment trước đó nếu cần
+                    .commit();
+        });
 
     }
+
+
+
     private void addToCart() {
         int customerId = 1;
         int productId = getIntent().getIntExtra("pro_id", -1);
@@ -138,43 +147,6 @@ private int productQuantity;
         }
     }
 
-
-
-//    private void addToCart() {
-//        int customerId = 1;
-//
-//
-//        int productId = getIntent().getIntExtra("pro_id", -1);
-//        if (productId == -1) {
-//            Toast.makeText(this, "Lỗi: Không có sản phẩm!", Toast.LENGTH_SHORT).show();
-//            finish();
-//            return;
-//        }
-//
-//
-//        // Lấy thông tin sản phẩm từ DAO
-//        Product product = productDAO.getProductDetailsByProductId(productId);
-//
-//        // Tạo đối tượng Cart
-//        Cart cartItem = new Cart(
-//                0, //cartId tự động tăng
-//                customerId,
-//                product.getProId(),
-//                quantity,
-//                product.getProPrice() * quantity
-//        );
-//
-//        // Lưu vào database (hoặc danh sách giỏ hàng tạm thời)
-//        CartDAOU cartDAO = new CartDAOU(new DatabaseHelper(this));
-//        boolean success = cartDAO.addToCart(cartItem);
-//
-//        if (success) {
-//            makeText(this, "", Toast.LENGTH_SHORT).show();
-//        } else {
-//            makeText(this, "Lỗi khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
     //  tăng số lượng
     private void increaseQuantity() {
         if (quantity < productQuantity) {
@@ -194,25 +166,11 @@ private int productQuantity;
     }
 
 
-
     public void goToCart(View view) {
         Intent intent = new Intent(this, CartActivity.class);
         startActivity(intent);
     }
 
 
-
-
-
-
-
-//    private void shareToAnyApp(String name, String url) {
-//        Intent intent = new Intent(Intent.ACTION_SEND);
-//        intent.setType("text/plain");
-//        intent.putExtra(Intent.EXTRA_TEXT, "🔥 " + name + " - Xem ngay tại: " + url);
-//
-//        // Mở trình chọn ứng dụng
-//        startActivity(Intent.createChooser(intent, "Chia sẻ sản phẩm"));
-//    }
 
 }
