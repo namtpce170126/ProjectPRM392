@@ -234,4 +234,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
+    public Cursor getMonthlyOrderCount() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT strftime('%Y-%m', o_date) AS month, COUNT(o_id) AS totalOrders " +
+                "FROM orders " + // Giả sử bạn có bảng Orders
+                "WHERE isDelete = 0 " + // Lọc các đơn hàng chưa bị xóa
+                "GROUP BY month " +
+                "ORDER BY month";
+        return db.rawQuery(query, null);
+    }
+
 }
