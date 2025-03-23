@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     private Toolbar toolbar;
-    private ImageButton btnCart,btn_cart;
+    private ImageButton btnCart,btn_cart,btnAddToCart;
     private RecyclerView recyclerView;
     private RecyclerView recyclerBestSeller;
     private DiscountProductAdapter foodAdapter;
@@ -121,6 +121,9 @@ public class HomeFragment extends Fragment {
         categoryAdapter = new CategoryAdapter(getContext(), categoryList);
         recyclerCategory.setAdapter(categoryAdapter);
 
+
+
+
         return view;
     }
 
@@ -132,10 +135,18 @@ public class HomeFragment extends Fragment {
         return Math.max(1, (int) (screenWidth / minItemWidth));
     }
 
+
     public void goToCartHome(View view) {
-        Intent intent = new Intent(getContext(), CartActivity.class);
-        startActivity(intent);
+        if (isAdded() && getContext() != null) {
+            Intent intent = new Intent(requireContext(), CartActivity.class);
+            startActivity(intent);
+        }
     }
+
+
+
+
+
 
 
 }

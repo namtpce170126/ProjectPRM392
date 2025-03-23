@@ -29,11 +29,12 @@
             android:layout_centerVertical="true"/>
 
         <ImageButton
-            android:id="@+id/btn_cart"
+            android:id="@+id/btn_cart_category"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="10dp"
+            android:onClick="goToCartCategory"
             android:src="@drawable/baseline_add_shopping_cart_24"
             app:tint="@android:color/white"
             android:layout_alignParentEnd="true"

@@ -21,6 +21,7 @@ import com.example.projectprm392.Database.DatabaseHelper;
 import com.example.projectprm392.HomeControl.MainActivity;
 import com.example.projectprm392.Models.Category;
 import com.example.projectprm392.Models.Product;
+import com.example.projectprm392.ProductControlU.CartActivity;
 import com.example.projectprm392.R;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class ViewProductByCategoryActivity extends AppCompatActivity {
     RecyclerView recyclerViewCategory, recyclerViewProduct;
     private CategoryListAdapter categoryListAdapter;
     private ProductListAdapter productListAdapter;
-    private ImageButton btnBack;
+    private ImageButton btnBack,btn_cart_category;
     public Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class ViewProductByCategoryActivity extends AppCompatActivity {
 
 
 
+//        btn_cart_category = findViewById(R.id.btn_cart_category);
         recyclerViewCategory = findViewById(R.id.recyclerCategory);
         recyclerViewProduct = findViewById(R.id.recyclerProduct);
         btnBack = findViewById(R.id.imageButtonBackMain);
@@ -83,6 +85,12 @@ public class ViewProductByCategoryActivity extends AppCompatActivity {
 
 
     }
+
+    public void goToCartCategory(View view) {
+        Intent intent = new Intent(this, CartActivity.class);
+        startActivity(intent);
+    }
+
     private void loadProductsByCategory(int categoryId) {
         List<Product> newProducts = new ArrayList<>();
 
