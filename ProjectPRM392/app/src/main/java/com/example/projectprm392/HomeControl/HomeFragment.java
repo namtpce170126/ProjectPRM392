@@ -1,5 +1,6 @@
 package com.example.projectprm392.HomeControl;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.projectprm392.ProductControlU.CartActivity;
 
 import com.example.projectprm392.DAOs.ProductDAO;
 import com.example.projectprm392.Database.DatabaseHelper;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     private Toolbar toolbar;
-    private ImageButton btnCart;
+    private ImageButton btnCart,btn_cart;
     private RecyclerView recyclerView;
     private RecyclerView recyclerBestSeller;
     private DiscountProductAdapter foodAdapter;
@@ -46,9 +48,23 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home, container, false);
 
+
+
+
+
         // Ánh xạ Toolbar
         toolbar = view.findViewById(R.id.toolbar);
         btnCart = view.findViewById(R.id.btn_cart);
+
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCartHome(v);
+            }
+        });
+
+
 
         // Thiết lập Toolbar làm ActionBar của Fragment
         AppCompatActivity activity = (AppCompatActivity) requireActivity();
@@ -115,4 +131,11 @@ public class HomeFragment extends Fragment {
 
         return Math.max(1, (int) (screenWidth / minItemWidth));
     }
+
+    public void goToCartHome(View view) {
+        Intent intent = new Intent(getContext(), CartActivity.class);
+        startActivity(intent);
+    }
+
+
 }

@@ -339,6 +339,32 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-1dp"
+            android:layout_marginBottom="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:id="@+id/btnLogOut"
+                    android:layout_width="53dp"
+                    android:layout_height="55dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="11dp"
+                    android:layout_marginBottom="4dp"
+                    android:backgroundTint="#F8EEEE"
+                    android:onClick="logOutAdmin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/logout1" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="91dp"
@@ -435,6 +461,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -483,7 +510,7 @@
                     android:layout_marginStart="114dp"
                     android:layout_marginTop="14dp"
                     android:fontFamily="sans-serif-black"
-                    android:text="Sạp bánh cam Mih Uyn"
+                    android:text="Sạp bánh cam F-Farm"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -513,6 +540,7 @@
                     android:text="Thống kê chi tiết"
                     android:textColor="#E6D223"
                     app:layout_constraintEnd_toEndOf="parent" />
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 

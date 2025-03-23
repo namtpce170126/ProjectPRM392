@@ -115,4 +115,6 @@ public class ProductDetailDAOU extends SingletonBaseDAO {
         return sum;
     }
 
+
+
 }

@@ -1,6 +1,8 @@
 package com.example.projectprm392.ProductControlU;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,7 +17,9 @@ import com.example.projectprm392.Admin.AdminActivity;
 import com.example.projectprm392.Admin.Dashboard;
 import com.example.projectprm392.DAOs.ProductDetailDAOU;
 import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.HomeControl.MainActivity;
 import com.example.projectprm392.OrderControlX.Confirm_edit_Order_Activity;
+import com.example.projectprm392.ProfileControl.ClientProfileFragment;
 import com.example.projectprm392.R;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -75,6 +79,20 @@ public class DashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(DashboardActivity.this, ChartUActivity.class);
         startActivity(intent);
     }
+
+
+    public void logOutAdmin(View view){
+        // Xóa session đăng nhập
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("logged_in_user_id"); // Xóa ID người dùng
+        editor.apply();
+
+        Intent intent = new Intent(DashboardActivity.this, MainActivity.class);
+        startActivity(intent);
+
+    }
+
 
 
 }

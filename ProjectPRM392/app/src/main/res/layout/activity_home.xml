@@ -26,7 +26,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="10dp"
             android:src="@drawable/baseline_add_shopping_cart_24"
-            app:tint="@android:color/white"/>
+            app:tint="@android:color/white"
+            android:onClick="goToCartHome"/>
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Bọc nội dung trong ScrollView -->
