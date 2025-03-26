@@ -89,7 +89,9 @@ private int productQuantity;
 
 
     private void addToCart() {
-        int customerId = 1;
+
+        int customerId = getIntent().getIntExtra("logged_in_user_id", -1);
+
         int productId = getIntent().getIntExtra("pro_id", -1);
 
         if (productId == -1) {

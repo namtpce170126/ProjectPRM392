@@ -81,6 +81,13 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
 
+    public void ggMap(View v) {
+        Intent intent = new Intent(DashboardActivity.this, MapActivity.class);
+        startActivity(intent);
+    }
+
+
+
     public void logOutAdmin(View view){
         // Xóa session đăng nhập
         SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
