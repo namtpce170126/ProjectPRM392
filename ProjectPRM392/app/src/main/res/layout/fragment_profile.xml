@@ -429,7 +429,16 @@
                 android:text="For any questions please contact us: "
                 android:textSize="16dp"
                 android:textStyle="bold" />
-
+            <TextView
+                android:id="@+id/mapCus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:text="Store (Google Map)"
+                android:onClick="ggMapCus"
+                android:textColor="#DB694A"
+                android:textSize="16dp"
+                android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

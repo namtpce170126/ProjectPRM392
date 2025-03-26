@@ -1,15 +1,19 @@
 package com.example.projectprm392.HomeControl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.projectprm392.Database.DatabaseHelper;
+import com.example.projectprm392.ProductControlU.DashboardActivity;
+import com.example.projectprm392.ProductControlU.MapActivity;
 import com.example.projectprm392.ProfileControl.ClientProfileFragment;
 import com.example.projectprm392.ProfileControl.ProfileFragment;
 import com.example.projectprm392.R;
@@ -75,4 +79,15 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
+
+    public void backMain(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void ggMapCus(View v) {
+        Intent intent = new Intent(MainActivity.this, MapActivity.class);
+        startActivity(intent);
+    }
+
 }
